@@ -12,4 +12,4 @@
 </sub>
 
 ## 
-<h4 align="center">Feito por <a tex href="https://github.com/Fabriciobr5975"> Fabrício de Araújo Santana</a>, <a href="https://github.com/MarcusVPRocha">Marcus Vinícius Pereira Rocha</a> e <a href="https://github.com/Ruanlv"> Ruan Lopes Viana</a></h4>
+<h5 align="center">Feito por <a tex href="https://github.com/Fabriciobr5975"> Fabrício de Araújo Santana</a>, <a tex href="https://github.com/geovannanovais"> Geovanna Novais</a>, <a href="https://github.com/MarcusVPRocha">Marcus Vinícius Pereira Rocha</a> e <a href="https://github.com/Ruanlv"> Ruan Lopes Viana</a></h5>
