@@ -3,25 +3,30 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins";
+  //overflow: hidden;
+}
+
+body {
+  background: #3d070b;
 }
 
 .pagina {
   .header {
     display: flex;
-    height: 100%;
+    width: 100%;
+    height: 6.25rem; 
     padding: 1.8125rem 4.0625rem 2.625rem 4rem;
     justify-content: center;
     align-items: center;
-    background: #533434;
   }
 
   .footer {
     display: flexbox;
-    height: 100%;
+    height: 100%; 
     padding: 3.4375rem 3.1875rem 2.6875rem 5.875rem;
     justify-content: flex-end;
     align-items: center;
-    background: #533434;
+    background: #3d070b;
 
     .elementos-footer {
       display: inline-flex;
@@ -119,7 +124,7 @@
     }
   }
 
-  hr {
+  .barra-horizontal {
     width: 77.625rem;
     height: 0.0625rem;
   }

@@ -11,7 +11,11 @@ export default function HomePage() {
           </div>
 
           <div className="input-header">
-            <input type="text" placeholder="Search Your itens here..." className="campo-busca-homepage" />
+            <input
+              type="text"
+              placeholder="Search Your itens here..."
+              className="campo-busca-homepage"
+            />
           </div>
 
           <div className="dados-usuario-header">
@@ -24,7 +28,61 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section className="conteudo-principal"></section>
+      <main className="banner">
+        <div className="informacao-banner">
+          <h2>CELEBRANDO 33 ANOS DE PAIXÃO PELO VINHO</h2>
+          <p>
+            Personalize seu vinho conosco. Pode ser datas como: aniversários,
+            lembrancinhas de casamento, até personalização da sua empresa, para
+            brindes de fim de ano.
+          </p>
+        </div>
+      </main>
+
+      <section className="sobre-nos">
+        <div className="img-sobre-nos">
+          <div id="imagem"></div>
+        </div>
+
+        <div className="informacao-sobre-nos">
+          <h2>NOSSA JORNADA</h2>
+          <hr />
+          <p>
+            A empresa Viana Vinhos Finos foi criada em 1992. Representante
+            Ronilton de Melo Viana.
+          </p>
+          <p>
+            A empresa tem como objetivo atender as pessoas que apreciam um bom
+            vinho. Nossos parceiros profissionais: Vinícola Gões e Vinícola XV
+            de Novembro.
+          </p>
+          <p>
+            Os nossos serviços vão desde o consumo cotidiano até os brindes
+            promocionais.
+          </p>
+          <p>
+            Descubra rótulos exclusivos e experiências únicas na loja que é
+            referência entre os amantes do bom vinho.
+          </p>
+        </div>
+      </section>
+
+      <section className="principais-categorias">
+        <div id="titulo-categoria">
+          <h2>PRINCIPAIS CATEGORIAS</h2>
+          <hr />
+        </div>
+
+        <div className="categoria-vinho">
+          <div className="categoria tinto"></div>
+          <div className="categoria rose"></div>
+          <div className="categoria branco"></div>
+        </div>
+      </section>
+
+      <section className="vinhos-mais-procurados"></section>
+
+      <section className="informacoes-adicionais"></section>
 
       <footer className="footer">
         <div className="elementos-footer">
@@ -74,8 +132,10 @@ export default function HomePage() {
         </div>
 
         <div className="direitos-reservados">
-          <hr />
-          <span id="mensagem-direitos-reservados">2025 VIANA VINHOS - Direitos Reservados</span>
+          <hr className="barra-horizontal" />
+          <span id="mensagem-direitos-reservados">
+            2025 VIANA VINHOS - Direitos Reservados
+          </span>
         </div>
       </footer>
     </div>
