@@ -1,6 +1,7 @@
+import './index'
 
 export default function NotFound() {
     return(
-        <h1>Página não encontrado</h1>
+        <h1>Página não encontrada</h1>
     )
 }

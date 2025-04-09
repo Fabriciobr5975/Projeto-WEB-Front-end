@@ -1,15 +1,16 @@
-import { BrowserRouter, Router, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import App from './App';
+import HomePage from './pages/homepage';
 import NotFound from './pages/notfound'
 
 export default function Navegacao() {
   return (
     <BrowserRouter>
-      <Router>
-        <Route path="/" element={<App />}/>
-        <Route path="*" element={<NotFound />}/>
-      </Router>
+      <Routes>
+        <Route path='/' element={<HomePage />}/>
+        <Route path='*' element={<NotFound />}/>
+      </Routes>
     </BrowserRouter>
   );
 }
+

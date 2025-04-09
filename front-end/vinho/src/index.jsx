@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 
-import Navegacao from './routers'
+import Navegacao from './routers';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

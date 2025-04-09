@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins";
+}
+
+.pagina {
+  .header {
+    display: flex;
+    height: 100%;
+    padding: 1.8125rem 4.0625rem 2.625rem 4rem;
+    justify-content: center;
+    align-items: center;
+    background: #533434;
+  }
+
+  .footer {
+    display: flexbox;
+    height: 100%;
+    padding: 3.4375rem 3.1875rem 2.6875rem 5.875rem;
+    justify-content: flex-end;
+    align-items: center;
+    background: #533434;
+
+    .elementos-footer {
+      display: inline-flex;
+      padding: 0.346rem 0.39rem 0.638rem;
+      width: 77.625rem;
+      align-items: center;
+      justify-content: center;
+      gap: 6rem;
+      margin-bottom: 4rem;
+    }
+
+    .mapa-navegacao-footer {
+      display: flex;
+      width: 9.625rem;
+      height: 18.875rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      gap: 1rem;
+    }
+
+    .vinho-footer {
+      display: flex;
+      width: 9.625rem;
+      height: 18.875rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .ajuda-footer {
+      display: flex;
+      width: 9.625rem;
+      height: 18.875rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .conteudo-adicional-footer {
+      display: flex;
+      width: 23.9375rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.75rem;
+      flex-shrink: 0;
+
+      .email-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.3125rem;
+        align-self: stretch;
+      }
+
+      .contato-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.3125rem;
+        align-self: stretch;
+      }
+
+      .midia-social-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.3125rem;
+        align-self: stretch;
+      }
+    }
+
+    .subtitulos-footer {
+      color: #9f9f9f;
+      font-family: Poppins;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .links-footer {
+      text-decoration: none;
+      color: #f6edd9;
+      font-family: Poppins;
+      font-size: 0.9rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      text-align: center;
+    }
+  }
+
+  hr {
+    width: 77.625rem;
+    height: 0.0625rem;
+  }
+
+  .direitos-reservados {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  #mensagem-direitos-reservados {
+    color: #f4ebd7;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+input {
+  min-height: 2rem;
+  min-width: 20rem;
+  border-radius: 2.8125rem;
+  border: 1px solid #fdecec;
+  padding: 0.38rem;
+  background-color: rgba(255, 255, 255, 0);
+  color: #fdecec;
+}
+
+input::placeholder {
+  color: #fdecec;
+}

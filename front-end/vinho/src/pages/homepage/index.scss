@@ -1,0 +1,63 @@
+.pagina-principal {
+  background-color: #b14854;
+
+  .elementos-header {
+    display: flex;
+    width: 79.4375rem;
+    height: 3.375rem;
+    margin: 0.113rem, 0.254rem, 0.164rem, 0.25rem;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .dados-usuario-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+
+    span {
+      color: #eee;
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+    }
+
+    span > strong {
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    .icone {
+      font-size: 2rem;
+    }
+  }
+
+  .input-header {
+    padding: 0.375rem 0.75rem;
+  }
+
+  .campo-busca-homepage {
+    width: 30.5rem;
+    height: 2.3rem;
+    background-image: url('../../../public/assets/images/lupa-busca-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 2%;
+    background-size: 1.2rem;
+    padding-left: 2.55rem;
+  }
+
+  .conteudo-principal {
+    height: 100vh   ;
+  }
+
+  .elementos-footer {
+    display: flex;
+    height: 18.25rem;
+    align-items: flex-start;
+    gap: 4.875rem;
+  }
+}
