@@ -3,7 +3,15 @@
 
 ## Objetivo 🎯 
 
-## Tecnologias ⚒️
+## Ferramentas e Tecnologias Usadas ⚒️
+<div align="center" > 
+  <a href="https://logospng.org" target="_blank"><img src="https://logospng.org/download/visual-studio-code/visual-studio-code-4096.png" alt="Logo do Visual Studio Code" width="90" height="90"/></a>
+  <a href="https://logospng.org" target="_blank"><img src="https://logospng.org/download/javascript/logo-javascript-1024.png" alt="Logo do JavaScript" width="90" height="90"/></a>
+  <a href="https://logospng.org" target="_blank"><img src="https://logospng.org/download/node-js/logo-node-js-1024.png" alt="Logo do NodeJS" width="90" height="90"/></a>
+  <a href="https://logospng.org" target="_blank"><img src="https://logospng.org/download/react/logo-react-1024.png" alt="Logo do ReactJS" width="90" height="90"/></a>
+  <a href="https://logospng.org" target="_blank"><img src="https://logospng.org/download/mysql/mysql-4096.png" alt="Logo do MySQL" width="90" height="90"/></a>
+  <a href="https://logospng.org" target="_blank"><img src="https://logospng.org/download/figma/figma-4096.png" alt="Logo do Figma" width="90" height="90"/></a>
+</div>
 
 ## Links Úteis 🔗
 <sub> <br/>
