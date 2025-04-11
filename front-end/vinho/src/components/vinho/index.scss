@@ -1,0 +1,73 @@
+.componente-vinho {
+  display: flex;
+  flex-direction: column;
+  width: 18rem;
+  height: 27.59788rem;
+  background: #fff;
+  border-radius: 0.25rem;
+  padding: 0.7rem 0.97rem 0.25rem 0.96rem;
+  gap: 2rem;
+
+  .imagem-vinho {
+    width: 100%;
+    height: 10rem;
+    aspect-ratio: 222.22/394.7;
+    background-image: url("../../../public/assets/images/vinho-exemplo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50% 100%;
+  }
+
+  .informacoes-vinho {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+
+    h5 {
+      color: #000;
+      font-family: Inter;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-align: center;
+    }
+
+    span {
+      color: #3d070b;
+      font-family: Inter;
+      font-size: 0.9375rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-align: center;
+    }
+
+    .preco {
+      color: #3d070b;
+      font-family: Inter;
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      text-align: center;
+    }
+
+    .btn-reversa-vinho {
+      width: 11.359rem;
+      height: 2.9rem;
+      background: #99343b;
+      border: 0rem solid #000;
+      border-radius: 0.3125rem;
+      box-sizing: 0rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.25);
+      color: #fff;
+      text-align: center;
+      font-family: Inter;
+      font-size: 1.5rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+  }
+}

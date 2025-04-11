@@ -1,0 +1,120 @@
+.footer {
+  display: flexbox;
+  height: 100%;
+  padding: 3.4375rem 3.1875rem 2.6875rem 6.2rem;
+  justify-items: center;
+  align-items: center;
+  background: #3d070b;
+
+  .elementos-footer {
+    display: grid;
+    padding: 0.346rem 0.39rem 0.638rem;
+    width: 77.625rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4rem;
+    gap: 4rem;
+    
+    .mapa-navegacao-footer {
+      display: flex;
+      width: 9.625rem;
+      height: 18.875rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      gap: 1rem;
+    }
+
+    .vinho-footer {
+      display: flex;
+      width: 9.625rem;
+      height: 18.875rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .ajuda-footer {
+      display: flex;
+      width: 9.625rem;
+      height: 18.875rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .conteudo-adicional-footer {
+      display: flex;
+      width: 23.9375rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.75rem;
+      flex-shrink: 0;
+
+      .email-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.3125rem;
+        align-self: stretch;
+      }
+
+      .contato-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.3125rem;
+        align-self: stretch;
+      }
+
+      .midia-social-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.3125rem;
+        align-self: stretch;
+      }
+    }
+
+    .subtitulos-footer {
+      color: #9f9f9f;
+      font-family: Poppins;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .links-footer {
+      text-decoration: none;
+      color: #f6edd9;
+      font-family: Poppins;
+      font-size: 0.9rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      text-align: center;
+    }
+  }
+
+  .direitos-reservados {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  #mensagem-direitos-reservados {
+    color: #f4ebd7;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}

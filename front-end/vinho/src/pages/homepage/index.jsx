@@ -1,32 +1,14 @@
+import Header from "../../components/header";
+import Footer from "../../components/footer";
+import Vinho from "../../components/vinho";
+import Disclaimer from "../../components/disclaimer";
+
 import "./index.scss";
-import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
     <div className="pagina-principal pagina">
-      <header className="header">
-        <div className="elementos-header">
-          <div>
-            <img src="" alt="" className="logo" />
-          </div>
-
-          <div className="input-header">
-            <input
-              type="text"
-              placeholder="Search Your itens here..."
-              className="campo-busca-homepage"
-            />
-          </div>
-
-          <div className="dados-usuario-header">
-            <span>
-              Welcome, <strong>Paola Smith</strong>
-            </span>
-            <i class="fa-solid fa-circle-user icone"></i>
-            <i class="fa-solid fa-cart-shopping icone"></i>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="banner">
         <div className="informacao-banner">
@@ -68,7 +50,7 @@ export default function HomePage() {
       </section>
 
       <section className="principais-categorias">
-        <div id="titulo-categoria">
+        <div class="subtitulos">
           <h2>PRINCIPAIS CATEGORIAS</h2>
           <hr />
         </div>
@@ -80,64 +62,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="vinhos-mais-procurados"></section>
+      <section className="produtos">
+        <div className="subtitulos">
+          <h2>VINHOS MAIS VENDIDOS</h2>
+          <hr />
+          <p>Confira os vinhos mais vendidos e faça uma reserva</p>
+        </div>
 
-      <section className="informacoes-adicionais"></section>
-
-      <footer className="footer">
-        <div className="elementos-footer">
-          <div className="mapa-navegacao-footer">
-            <h3 className="subtitulos-footer">VIANA VINHOS</h3>
-            <Link className="links-footer">Home</Link>
-            <Link className="links-footer">Sobre Nós</Link>
-            <Link className="links-footer">Nossa História</Link>
-            <Link className="links-footer">Guia de Vinhos</Link>
+        <div className="secao-vinhos">
+          <div className="secao01-vinho">
+            <Vinho />
+            <Vinho />
+            <Vinho />
+            <Vinho />
           </div>
 
-          <div className="vinho-footer">
-            <h3 className="subtitulos-footer">VINHOS</h3>
-            <Link className="links-footer">Tinto</Link>
-            <Link className="links-footer">Branco</Link>
-            <Link className="links-footer">Espumante</Link>
-            <Link className="links-footer">Rosé</Link>
-            <Link className="links-footer">Mais Vendidos</Link>
-            <Link className="links-footer">Em Promoção</Link>
-            <Link className="links-footer">Guia de Vinhos</Link>
-          </div>
-
-          <div className="ajuda-footer">
-            <h3 className="subtitulos-footer">AJUDA</h3>
-            <Link className="links-footer">Contate-nos</Link>
-            <Link className="links-footer">Perguntas Frequentes</Link>
-            <Link className="links-footer">Política de Privacidade</Link>
-            <Link className="links-footer">Política de Privacidade</Link>
-            <Link className="links-footer">Política de Cancelamento</Link>
-            <Link className="links-footer">Informações sobre Entrega</Link>
-          </div>
-
-          <div className="conteudo-adicional-footer">
-            <div className="email-footer">
-              <h3 className="subtitulos-footer">RECEBA NOVIDADES VIA E-MAIL</h3>
-              <input type="email" placeholder="seu.email@aqui.com" />
-            </div>
-
-            <div className="contato-footer">
-              <h3 className="subtitulos-footer">CONTATO</h3>
-            </div>
-
-            <div className="midia-social-footer">
-              <h3 className="subtitulos-footer">MÍDIA SOCIAL</h3>
-            </div>
+          <div className="secao02-vinho">
+            <Vinho />
+            <Vinho />
+            <Vinho />
+            <Vinho />
           </div>
         </div>
 
-        <div className="direitos-reservados">
-          <hr className="barra-horizontal" />
-          <span id="mensagem-direitos-reservados">
-            2025 VIANA VINHOS - Direitos Reservados
-          </span>
+        <div className="confira-mais">
+          <span>Confira Mais</span>
+          <hr></hr>
         </div>
-      </footer>
+      </section>
+
+      <section className="disclaimer">
+        <Disclaimer />
+      </section>
+
+      <Footer />
     </div>
   );
 }
