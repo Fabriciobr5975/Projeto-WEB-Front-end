@@ -7,13 +7,13 @@
   background: #3d070b;
 
   .elementos-footer {
-    display: grid;
+    display: flex;
     padding: 0.346rem 0.39rem 0.638rem;
     width: 77.625rem;
     justify-content: center;
     align-items: center;
     margin-bottom: 4rem;
-    gap: 4rem;
+    gap: 5rem;
     
     .mapa-navegacao-footer {
       display: flex;
@@ -48,8 +48,9 @@
     .conteudo-adicional-footer {
       display: flex;
       width: 23.9375rem;
+      height: 18.875rem;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: start;
       gap: 1.75rem;
       flex-shrink: 0;
 
@@ -104,8 +105,12 @@
   .direitos-reservados {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    gap: 2rem;
     align-items: center;
+    justify-content: flex-end;
+    padding: 2rem 2.5rem 1rem 2.5rem;
   }
 
   #mensagem-direitos-reservados {

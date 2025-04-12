@@ -16,7 +16,7 @@ export default function Header(props) {
 
         <div className="dados-usuario-header">
           <span>
-            Welcome, <strong>Paola Smith</strong>
+            Welcome, <strong>{'Paola Smith'}</strong>
           </span>
           <i class="fa-solid fa-circle-user icone"></i>
           <i class="fa-solid fa-cart-shopping icone"></i>
