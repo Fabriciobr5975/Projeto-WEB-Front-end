@@ -1,17 +1,27 @@
 import "./index.scss";
 
+import { Link } from "react-router-dom";
+
 export default function Header(props) {
   return (
     <header className="header">
       <div className="elementos-header">
-        <div className="logo"></div>
-
-        <div className="input-header">
-          <input
-            type="text"
-            placeholder="Search Your itens here..."
-            className="campo-busca-homepage"
-          />
+        <picture className="logo">
+          <img src="/assets/images/logo.svg" alt="Logo" />
+        </picture>
+        
+        <div className="links-header">
+          <ul className="lista-links-header">
+            <li>
+              <Link>Vinho</Link>
+            </li>
+            <li>
+              <Link>Vinicola</Link>
+            </li>
+            <li>
+              <Link>Contato</Link>
+            </li>
+          </ul>
         </div>
 
         <div className="dados-usuario-header">
@@ -24,6 +34,7 @@ export default function Header(props) {
           </div>
         </div>
       </div>
+      
     </header>
   );
 }

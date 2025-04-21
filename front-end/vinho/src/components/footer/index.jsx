@@ -38,7 +38,7 @@ export default function Footer(props) {
         <div className="conteudo-adicional-footer">
           <div className="email-footer">
             <h3 className="subtitulos-footer">RECEBA NOVIDADES VIA E-MAIL</h3>
-            <input type="email" placeholder="seu.email@aqui.com" />
+            <input type="email" placeholder="seu.email@aqui.com" className="input-footer"/>
           </div>
 
           <div className="contato-footer">

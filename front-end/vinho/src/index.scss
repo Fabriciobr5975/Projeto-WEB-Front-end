@@ -5,7 +5,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", "Inter", "Brygada 1918", serif;
-  //overflow: hidden;
 }
 
 body {
@@ -19,8 +18,10 @@ body {
   }
 
   input {
+    width: 20rem;
+    max-width: 50rem;
     min-height: 2rem;
-    min-width: 20rem;
+    min-width: 10rem;
     border-radius: 2.8125rem;
     border: 1px solid #fdecec;
     padding: 0.38rem;
