@@ -141,7 +141,7 @@
       width: 80%;
       gap: 2rem;
       height: 30rem;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: flex-start;
       .mapa-navegacao-footer,
       .vinho-footer,
@@ -171,8 +171,13 @@
           .input-footer {
             width: 30rem;
             height: 3rem;
+          
           }
         }
+
+        input::placeholder {
+         font: 400 1rem 'Poppins';
+         }
       }
 
       .subtitulos-footer {
@@ -181,7 +186,7 @@
       }
 
       .links-footer {
-        font: 600 1.4rem "Poppins";
+        font: 500 1.4rem "Poppins";
         text-align: start;
       }
     }
