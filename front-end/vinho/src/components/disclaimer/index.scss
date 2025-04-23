@@ -21,10 +21,8 @@
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: center;
-      font-family: Inter;
-      font-size: 2rem;
+      font: 500 2rem 'Poppins';
       font-style: normal;
-      font-weight: 500;
       line-height: normal;
       gap: 1rem;
     }
@@ -43,16 +41,69 @@
         display: flex;
         width: 16rem;
         height: 3rem;
+
         p {
           color: #000;
           text-align: center;
-          font-family: Inter;
-          font-size: 1.2rem;
+          font: 400 1.2rem 'Poppins';
           font-style: normal;
-          font-weight: 400;
           line-height: normal;
         }
       }
     }
+  }
+}
+
+@media (max-width: 1000px) {
+  .componente-disclaimer {
+    margin-top: 1rem;
+    
+    .informacoes-disclaimer {
+      align-items: flex-start;
+      justify-content: space-evenly;
+      width: 100% !important;
+      height: 8rem;
+      gap: 1rem;
+  
+      .cabecalho {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        font: 500 1rem 'Poppins';
+        font-style: normal;
+        line-height: normal;
+        gap: 1rem;
+      }
+  
+      .seguranca,
+      .frete-gratis,
+      .desconto {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 1.5rem;
+  
+        .texto-disclaimer {
+          display: flex;
+          width: .5rem;
+          height: .5rem;
+  
+          p {
+            color: #000;
+            text-align: start;
+            font: 300 .7rem 'Poppins' !important;
+            font-style: normal;
+            line-height: normal;
+          }
+        }
+      }
+    }
+  }  
+
+  i {
+    font-size: 1.5rem;
   }
 }

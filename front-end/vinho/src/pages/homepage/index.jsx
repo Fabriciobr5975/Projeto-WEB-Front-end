@@ -22,9 +22,12 @@ export default function HomePage() {
       </main>
 
       <section className="sobre-nos">
-        <div className="img-sobre-nos">
-          <div id="imagem"></div>
-        </div>
+        <picture className="img-sobre-nos">
+          <img
+            src="/assets/images/imagem-sobre-nos.svg"
+            alt="Imagem Sobre Nós"
+          />
+        </picture>
 
         <div className="informacao-sobre-nos">
           <h2>NOSSA JORNADA</h2>
@@ -52,20 +55,36 @@ export default function HomePage() {
       <section className="principais-categorias">
         <div class="subtitulos">
           <h2>PRINCIPAIS CATEGORIAS</h2>
-          <hr />
+          <hr className="barra-categorias"/>
         </div>
 
         <div className="categoria-vinho">
-          <div className="categoria tinto"></div>
-          <div className="categoria rose"></div>
-          <div className="categoria branco"></div>
+        <picture className="categoria tinto">
+          <img
+            src="/assets/images/classificao-vinhos/Tinto.svg"
+            alt="Categoria Tinto"
+          />
+        </picture>
+        <picture className="categoria rose">
+          <img
+            src="/assets/images/classificao-vinhos/Rose.svg"
+            alt="Categoria Rose"
+          />
+        </picture>
+        <picture className="categoria branco">
+          <img
+            src="/assets/images/classificao-vinhos/Branco.svg"
+            alt="Categoria Branco"
+          />
+        </picture>
+        
         </div>
       </section>
 
       <section className="produtos">
         <div className="subtitulos">
           <h2>VINHOS MAIS VENDIDOS</h2>
-          <hr />
+          <hr className="barra-vinhos" />
           <p>Confira os vinhos mais vendidos e faça uma reserva</p>
         </div>
 
@@ -91,9 +110,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="disclaimer">
-        <Disclaimer />
-      </section>
+      <Disclaimer />
 
       <Footer />
     </div>

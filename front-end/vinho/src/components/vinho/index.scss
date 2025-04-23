@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 18rem;
+  min-width: 8rem;
   height: 27.59788rem;
   background: #fff;
   border-radius: 0.25rem;
@@ -26,30 +27,24 @@
 
     h5 {
       color: #000;
-      font-family: Inter;
-      font-size: 1rem;
+      font: 600 1rem 'Poppins';
       font-style: normal;
-      font-weight: 600;
       line-height: normal;
       text-align: center;
     }
 
     span {
       color: #3d070b;
-      font-family: Inter;
-      font-size: 0.9375rem;
+      font: 400 1rem 'Poppins';
       font-style: normal;
-      font-weight: 400;
       line-height: normal;
       text-align: center;
     }
 
     .preco {
       color: #3d070b;
-      font-family: Inter;
-      font-size: 1.5rem;
+      font: 800 1.5rem 'Poppins';
       font-style: normal;
-      font-weight: 800;
       line-height: normal;
       text-align: center;
     }
@@ -60,14 +55,13 @@
       background: #99343b;
       border: 0rem solid #000;
       border-radius: 0.3125rem;
-      box-sizing: 0rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.25);
+      box-sizing: 0rem 0.3rem 0.3rem 0rem #00000040;
       color: #fff;
       text-align: center;
-      font-family: Inter;
-      font-size: 1.5rem;
+      font: 500 1.5rem 'Poppins';
       font-style: normal;
-      font-weight: 500;
       line-height: normal;
     }
   }
 }
+

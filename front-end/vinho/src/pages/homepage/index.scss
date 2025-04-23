@@ -1,40 +1,44 @@
-
 .pagina-principal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 20rem;
+  flex-shrink: 1;
+
   h2 {
-    font-size: 3.4rem;
-    font-weight: 300;
-    line-height: 4.3125rem;
+    font: 400 3.3rem "Poppins";
+    line-height: 4rem;
   }
 
   p {
-    font-size: 1.15rem;
-    font-weight: 200;
-    line-height: 1.3rem;
+    font: 200 1.15rem "Poppins";
+    line-height: 1.4rem;
   }
 
   .banner {
     width: 100%;
     height: 45rem;
-    flex-shrink: 0;
+    min-width: 20rem;
+    min-height: 10rem;
     background: #0a0a0a;
     background-image: url("../../../public/assets/images/imagem-banner.svg");
     background-size: cover;
     background-repeat: no-repeat;
-    position: relative;
-    z-index: -1;
+    flex-wrap: wrap;
 
     .informacao-banner {
       display: flex;
-      width: 33.0625rem;
+      width: 33rem;
+      min-width: 5rem;
       height: inherit;
+      min-height: 10rem;
       flex-direction: column;
       gap: 2rem;
       padding-left: 5rem;
       justify-content: center;
-      flex-shrink: 0;
       color: #fff;
       font-style: normal;
-      font-family: Inter;
+      font-family: "Inter";
     }
   }
 
@@ -42,31 +46,28 @@
     display: flex;
     width: 100%;
     height: 42rem;
+    min-height: 20rem;
     padding: 4rem 3rem;
-    flex-shrink: 0;
     background: #fff;
     gap: 5.69rem;
-    overflow: hidden;
 
     .img-sobre-nos {
-      width: 34.13463rem;
-      height: 30.60738rem;
-      flex-shrink: 0;
+      display: inline-flex;
+      width: 40%;
+      min-width: 35%;
+      min-inline-size: 10%;
 
-      #imagem {
-        max-width: 100%;
+      img {
+        width: 100%;
         height: 100%;
-        background: url("../../../public/assets/images/imagem-sobre-nos.svg")
-          no-repeat;
-        background-size: cover;
-        background-position: center;
-        object-fit: cover;
-        aspect-ratio: 546.15/489.72;
+        image-rendering: optimizeQuality;
       }
     }
 
     .informacao-sobre-nos {
       display: flex;
+      width: 60%;
+      min-height: 30%;
       flex-direction: column;
       gap: 2rem;
 
@@ -79,7 +80,7 @@
         width: inherit;
         height: 0.125rem;
         flex-shrink: 0;
-        fill: rgba(61, 7, 11, 0.37);
+        fill: #3d070b5e;
         top: -1rem;
       }
 
@@ -96,34 +97,27 @@
     flex-direction: column;
     width: 100%;
     height: 45.8125rem;
-    flex-shrink: 0;
+    min-height: 15rem;
     padding: 3.75rem 4rem 5.14rem 3.94rem;
 
     .categoria-vinho {
       display: flex;
       gap: 2.03rem;
-      align-content: center;
+      align-content: flex-start;
       justify-content: center;
 
       .categoria {
-        width: 26.0195rem;
-        height: 25.625rem;
-        flex-shrink: 0;
+        min-inline-size: 10%;
+        width: 26rem;
+        height: 26rem;
+        min-width: 10rem;
       }
 
-      .tinto {
-        background: url("../../../public/assets/images/classificao-vinhos/Tinto.svg")
-          lightgray 50% / cover no-repeat;
-      }
-
-      .rose {
-        background: url("../../../public/assets/images/classificao-vinhos/Rose.svg")
-          lightgray 50% / cover no-repeat;
-      }
-
+      .tinto,
+      .rose,
       .branco {
-        background: url("../../../public/assets/images/classificao-vinhos/Branco.svg")
-          lightgray 50% / cover no-repeat;
+        background: center / cover no-repeat;
+        background-position: 50%;
       }
     }
   }
@@ -131,7 +125,6 @@
   .produtos {
     max-width: 100%;
     max-height: 123.4375rem;
-    flex-shrink: 0;
     padding: 3rem 2.2rem 2.8rem;
 
     .secao-vinhos {
@@ -206,5 +199,118 @@
       padding-top: 1.5rem;
     }
   }
+}
 
+@media (max-width: 1000px) {
+  h2 {
+    font: 400 1.8rem "Poppins" !important;
+    line-height: 2rem !important;
+  }
+
+  p {
+    font: 200 1rem "Poopins" !important ;
+    line-height: 1.3rem;
+  }
+
+  .banner {
+    min-height: 10rem !important;
+    background-image: url("../../../public/assets/images/imagem-banner.svg");
+    height: 30rem !important;
+
+    .informacao-banner {
+      max-width: 15rem !important;
+      height: inherit !important;
+      gap: 1.5rem !important;
+      padding-left: 2rem !important;
+    }
+  }
+
+  .sobre-nos {
+    height: 42rem;
+    padding: 4rem 3rem;
+    background: #fff;
+    gap: 3rem !important;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    .img-sobre-nos {
+      display: none !important;
+    }
+
+    .informacao-sobre-nos {
+      min-width: 100% !important;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem !important;
+
+      p {
+        font: 500 1rem "Poppins" !important;
+      }
+
+      h2 {
+        font: 500 2rem "Poppins" !important;
+      }
+    }
+  }
+
+  .principais-categorias {
+    padding: 2rem 1rem 3rem 1rem !important;
+    height: 20rem !important;
+
+    h2 {
+      padding: 1rem !important;
+      padding-top: 0.2rem !important;
+    }
+
+    .barra-categorias {
+      width: 100% !important;
+    }
+
+    .categoria-vinho {
+      padding-top: 1rem;
+      gap: 0.2rem !important;
+      justify-content: start !important;
+      align-content: start !important;
+
+      img {
+        width: 90%;
+        image-rendering: optimizeSpeed;
+      }
+
+      .tinto,
+      .rose,
+      .branco {
+        background: #7f7f7f87 center / cover no-repeat;
+        background-position: 50%;
+      }
+    }
+  }
+
+  .produtos {
+    .barra-vinhos {
+      width: 100% !important;
+    }
+
+    .secao-vinhos {
+      align-items: center;
+      justify-content: center;
+      gap: 3.5rem;
+
+      .secao01-vinho,
+      .secao02-vinho {
+        display: grid !important;
+        flex-direction: column !important;
+        grid-template-columns: auto auto !important;
+
+        align-items: center;
+        justify-content: center;
+        gap: 1rem !important;
+      }
+    }
+  }
+
+  .subtitulos {
+    padding: 1rem !important;
+  }
 }
