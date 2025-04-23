@@ -2,9 +2,24 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 
 
+import { useState } from "react";
+import axios from "axios";
+
 import "./index.scss";
 
 export default function ListagemProdutos() {
+
+    const [listaVinhos, setListaVinhos] = useState([]);
+    const [nome, setNome] = useState('');
+
+    async function Buscar() {
+        let resp = await axios.get(`http://localhost:5001/vinho/nome/${nome}`);
+        let resp1 = await axios.get(`http://localhost:5001/vinho/nome/${nome}`);
+        let vinhos_estoque = resp+resp1;
+        setListaVinhos(resp);
+        alert(`O(s) produto(s) pelo nome de: (${resp.data.nome}) foi/foram buscado(s) com sucesso! `);
+    }
+
     return (
         <main>
             <Header />
@@ -17,17 +32,20 @@ export default function ListagemProdutos() {
                 </div>
             </section>
             <section className="conteudo">
-                <div className="pesquisa"> <input type="text" placeholder="Insira um ID" /><input type="button" value="Buscar" /></div>
+                <div className="pesquisa"> 
+                    <input type="text" placeholder="Insira um ID" value={nome} onChange={e => setNome(e.target.value)}/>
+                    <input type="button" value="Buscar" onClick={Buscar}/>
+                </div>
                 <table>
                     <colgroup>
-                        <col className="id"/>
-                        <col className="vinho"/>
-                        <col className="descricao"/>
-                        <col className="vinicola"/>
-                        <col className="valor"/>
-                        <col className="status"/>
-                        <col className="estoque"/>
-                        
+                        <col className="id" />
+                        <col className="vinho" />
+                        <col className="descricao" />
+                        <col className="vinicola" />
+                        <col className="valor" />
+                        <col className="status" />
+                        <col className="estoque" />
+
                     </colgroup>
                     <thead>
                         <tr>
@@ -41,17 +59,17 @@ export default function ListagemProdutos() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {ListarProdutos.map(item =>
+                        {listaVinhos.map(item =>
                             <tr>
                                 <td>{item.id}</td>
                                 <td>{item.nome}{item.imagem}</td>
                                 <td>{item.descricao}</td>
                                 <td>{item.vinicola}</td>
                                 <td>{item.valor}</td>
-                                <td>{item.status}</td>
-                                <td>{item.qtd}</td>
+                                <td>{item.status_estoque}</td>
+                                <td>{item.quantidade}</td>
                             </tr>
-                        )} */}
+                        )}
                     </tbody>
                 </table>
 
