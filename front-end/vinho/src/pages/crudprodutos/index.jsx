@@ -76,17 +76,17 @@ export default function CrudProdutos() {
     async function Buscar() {
         let resp = await axios.get(`http://localhost:5001/vinho/${id}`);
         setNome(resp.data.nome_vinho);
-        setClassif('');
+        setClassif(resp.data.classificacao_vinho);
         setImagem(null);
-        setVinicola('');
+        setVinicola(resp.data.vinicola);
         setMarca('');
-        setUva('');
-        setTeor('');
-        setVolume('');
-        setTemp('');
-        setPais('');
-        setSafra('');
-        setPreco('');
+        setUva(resp.data.uva_vinho);
+        setTeor(resp.data.teor_alcolico);
+        setVolume(resp.data.volume_vinho);
+        setTemp(resp.data.temperatura_servir);
+        setPais(resp.data.pais);
+        setSafra(resp.data.safra_vinho);
+        setPreco(resp.data.preco_vinho);
         setDescr('');
         alert(`Produto(s) com nome "${resp.data.nome_vinho}" buscado(s) com sucesso! `);
     }
