@@ -4,6 +4,7 @@ import HomePage from './pages/homepage';
 import NotFound from './pages/notfound';
 import CrudProdutos from "./pages/crudprodutos";
 import ListagemProdutos from "./pages/listagemprodutos";
+import Login from "./pages/login"
 
 export default function Navegacao() {
   return (
@@ -13,6 +14,7 @@ export default function Navegacao() {
         <Route path='/homepage' element={<HomePage />}/>
         <Route path='/crudprodutos' element={<CrudProdutos />}/>
         <Route path='/listagemprodutos' element={<ListagemProdutos />}/>
+        <Route path='/login' element={<Login />}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
