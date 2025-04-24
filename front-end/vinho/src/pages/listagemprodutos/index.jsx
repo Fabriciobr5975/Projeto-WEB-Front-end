@@ -13,12 +13,16 @@ export default function ListagemProdutos() {
     const [nome, setNome] = useState('');
 
     async function Buscar() {
-        let resp = await axios.get(`http://localhost:5001/vinho/nome/${nome}`);
-        let resp1 = await axios.get(`http://localhost:5001/vinho/nome/${nome}`);
-        let vinhos_estoque = resp+resp1;
-        setListaVinhos(resp);
-        alert(`O(s) produto(s) pelo nome de: (${resp.data.nome}) foi/foram buscado(s) com sucesso! `);
+        try {
+            let resp = await axios.get(`http://localhost:5001/vinho/nome/${nome}`);
+            setListaVinhos(resp.data);
+            alert(`Produto(s) com nome "${nome}" buscado(s) com sucesso!`);
+        } catch (error) {
+            alert("Erro ao buscar vinhos: " + error.response?.status);
+            console.error(error);
+        }
     }
+    
 
     return (
         <main>
@@ -33,7 +37,7 @@ export default function ListagemProdutos() {
             </section>
             <section className="conteudo">
                 <div className="pesquisa"> 
-                    <input type="text" placeholder="Insira um ID" value={nome} onChange={e => setNome(e.target.value)}/>
+                    <input type="text" placeholder="Insira o nome do vinho.." value={nome} onChange={e => setNome(e.target.value)}/>
                     <input type="button" value="Buscar" onClick={Buscar}/>
                 </div>
                 <table>
@@ -59,17 +63,17 @@ export default function ListagemProdutos() {
                         </tr>
                     </thead>
                     <tbody>
-                        {listaVinhos.map(item =>
-                            <tr>
-                                <td>{item.id}</td>
-                                <td>{item.nome}{item.imagem}</td>
-                                <td>{item.descricao}</td>
+                        {listaVinhos.map(item => (
+                            <tr key={item.id}>
+                                <td>{item.id_vinho}</td>
+                                <td>{item.vinho}{item.imagem}</td>
+                                <td>{item.vinho}</td>
                                 <td>{item.vinicola}</td>
-                                <td>{item.valor}</td>
+                                <td>{item.preco_vinho}</td>
                                 <td>{item.status_estoque}</td>
-                                <td>{item.quantidade}</td>
+                                <td>{item.quantidade_estoque}</td>
                             </tr>
-                        )}
+                        ))}
                     </tbody>
                 </table>
 
