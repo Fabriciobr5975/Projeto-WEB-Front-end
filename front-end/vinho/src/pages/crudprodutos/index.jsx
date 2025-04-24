@@ -27,40 +27,40 @@ export default function CrudProdutos() {
 
     async function Cadastrar() {
         let corpo = {
-            "nome": nome,
-            "classificacao": classif,
+            "nome_vinho": nome,
+            "classificacao_vinho": classif,
             "imagem": imagem,
             "vinicola": vinicola,
             "marca": marca,
-            "uva": uva,
+            "uva_vinho": uva,
             "teor_alcolico": teor,
-            "volume": volume,
+            "volume_vinho": volume,
             "temperatura_servir": temp,
-            "pais_fk": pais,
-            "safra": safra,
-            "preco": preco,
+            "pais": pais,
+            "safra_vinho": safra,
+            "preco_vinho": preco,
             "descricao": descr
         }
         let resp = await axios.post('http://localhost:5001/vinho', corpo);
         alert(`produto cadastrado com sucesso! (${resp.data.novoId})`);
 
-        limpar();
+        // limpar();
     }
 
     async function Alterar() {
         let corpo = {
-            "nome": nome,
-            "classificacao": classif,
+            "nome_vinho": nome,
+            "classificacao_vinho": classif,
             "imagem": imagem,
             "vinicola": vinicola,
             "marca": marca,
-            "uva": uva,
+            "uva_vinho": uva,
             "teor_alcolico": teor,
-            "volume": volume,
+            "volume_vinho": volume,
             "temperatura_servir": temp,
-            "pais_fk": pais,
-            "safra": safra,
-            "preco": preco,
+            "pais": pais,
+            "safra_vinho": safra,
+            "preco_vinho": preco,
             "descricao": descr
         }
         let resp = await axios.put(`http://localhost:5001/vinho/${id}`, corpo);
@@ -75,8 +75,20 @@ export default function CrudProdutos() {
     }
     async function Buscar() {
         let resp = await axios.get(`http://localhost:5001/vinho/${id}`);
-
-        alert(`O produto (${resp.data.nome}) foi buscado com sucesso! `);
+        setNome(resp.data.nome_vinho);
+        setClassif('');
+        setImagem(null);
+        setVinicola('');
+        setMarca('');
+        setUva('');
+        setTeor('');
+        setVolume('');
+        setTemp('');
+        setPais('');
+        setSafra('');
+        setPreco('');
+        setDescr('');
+        alert(`Produto(s) com nome "${resp.data.nome_vinho}" buscado(s) com sucesso! `);
     }
     function limpar() {
         setNome('');
@@ -107,7 +119,7 @@ export default function CrudProdutos() {
             </section>
             <section className="conteudo">
                 <div className="pesquisa1"><input type="button" value="Buscar" onClick={Buscar} />
-                    <input type="text" placeholder="Insira um ID" value={id} onChange={e => setId(e.target.value)} />
+                    <input type="text"  value={id} onChange={e => setId(e.target.value)} />
                 </div>
                 <div className="busca-imagem-campos">
                     <div className="inserir-imagem"><input type="file" /></div>

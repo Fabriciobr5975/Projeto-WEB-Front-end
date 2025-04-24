@@ -14,7 +14,7 @@ export default function ListagemProdutos() {
 
     async function Buscar() {
         try {
-            let resp = await axios.get(`http://localhost:5001/vinho/nome/${nome}`);
+            let resp = await axios.get(`http://localhost:5001/estoque/vinho/${nome}`);
             setListaVinhos(resp.data);
             alert(`Produto(s) com nome "${nome}" buscado(s) com sucesso!`);
         } catch (error) {
@@ -67,8 +67,8 @@ export default function ListagemProdutos() {
                             <tr key={item.id}>
                                 <td>{item.id_vinho}</td>
                                 <td>{item.vinho}{item.imagem}</td>
-                                <td>{item.vinho}</td>
-                                <td>{item.vinicola}</td>
+                                <td>{item.descricao}</td>
+                                <td>{item.vinicola_vinho}</td>
                                 <td>{item.preco_vinho}</td>
                                 <td>{item.status_estoque}</td>
                                 <td>{item.quantidade_estoque}</td>
