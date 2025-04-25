@@ -7,7 +7,11 @@
 ## Uma Breve Explicação Sobre a Nossa Aplicação 📕
 
 ## Informações Complementares 🧩
-> Os arquivos do Back-End se encontra neste repositório: [`Repositório do Back-End`](https://github.com/Ruanlv/Projeto-WEB-Back-end) 
+- A maioria dos ícones foram pegos do site [`Font Awesome`](https://fontawesome.com/)
+- O projeto tem um deploy no site [`netlify`](https://app.netlify.com). Ele sempre é atualizado após cada novo commit na branch padrão (Main)
+- O site não conta com responsividade completa, ainda estamos trabalhando nesta parte 
+
+>  Os arquivos do Back-End se encontra neste repositório: [`Repositório do Back-End`](https://github.com/Ruanlv/Projeto-WEB-Back-end) 
 
 ## Ferramentas e Tecnologias Usadas ⚒️
 <div align="center" > 
