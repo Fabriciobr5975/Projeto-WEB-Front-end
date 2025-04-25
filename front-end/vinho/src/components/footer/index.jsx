@@ -8,31 +8,31 @@ export default function Footer(props) {
       <div className="elementos-footer">
         <div className="mapa-navegacao-footer">
           <h3 className="subtitulos-footer">VIANA VINHOS</h3>
-          <Link className="links-footer">Home</Link>
-          <Link className="links-footer">Sobre Nós</Link>
-          <Link className="links-footer">Nossa História</Link>
-          <Link className="links-footer">Guia de Vinhos</Link>
+          <Link to="/" >Home</Link>
+          <Link to="/sobrenos" >Sobre Nós</Link>
+          <Link to="/nossahistoria" >Nossa História</Link>
+          <Link to="guiadevinhos" >Guia de Vinhos</Link>
         </div>
 
         <div className="vinho-footer">
           <h3 className="subtitulos-footer">VINHOS</h3>
-          <Link className="links-footer">Tinto</Link>
-          <Link className="links-footer">Branco</Link>
-          <Link className="links-footer">Espumante</Link>
-          <Link className="links-footer">Rosé</Link>
-          <Link className="links-footer">Mais Vendidos</Link>
-          <Link className="links-footer">Em Promoção</Link>
-          <Link className="links-footer">Guia de Vinhos</Link>
+          <Link to="" >Tinto</Link>
+          <Link to="" >Branco</Link>
+          <Link to="" >Espumante</Link>
+          <Link to="" >Rosé</Link>
+          <Link to="" >Mais Vendidos</Link>
+          <Link to="" >Em Promoção</Link>
+          <Link to="" >Guia de Vinhos</Link>
         </div>
 
         <div className="ajuda-footer">
           <h3 className="subtitulos-footer">AJUDA</h3>
-          <Link className="links-footer">Contate-nos</Link>
-          <Link className="links-footer">Perguntas Frequentes</Link>
-          <Link className="links-footer">Política de Privacidade</Link>
-          <Link className="links-footer">Política de Privacidade</Link>
-          <Link className="links-footer">Política de Cancelamento</Link>
-          <Link className="links-footer">Informações sobre Entrega</Link>
+          <Link to="" >Contate-nos</Link>
+          <Link to="" >Perguntas Frequentes</Link>
+          <Link to="" >Política de Privacidade</Link>
+          <Link to="" >Política de Privacidade</Link>
+          <Link to="" >Política de Cancelamento</Link>
+          <Link to="" >Informações sobre Entrega</Link>
         </div>
 
         <div className="conteudo-adicional-footer">

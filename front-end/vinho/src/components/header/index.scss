@@ -21,6 +21,13 @@
     .logo {
       display: inline-flex;
       min-inline-size: 10%;
+      cursor: pointer;
+      transition: opacity 0.5s ease;
+
+      &:hover {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
 
       img {
         width: auto;
@@ -73,6 +80,7 @@
       .icones {
         display: flex;
         gap: 1rem;
+        
 
         i {
           filter: invert(1);
@@ -166,7 +174,7 @@
       .icones {
         display: flex;
         flex-wrap: wrap;
-
+        
         i {
           font-size: 2rem;
         }

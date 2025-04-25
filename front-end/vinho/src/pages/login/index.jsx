@@ -4,30 +4,36 @@ import Footer from "../../components/footer";
 import { Link } from "react-router-dom";
 
 import "./index.scss";
+import { useState } from "react";
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  
   return (
     <div className="pagina-login pagina">
       <Header />
 
-      <div className="login-usuario">
-        <span>Login do usuário</span>
+      <div className="login">
+        <div className="login-usuario">
+          <span>Login do usuário</span>
 
-        <div className="campos-entrada">
-          <div className="campo-email">
-            <label>E-Mail: </label>
-            <input type="text" placeholder="Digite seu E-Mail" />
+          <div className="campos-entrada">
+            <div className="campo-email">
+              <label>E-Mail: </label>
+              <input type="text" placeholder="Digite seu E-Mail" value={email} onChange={e => setEmail(e.target.value)} />
+            </div>
+            <div className="campo-senha">
+              <label>Senha: </label>
+              <input type="password" placeholder="Digite sua Senha" value={senha} onChange={e => setSenha(e.target.value)} />
+            </div>
+            <Link to="/recupersenha">Esqueci minha senha</Link>
           </div>
-          <div className="campo-senha">
-            <label>Senha: </label>
-            <input type="text" placeholder="Digite sua Senha" />
+          <div className="botoes">
+            <button onClick={() => navigator("/")}>Entrar</button>
+            <p>Ainda não tem uma conta? Crie uma agora mesmo!</p>
+            <button onClick={() => navigator("/cadastrar-se")}>Cadastra-se</button>
           </div>
-          <Link to="/recupersenha">Esqueci minha senha</Link>
-        </div>
-        <div className="botoes">
-          <button>Entrar</button>   
-          <p>Ainda não tem uma conta? Crie uma agora mesmo!</p>
-          <button>Cadastra-se</button>
         </div>
       </div>
       <Footer />
