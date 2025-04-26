@@ -26,7 +26,7 @@
 
       &:hover {
         opacity: 0.8;
-        filter: drop-shadow(0rem 0rem .09rem #e81a3d6c);
+        filter: drop-shadow(0rem 0rem 0.05rem #c0233dbc);
         transform: scale(1.05);
       }
 
@@ -90,6 +90,14 @@
 
         i {
           filter: invert(1);
+          cursor: pointer;
+          transition: opacity 0.5s ease;
+
+          &:hover {
+            opacity: 0.8;
+            
+            transform: scale(1.2);
+          }
         }
       }
     }
@@ -216,7 +224,8 @@
   }
 
   i {
-    font-size: 2rem;
+    display: inline-flex;
+    font-size: 2.5rem;
   }
 }
 
