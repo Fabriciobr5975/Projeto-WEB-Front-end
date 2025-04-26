@@ -1,14 +1,19 @@
+import "./index.scss";
+
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Vinho from "../../components/vinho";
 import Disclaimer from "../../components/disclaimer";
 
-import "./index.scss";
+import { useLocation  } from  "react-router-dom"
 
 export default function HomePage() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  
   return (
     <div className="pagina-principal pagina">
-      <Header />
+      <Header cliente={cliente} />
 
       <main className="banner">
         <div className="informacao-banner">

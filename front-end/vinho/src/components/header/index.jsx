@@ -6,8 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Header(props) {
   const navigate = useNavigate();
 
-  const [usuario, setUsuario] = useState('Usuário');
-
   return (
     <header className="header">
       <div className="elementos-header">
@@ -31,7 +29,7 @@ export default function Header(props) {
 
         <div className="dados-usuario-header">
           <span>
-            Welcome, <strong>{usuario}</strong>
+            Welcome, <strong>{props.cliente?.nome_completo || "Visitante"}</strong>
           </span>
           <div className="icones">
             <i class="fa-solid fa-circle-user"></i>
