@@ -6,6 +6,8 @@ import CrudProdutos from "./pages/crudprodutos";
 import ListagemProdutos from "./pages/listagemprodutos";
 import Login from "./pages/login"
 import SobreNos from "./pages/sobrenos";
+import RecuperacaoSenha from "./pages/recuperacaosenha";
+
 
 export default function Navegacao() {
   return (
@@ -17,6 +19,7 @@ export default function Navegacao() {
         <Route path='/listagemprodutos' element={<ListagemProdutos />}/>
         <Route path='/login' element={<Login />}/>
         <Route path='/sobrenos' element={<SobreNos />}/>        
+        <Route path='/recuperacaosenha' element={<RecuperacaoSenha />}/>        
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>

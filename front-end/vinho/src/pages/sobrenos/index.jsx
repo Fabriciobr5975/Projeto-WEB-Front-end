@@ -1,5 +1,6 @@
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+//import Banner from "../../components/banner";
 
 import "./index.scss";
 import { useState } from "react";
