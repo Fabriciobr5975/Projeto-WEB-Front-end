@@ -20,7 +20,7 @@ export default function Login() {
 
           <div className="campos-entrada">
             <div className="campo-email">
-              <label>E-Mail: </label>
+              <label>E-mail: </label>
               <input
                 type="text"
                 placeholder="Digite seu E-Mail"
@@ -37,7 +37,7 @@ export default function Login() {
                 onChange={(e) => setSenha(e.target.value)}
               />
             </div>
-            <Link to="/recupersenha">Esqueci minha senha</Link>
+            <Link to="/recuperacaosenha">Esqueci minha senha</Link>
           </div>
           <div className="campo-botoes">
             <div className="botoes">
