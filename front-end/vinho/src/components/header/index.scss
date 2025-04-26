@@ -26,6 +26,7 @@
 
       &:hover {
         opacity: 0.8;
+        filter: drop-shadow(0rem 0rem .09rem #e81a3d6c);
         transform: scale(1.05);
       }
 
@@ -54,6 +55,12 @@
           font-style: normal;
           line-height: normal;
           text-align: center;
+
+          &:hover {
+            opacity: 0.9;
+            text-shadow: 0rem 0rem 0.3rem #f6edd9;
+            transform: scale(1.8);
+          }
         }
       }
     }
@@ -80,7 +87,6 @@
       .icones {
         display: flex;
         gap: 1rem;
-        
 
         i {
           filter: invert(1);
@@ -124,7 +130,6 @@
     padding: 3rem 4rem !important;
 
     .elementos-header {
-
       img {
         width: 80% !important;
       }
@@ -174,7 +179,7 @@
       .icones {
         display: flex;
         flex-wrap: wrap;
-        
+
         i {
           font-size: 2rem;
         }
