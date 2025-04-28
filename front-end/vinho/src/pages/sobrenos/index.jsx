@@ -3,7 +3,7 @@ import Footer from "../../components/footer";
 //import Banner from "../../components/banner";
 
 import "./index.scss";
-import { useState } from "react";
+//import { useState } from "react";
 
 export default function SobreNos() {
   return (
