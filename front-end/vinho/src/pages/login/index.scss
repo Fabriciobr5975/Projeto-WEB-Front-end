@@ -1,0 +1,127 @@
+.pagina-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  font-style: normal;
+  line-height: normal;
+
+  .login {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    min-width: 100vh;
+    justify-content: center;
+    background-color: #fff;
+    padding: 1rem 2rem 3rem 2rem;
+
+    .login-usuario {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      width: 35rem;
+      padding: 2rem;
+      border-radius: 1rem;
+      gap: 2rem;
+
+      span {
+        font: 500 2rem "Poppins";
+        color: #000;
+        text-align: center;
+        padding-bottom: 0.5rem;
+      }
+
+      .campos-entrada {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        .campo-email,
+        .campo-senha {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 5.5rem;
+          align-items: start;
+          justify-content: center;
+          gap: 1rem;
+
+          label {
+            display: inline-flex;
+            text-align: left;
+            font: 400 1.3rem "Poppins";
+          }
+
+          input {
+            flex: 1;
+            width: 100%;
+            border-radius: 0.75rem;
+            border: 0.0625rem solid #000;
+            padding: 0 1rem;
+            font-size: 1rem;
+            color: #000;
+          }
+        }
+
+        a {
+          display: inline-flex;
+          align-self: flex-end;
+          font: 500 0.9rem "Poppins";
+          color: #2e31d8;
+          text-decoration: none;
+
+          &:hover {
+            transform: scale(1.03);
+          }
+        }
+      }
+
+      .campo-botoes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .botoes {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+
+          button {
+            width: 100%;
+            height: 3.5rem;
+            border-radius: 1rem;
+            background-color: #a4596d;
+            color: #fff;
+            font: 500 1.2rem "Poppins";
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+
+            &:hover {
+              opacity: 0.9;
+              box-shadow: 0rem 0rem 0.3rem #b84363 inset;
+              transform: scale(1.05);
+            }
+          }
+
+          p {
+            display: inline;
+            font: 500 0.9rem "Poppins";
+            text-align: center;
+            justify-self: center;
+            align-self: center;
+          }
+        }
+      }
+    }
+  }
+}
