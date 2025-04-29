@@ -15,31 +15,31 @@ export default function CadastroCliente() {
           <div className="campos-entrada-obrigatório">
             <div className="campo">
               <label>Nome:</label>
-              <input type="text" placeholder="Digite seu primeiro nome" />
+              <input type="text" placeholder="Digite seu primeiro nome" required/>
               <p>*</p>
             </div>
 
             <div className="campo">
               <label>Sobrenome:</label>
-              <input type="text" placeholder="Digite seu sobrenome" />
+              <input type="text" placeholder="Digite seu sobrenome" required/>
               <p>*</p>
             </div>
 
             <div className="campo">
               <label>E-mail:</label>
-              <input type="text" placeholder="Digite seu E-mail" />
+              <input type="text" placeholder="Digite seu E-mail" required/>
               <p>*</p>
             </div>
 
             <div className="campo">
               <label>Senha:</label>
-              <input type="text" placeholder="Digite seu primeiro nome" />
+              <input type="text" placeholder="Digite sua senha" required/>
               <p>*</p>
             </div>
 
             <div className="campo">
               <label>Celular:</label>
-              <input type="text" placeholder="Digite o número de celular" />
+              <input type="text" placeholder="Digite o número de celular" required/>
               <p>*</p>
             </div>
           </div>
