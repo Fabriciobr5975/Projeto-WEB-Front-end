@@ -40,7 +40,7 @@ export default function Header(props) {
 
         <div className="dados-usuario-header">
           <span>
-            Welcome,{" "}
+            Welcome,
             <strong>{props.cliente?.nome_completo || "Visitante"}</strong>
           </span>
           <div className="icones">
