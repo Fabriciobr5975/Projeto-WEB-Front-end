@@ -39,7 +39,7 @@
 
       &:hover {
         opacity: 0.95;
-        box-shadow: 0rem 0rem 0.15rem #b84363;
+        box-shadow: 0rem 0rem 0.15rem #b84363 inset;
         transform: scale(1.05);
       }
     }
@@ -82,7 +82,7 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        font: 500 1.2rem "Poppins";
+        font: 400 1.2rem "Poppins";
       }
 
       input {

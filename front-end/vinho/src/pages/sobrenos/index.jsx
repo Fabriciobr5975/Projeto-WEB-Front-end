@@ -1,14 +1,18 @@
+import "./index.scss";
+
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 //import Banner from "../../components/banner";
 
-import "./index.scss";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function SobreNos() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  
   return (
     <div className="pagina-sobre-nos pagina">
-      <Header />
+      <Header cliente={cliente}/>
       <main className="sobre-nos">
         <div className="banner">
           <h1>Sobre Nós</h1>

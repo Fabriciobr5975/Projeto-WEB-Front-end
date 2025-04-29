@@ -18,13 +18,13 @@
     padding: 1rem 2rem 3rem 2rem;
 
     .login-usuario {
-      width: 35rem;
-      padding: 2rem;
-      border-radius: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: stretch;
+      width: 35rem;
+      padding: 2rem;
+      border-radius: 1rem;
       gap: 2rem;
 
       span {
@@ -74,8 +74,8 @@
           font: 500 0.9rem "Poppins";
           color: #2e31d8;
           text-decoration: none;
-          
-          &:hover {  
+
+          &:hover {
             transform: scale(1.03);
           }
         }
@@ -108,14 +108,14 @@
 
             &:hover {
               opacity: 0.9;
-              box-shadow: 0rem 0rem 0.3rem #b84363;
+              box-shadow: 0rem 0rem 0.3rem #b84363 inset;
               transform: scale(1.05);
             }
           }
 
           p {
             display: inline;
-            font: 500 .9rem "Poppins";
+            font: 500 0.9rem "Poppins";
             text-align: center;
             justify-self: center;
             align-self: center;

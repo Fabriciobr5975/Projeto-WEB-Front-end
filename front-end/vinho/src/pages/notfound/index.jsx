@@ -1,9 +1,9 @@
+import "./index.scss";
+
 import { useEffect } from "react";
 
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-
-import "./index.scss";
 
 export default function NotFound() {
   useEffect(() => {

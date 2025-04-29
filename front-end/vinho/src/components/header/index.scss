@@ -26,8 +26,8 @@
 
       &:hover {
         opacity: 0.8;
-        filter: drop-shadow(0rem 0rem 0.05rem #c0233dbc);
-        transform: scale(1.05);
+        filter: drop-shadow(0rem 0rem 0.04rem #c0233d95) inset;
+        transform: scale(1.08);
       }
 
       img {
@@ -39,14 +39,12 @@
 
     .links-header {
       display: inline-flex;
-      min-width: 10rem;
-      height: 5rem;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
 
       .lista-links-header {
-        display: flex;
+        display: inline-flex;
         list-style-type: none;
 
         a {
@@ -55,11 +53,12 @@
           font-style: normal;
           line-height: normal;
           text-align: center;
+          transition: opacity 0.5s ease;
 
           &:hover {
             opacity: 0.9;
-            text-shadow: 0rem 0rem 0.3rem #f6edd9;
-            transform: scale(1.8);
+            text-shadow: 0rem 0rem 1rem #fff inset;
+            transform: scale(1.05);
           }
         }
       }
@@ -94,8 +93,8 @@
           transition: opacity 0.5s ease;
 
           &:hover {
-            opacity: 0.8;
-            
+            opacity: 0.8; 
+            text-shadow: 0rem 0rem .5rem #fff inset;
             transform: scale(1.2);
           }
         }

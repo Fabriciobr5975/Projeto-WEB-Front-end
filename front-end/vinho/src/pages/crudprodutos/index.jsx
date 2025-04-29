@@ -146,10 +146,6 @@ export default function CrudProdutos() {
 
                 </div>
 
-
-
-
-
             </section>
             <Footer />
         </main>
