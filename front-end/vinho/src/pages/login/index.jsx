@@ -93,7 +93,7 @@ export default function Login() {
             <div className="botoes">
               <button onClick={buscarCliente}>Entrar</button>
               <p>Ainda não tem uma conta? Crie uma agora mesmo!</p>
-              <button onClick={() => navigator("/cadastrar-se")}>
+              <button onClick={() => navigate("/cadastro")}>
                 Cadastra-se
               </button>
             </div>

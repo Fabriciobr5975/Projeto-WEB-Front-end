@@ -20,7 +20,6 @@
       display: flex;
       width: 100%;
       font: 700 1.2rem "Poppins";
-      padding: 3rem;
       height: 15rem;
       background-image: url("../../../public/assets/images/banner/BannerUserSpace.png");
       background-size: cover;
@@ -33,28 +32,27 @@
     .recibo-pedido {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: space-between;
+      width: 50rem;
+      height: 50rem;
       margin: 6rem 3rem;
       color: #000;
-     
+      background-image: url("../../../public/assets/images/imagem-recibo.png");
+      background-repeat: no-repeat;
+      background-size: contain;
+
       .informacoes {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 50rem;
-        height: 50rem;
-        padding: 2rem;
-        background-image: url("../../../public/assets/images/imagem-recibo.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        gap: 1rem;
+        align-items: start;
+        justify-content: center;
+        width: 100%;
+        height: 90%;
 
         .mensagem-confirmacao-pedido {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-items: center;
-          width: 100%;
+          width: 80%;
           gap: 0.5rem;
           color: #0aa06e;
 
