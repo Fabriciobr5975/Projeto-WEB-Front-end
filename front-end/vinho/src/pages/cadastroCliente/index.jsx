@@ -2,10 +2,12 @@ import "./index.scss";
 
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function CadastroCliente() {
+  const [bloqueioCampo, setBloqueioCampo] = useState(true);
+
   const [cliente, setCliente] = useState({
     nome: "",
     sobrenome: "",
@@ -22,38 +24,69 @@ export default function CadastroCliente() {
     estado: "",
     cidade: "",
     bairro: "",
-    logradouro: "", 
+    logradouro: "",
   });
 
-  const [bloqueioCampo, setBloqueioCampo] = useState(true);
+  useEffect(() => {
+    if (cliente.cep.length === 8 || cliente.cep.length === 9) {
+      pegarEnderecoViaCep();
+    }
 
-  const pegarEndereco = async () => {
-    const url = `http://localhost:5001/endereco/busca/cep?cep=${cliente.cep}`;
+    if (endereco.estado != "" && cliente.cep.length === 0) {
+      limparEndereco();
+    }
+  }, [cliente.cep]);
 
-    await axios.get(url).then(response => {
-      const enderecoBusca = response.data[0];
+  const pegarEnderecoViaCep = async () => {
+    try {
+      const resp = await axios.get(
+        `https://viacep.com.br/ws/${cliente.cep}/json/`
+      );
+      const enderecoBusca = resp.data;
 
-      setEndereco({ ...endereco, estado: enderecoBusca.uf, cidade: enderecoBusca.localidade, bairro: enderecoBusca.bairro, logradouro: enderecoBusca.logradouro});
+      if (enderecoBusca?.erro) {
+        alert("CEP inválido! Tente novamente.");
+        return;
+      }
+
+      setEndereco({
+        ...endereco,
+        estado: enderecoBusca.uf,
+        cidade: enderecoBusca.localidade,
+        bairro: enderecoBusca.bairro,
+        logradouro: enderecoBusca.logradouro,
+      });
+
       setBloqueioCampo(false);
-  
-    }).catch(err => {
-      if (err.response && err.response.data?.erro) {
-        alert(err.response.data.erro);
+    } catch (err) {
+      console.error("Erro ao buscar endereço");
+    }
+  };
 
-        return false;
-      } 
+  const limparEndereco = () => {
+    setEndereco({
+      ...endereco,
+      estado: "",
+      cidade: "",
+      bairro: "",
+      logradouro: "",
     });
 
-    return true;
+    setCliente({
+      ...cliente,
+      numero: "",
+      complemento: "",
+    });
   };
 
   const inserirNovoCliente = async () => {
-    if(pegarEndereco()) {
+    try {
       const url = `http://localhost:5001/cliente`;
-
       const resp = await axios.post(url, cliente);
-  
-      alert(`${resp.data?.resposta}`);
+      alert(resp.data.resposta);
+      
+    } catch (err) {
+      alert("O ocorreu um erro na inserção do cliente");
     }
   };
 
@@ -167,17 +200,32 @@ export default function CadastroCliente() {
             <div className="campo">
               <div className="campo"></div>
               <label>Bairro:</label>
-              <input type="text" placeholder="Bairro" value={endereco.bairro} readOnly />
+              <input
+                type="text"
+                placeholder="Bairro"
+                value={endereco.bairro}
+                readOnly
+              />
             </div>
 
             <div className="campo">
               <label>Estado:</label>
-              <input type="text" placeholder="Estado" value={endereco.estado} readOnly />
+              <input
+                type="text"
+                placeholder="Estado"
+                value={endereco.estado}
+                readOnly
+              />
             </div>
 
             <div className="campo">
               <label>Cidade:</label>
-              <input type="text" placeholder="Cidade" value={endereco.cidade} readOnly />
+              <input
+                type="text"
+                placeholder="Cidade"
+                value={endereco.cidade}
+                readOnly
+              />
             </div>
 
             <div className="campo">

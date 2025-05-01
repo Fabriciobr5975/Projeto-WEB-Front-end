@@ -9,6 +9,15 @@ import { useLocation } from "react-router-dom";
 export default function SobreNos() {
   const location = useLocation();
   const { cliente } = location.state || {};
+
+  /* Irá se transformar em um componente
+  useEffect(() => {
+    document.title = "Viana Vinhos";
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 500);
+  }, []);
+  */
   
   return (
     <div className="pagina-sobre-nos pagina">
