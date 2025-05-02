@@ -34,7 +34,7 @@
       align-items: center;
       justify-content: space-between;
       width: 50rem;
-      height: 50rem;
+      height: 45rem;
       margin: 6rem 3rem;
       color: #000;
       background-image: url("../../../public/assets/images/imagem-recibo.png");
@@ -55,6 +55,7 @@
           width: 80%;
           gap: 0.5rem;
           color: #0aa06e;
+          padding-top: 1.5rem;
 
           i {
             font-size: 10rem;
@@ -76,18 +77,19 @@
             align-items: center;
             justify-content: center;
             color: #000;
-            width: 80%;
+            width: 100%;
             gap: 1rem;
+            padding-top: 2.2rem;
 
             .mensagem-agradecimento {
               display: inline-flex;
               align-items: center;
               justify-content: center;
+              text-align: justify;
 
               p {
                 width: 100%;
-                font: 300 1.5rem / normal "Poppins";
-                text-align: justify;
+                font: 300 1.4rem / normal "Poppins";
               }
             }
 
@@ -95,10 +97,10 @@
               display: inline-flex;
               align-items: center;
               justify-content: center;
+              
               p {
                 width: 90%;
                 font: 300 1rem / normal "Poppins";
-                text-align: justify;
               }
             }
           }
