@@ -2,8 +2,31 @@ import "./index.scss";
 
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import { use, useEffect, useState } from "react";
 
 export default function Vinho() {
+  const [quantidade, setQuantidade] = useState(1);
+
+  useEffect(() => {
+    if(quantidade < 1 || quantidade > 100) {
+      setQuantidade(1);
+      alert("A quantidade informada é inválida!");
+    }
+
+  }, [quantidade]);
+
+  const aumentarQuantidade = () => {
+    if (quantidade < 100) {
+      setQuantidade(quantidade + 1);
+    }
+  };
+
+  const diminuirQuantidade = () => {
+    if (quantidade > 1) {
+      setQuantidade(quantidade - 1);
+    }
+  };
+
   return (
     <div className="pagina-vinho pagina">
       <Header />
@@ -47,9 +70,28 @@ export default function Vinho() {
 
             <div className="reserva-vinho">
               <div className="input-reservar-vinho">
-                <p id="diminuir-valor-input">-</p>
-                <input id="input" type="number" min={1} max={10} value={1} />
-                <p id="aumentar-valor-input">+</p>
+                <p
+                  class="manipulacao-valores-input"
+                  tabIndex={1}
+                  onClick={diminuirQuantidade}
+                >
+                  -
+                </p>
+                <input
+                  id="input"
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={quantidade}
+                  onChange={(e) => setQuantidade(e.target.value)}
+                />
+                <p
+                  class="manipulacao-valores-input"
+                  tabIndex={1}
+                  onClick={aumentarQuantidade}
+                >
+                  +
+                </p>
               </div>
               <button>Reservar</button>
             </div>

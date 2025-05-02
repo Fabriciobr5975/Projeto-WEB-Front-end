@@ -49,6 +49,9 @@
           justify-content: flex-start;
           gap: 5rem;
           padding-left: 1.5rem;
+          font: 400 1rem/2rem "Poppins";
+          font-size: 1.25rem;
+          color: #6d6d6d;
 
           .tipo-caracteristicas {
             display: inline-flex;
@@ -57,27 +60,26 @@
 
             ul {
               list-style: square;
-              color: #9f9f9f;
-              font: 400 1rem "Poppins";
-            }
 
-            li::marker {
-              color: #d9d9d9;
-              font-size: 1.5rem;
+              li::marker {
+                color: #d9d9d9;
+              }
             }
           }
 
           .dados-caracteristicas {
-            color: #9f9f9f;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
             ul {
               list-style: none;
-            }
 
-            li::before {
-              content: ":";
-              margin-right: 1.5rem;
-              color: #9f9f9f;
+              li::before {
+                content: ":";
+                margin-right: 1.5rem;
+                color: #9f9f9f;
+              }
             }
           }
         }
@@ -109,24 +111,47 @@
             width: 20%;
             height: 3.5rem;
 
+            .manipulacao-valores-input {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 1.2rem;
+              height: 1.2rem;
+              border-radius: 50%;
+              cursor: pointer;
+              transition: opacity 0.5s ease;
+              font: 400 1rem "Poppins";
+
+              &:hover {
+                opacity: 0.8;
+                border-radius: 50rem;
+                background-color: #bebebe6d;
+                transform: scale(1.2);
+              }
+            }
+
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+
             input[type="number"] {
+              -moz-appearance: textfield;
+              appearance: none;
+            }
+
+            input[type="number"] {
+              all: none;
               width: 2rem;
               text-align: center;
               font: 500 1rem / normal "Poppins";
               color: #000;
               border-radius: 0rem;
               border: none;
-              pointer-events: none;
+              //pointer-events: none;
               padding: 0;
-              padding-left: .75rem;
-            }
-
-            #diminuir-valor-input {
-              display: inline-flex;
-            }
-
-            #aumentar-valor-input {
-              display: inline-flex;
+              outline: none;
             }
           }
 
