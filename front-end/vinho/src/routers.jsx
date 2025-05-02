@@ -9,6 +9,7 @@ import SobreNos from "./pages/sobreNos";
 import RecuperacaoSenha from "./pages/recuperacaoSenha";
 import CadastroCliente from "./pages/cadastroCliente";
 import ConfirmacaoPedido from "./pages/confirmacaoPedido";
+import Vinho from "./pages/vinho";
 
 
 export default function Navegacao() {
@@ -22,7 +23,8 @@ export default function Navegacao() {
         <Route path='/login' element={<Login />}/>
         <Route path='/recuperacaosenha' element={<RecuperacaoSenha />}/>
         <Route path='/cadastro' element={<CadastroCliente />}/>        
-        <Route path='/sobrenos' element={<SobreNos />}/>        
+        <Route path='/sobrenos' element={<SobreNos />}/>       
+        <Route path='/vinho' element={<Vinho />}/>        
         <Route path='/confirmacaopedido' element={<ConfirmacaoPedido />}/>        
         <Route path='*' element={<NotFound />}/>
       </Routes>

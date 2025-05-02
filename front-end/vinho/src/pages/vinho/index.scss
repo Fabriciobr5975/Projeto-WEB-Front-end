@@ -1,0 +1,191 @@
+.pagina-vinho {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 20rem;
+  flex-shrink: 1;
+  font-style: normal;
+  line-height: normal;
+
+  .informacoes-vinho {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    padding: 3rem 5rem 5rem 5rem;
+    gap: 7rem;
+
+    .caracteristicas-vinho {
+      display: flex;
+      gap: 5rem;
+      width: 100%;
+      //flex-wrap: wrap;
+
+      .imagem-vinho {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35%;
+        background-color: #e6e6e6;
+      }
+
+      .caracteristicas {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1.25 1.2rem 1.2rem;
+        gap: 1.5rem;
+        line-height: 2rem;
+
+        h2 {
+          text-align: center;
+          color: #000;
+          font: 400 2rem / normal "Poppins";
+          padding-bottom: 2rem;
+        }
+
+        .lista-caracteristicas {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 5rem;
+          padding-left: 1.5rem;
+
+          .tipo-caracteristicas {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            ul {
+              list-style: square;
+              color: #9f9f9f;
+              font: 400 1rem "Poppins";
+            }
+
+            li::marker {
+              color: #d9d9d9;
+              font-size: 1.5rem;
+            }
+          }
+
+          .dados-caracteristicas {
+            color: #9f9f9f;
+
+            ul {
+              list-style: none;
+            }
+
+            li::before {
+              content: ":";
+              margin-right: 1.5rem;
+              color: #9f9f9f;
+            }
+          }
+        }
+
+        .preco {
+          padding-top: 1rem;
+          color: #3d070b;
+          font: 800 3.1rem / normal "Poppins";
+          font-weight: 800;
+          text-align: start;
+          -webkit-text-stroke-width: 1px;
+          -webkit-text-stroke-color: #943d3d00;
+        }
+
+        .reserva-vinho {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 2rem;
+
+          .input-reservar-vinho {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0.625rem;
+            border: 0.0625rem solid #9f9f9f;
+            background: #fff;
+            padding: 0.5rem;
+            width: 20%;
+            height: 3.5rem;
+
+            input[type="number"] {
+              width: 2rem;
+              text-align: center;
+              font: 500 1rem / normal "Poppins";
+              color: #000;
+              border-radius: 0rem;
+              border: none;
+              pointer-events: none;
+              padding: 0;
+              padding-left: .75rem;
+            }
+
+            #diminuir-valor-input {
+              display: inline-flex;
+            }
+
+            #aumentar-valor-input {
+              display: inline-flex;
+            }
+          }
+
+          button {
+            font: 400 1.5rem / normal "Poppins";
+            background: #3d070b;
+            display: inline-flex;
+            width: 15rem;
+            height: 3.5rem;
+            border-radius: 0.625rem;
+            border: none;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+
+            &:hover {
+              opacity: 0.95;
+              box-shadow: 0rem 0rem 0.15rem #3d070bbf inset;
+              transform: scale(1.05);
+            }
+          }
+        }
+      }
+    }
+    .descricao-caracteristicas-vinho {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 1.5rem;
+
+      .titulo-texto-caracteristicas {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h2 {
+          font: 300 3rem/4rem "Poppins";
+        }
+
+        hr {
+          width: 30%;
+          border: 0.0625rem solid #000;
+        }
+      }
+
+      .informacoes-adicionais-vinho {
+        display: flex;
+        align-items: start;
+        flex-direction: inherit;
+        justify-content: center;
+        text-align: justify;
+        color: #000;
+        font: 400 1.1rem / normal "Poppins";
+        gap: 1.5rem;
+        padding-top: 3rem;
+      }
+    }
+  }
+}
