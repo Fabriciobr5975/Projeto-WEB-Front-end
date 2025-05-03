@@ -1,7 +1,7 @@
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import "./index.scss";

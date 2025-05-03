@@ -2,7 +2,7 @@ import "./index.scss";
 
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Vinho() {
   const [quantidade, setQuantidade] = useState(1);
