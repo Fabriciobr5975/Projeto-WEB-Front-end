@@ -63,6 +63,10 @@
         gap: 1.3125rem;
         align-self: stretch;
       
+        input {
+          min-width: 10rem;
+        }
+
         input::placeholder {
           color: #fdecec;
         }

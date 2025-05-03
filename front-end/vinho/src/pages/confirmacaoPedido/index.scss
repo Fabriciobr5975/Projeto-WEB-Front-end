@@ -27,6 +27,10 @@
       background-color: #99343b;
       justify-content: flex-start;
       align-items: flex-end;
+
+      h1 {
+        padding: 2rem 2rem;
+      }
     }
 
     .recibo-pedido {
@@ -62,6 +66,7 @@
           }
 
           h3 {
+            padding-top: 1rem;
             font: 600 2rem "Poppins";
             color: #26a45a;
           }

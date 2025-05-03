@@ -8,11 +8,10 @@ export default function Vinho() {
   const [quantidade, setQuantidade] = useState(1);
 
   useEffect(() => {
-    if(quantidade < 1 || quantidade > 100) {
+    if (quantidade < 1 || quantidade > 100) {
       setQuantidade(1);
       alert("A quantidade informada é inválida!");
     }
-
   }, [quantidade]);
 
   const aumentarQuantidade = () => {
@@ -72,7 +71,6 @@ export default function Vinho() {
               <div className="input-reservar-vinho">
                 <p
                   class="manipulacao-valores-input"
-                  tabIndex={1}
                   onClick={diminuirQuantidade}
                 >
                   -
@@ -87,7 +85,6 @@ export default function Vinho() {
                 />
                 <p
                   class="manipulacao-valores-input"
-                  tabIndex={1}
                   onClick={aumentarQuantidade}
                 >
                   +
