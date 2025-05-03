@@ -9,6 +9,7 @@ import SobreNos from "./pages/sobreNos";
 import RecuperacaoSenha from "./pages/recuperacaoSenha";
 import CadastroCliente from "./pages/cadastroCliente";
 import PerfilCliente from "./pages/dadosCliente";
+import EnderecosCliente from "./pages/enderecosCliente";
 import ConfirmacaoPedido from "./pages/confirmacaoPedido";
 import Vinho from "./pages/vinho";
 
@@ -23,7 +24,8 @@ export default function Navegacao() {
         <Route path='/login' element={<Login />}/>
         <Route path='/recuperacaosenha' element={<RecuperacaoSenha />}/>
         <Route path='/cadastro' element={<CadastroCliente />}/>
-        <Route path='/perfil' element={<PerfilCliente />}/>        
+        <Route path='/perfil' element={<PerfilCliente />}/>
+        <Route path='/enderecoCliente' element={<EnderecosCliente />}/>        
         <Route path='/sobrenos' element={<SobreNos />}/>       
         <Route path='/vinho' element={<Vinho />}/>        
         <Route path='/confirmacaopedido' element={<ConfirmacaoPedido />}/>        
