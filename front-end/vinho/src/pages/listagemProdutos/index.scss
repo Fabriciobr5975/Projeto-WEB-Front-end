@@ -52,13 +52,40 @@
 
   .pesquisa {
     width: 100%;
-    display: grid;
+    display: flex;
     grid-column: -1;
     justify-content: end;
-    grid-template-columns: 25% 15%;
-    justify-items: flex-end;
-    padding-right: 5rem;
+    justify-content: space-between;
     padding-bottom: 2rem;
+
+    .recarregar-dados {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1.5rem;
+      
+      span {
+        font: 500 1rem "Poppins";
+      }
+
+      i {
+        transition: opacity 0.5s ease;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.9;
+          text-shadow: 0rem 0rem 1rem #fff inset;
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .busca-vinho {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: flex-end;
+    }
   }
 
   .id {

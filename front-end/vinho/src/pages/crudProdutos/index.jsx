@@ -1,11 +1,11 @@
+import "./index.scss";
+
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useState } from "react";
 import axios from "axios";
-
-import "./index.scss";
-import AbaNavegacao from "../../components/abaNavegacao";
 
 export default function CrudProdutos() {
   const [imagemCampo, setImagemCampo] = useState(null);
@@ -23,59 +23,31 @@ export default function CrudProdutos() {
 
   const [id, setId] = useState("");
 
-  const [nome, setNome] = useState("");
-  const [classif, setClassif] = useState("");
-  const [imagem, setImagem] = useState([]);
-  const [vinicola, setVinicola] = useState("");
-  const [marca, setMarca] = useState("");
-  const [uva, setUva] = useState("");
-  const [teor, setTeor] = useState("");
-  const [volume, setVolume] = useState("");
-  const [temp, setTemp] = useState("");
-  const [pais, setPais] = useState("");
-  const [safra, setSafra] = useState("");
-  const [preco, setPreco] = useState("");
-  const [descr, setDescr] = useState("");
+  const [vinho, setVinho] = useState({
+    nome_vinho: "",
+    classificacao_vinho: "",
+    imagem: [],
+    vinicola: "",
+    id_vinho: "",
+    uva_vinho: "",
+    teor_alcolico: "",
+    volume_vinho: "volume",
+    temperatura_servir: "",
+    pais: "",
+    safra_vinho: "",
+    preco_vinho: 0.0,
+    descricao: "",
+  });
 
   async function Cadastrar() {
-    let corpo = {
-      nome_vinho: nome,
-      classificacao_vinho: classif,
-      imagem: imagem,
-      vinicola: vinicola,
-      marca: marca,
-      uva_vinho: uva,
-      teor_alcolico: teor,
-      volume_vinho: volume,
-      temperatura_servir: temp,
-      pais: pais,
-      safra_vinho: safra,
-      preco_vinho: preco,
-      descricao: descr,
-    };
-    let resp = await axios.post("http://localhost:5001/vinho", corpo);
+    let resp = await axios.post("http://localhost:5001/vinho", vinho);
     alert(`produto cadastrado com sucesso! (${resp.data.novoId})`);
 
     // limpar();
   }
 
   async function Alterar() {
-    let corpo = {
-      nome_vinho: nome,
-      classificacao_vinho: classif,
-      imagem: imagem,
-      vinicola: vinicola,
-      marca: marca,
-      uva_vinho: uva,
-      teor_alcolico: teor,
-      volume_vinho: volume,
-      temperatura_servir: temp,
-      pais: pais,
-      safra_vinho: safra,
-      preco_vinho: preco,
-      descricao: descr,
-    };
-    let resp = await axios.put(`http://localhost:5001/vinho/${id}`, corpo);
+    let resp = await axios.put(`http://localhost:5001/vinho/${id}`, vinho);
     alert(`O produto (${resp.data.nome}) foi alterado com sucesso!`);
 
     limpar();
@@ -85,39 +57,34 @@ export default function CrudProdutos() {
     let resp = await axios.delete(`http://localhost:5001/${id}`);
     alert(`O produto (${resp.data.nome}) foi excluido com sucesso! `);
   }
+  
   async function Buscar() {
-    let resp = await axios.get(`http://localhost:5001/vinho/${id}`);
-    setNome(resp.data.nome_vinho);
-    setClassif(resp.data.classificacao_vinho);
-    setImagem(null);
-    setVinicola(resp.data.vinicola);
-    setMarca("");
-    setUva(resp.data.uva_vinho);
-    setTeor(resp.data.teor_alcolico);
-    setVolume(resp.data.volume_vinho);
-    setTemp(resp.data.temperatura_servir);
-    setPais(resp.data.pais);
-    setSafra(resp.data.safra_vinho);
-    setPreco(resp.data.preco_vinho);
-    setDescr("");
+    const resp = await axios.get(`http://localhost:5001/vinho/${Number(id)}`);
+    const vinhoBuscado = resp.data;
+
+    setVinho({
+      ...vinho,
+      id_vinho: vinhoBuscado.id_vinho,
+      nome_vinho: vinhoBuscado.nome_vinho,
+      classificacao_vinho: vinhoBuscado.classificacao_vinho,
+      image: vinhoBuscado.imagem_vinho,
+      vinicola: vinhoBuscado.vinicola,
+      uva_vinho: vinhoBuscado.uva_vinho,
+      teor_alcolico: vinhoBuscado.teor_alcolico,
+      volume_vinho: vinhoBuscado.volume_vinho,
+      temperatura_servir: vinhoBuscado.temperatura_servir,
+      pais: vinhoBuscado.pais,
+      safra_vinho: vinhoBuscado.safra_vinho,
+      preco_vinho: vinhoBuscado.preco_vinho,
+      descricao: vinhoBuscado.descricao,
+    });
+
     alert(
-      `Produto(s) com nome "${resp.data.nome_vinho}" buscado(s) com sucesso! `
+      `Produto(s) com nome "${vinhoBuscado.nome_vinho}" buscado(s) com sucesso! `
     );
   }
   function limpar() {
-    setNome("");
-    setClassif("");
-    setImagem(null);
-    setVinicola("");
-    setMarca("");
-    setUva("");
-    setTeor("");
-    setVolume("");
-    setTemp("");
-    setPais("");
-    setSafra("");
-    setPreco("");
-    setDescr("");
+    setVinho({});
   }
 
   return (
@@ -158,11 +125,22 @@ export default function CrudProdutos() {
           </div>
           <div>
             {" "}
+            Identificação do Vinho (ID):<br />{" "}
+            <input
+              type="text"
+              value={vinho.id_vinho}
+              onChange={(e) => setVinho({ ...vinho, id_vinho: e.target.value})}
+              placeholder="ID do vinho"
+              readOnly
+            />{" "}
+          </div>
+          <div>
+            {" "}
             Nome :<br />{" "}
             <input
               type="text"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
+              value={vinho.nome_vinho}
+              onChange={(e) => setVinho({ ...vinho, nome_vinho: e.target.value})}
               placeholder="Digite o nome do vinho"
             />{" "}
           </div>
@@ -171,8 +149,8 @@ export default function CrudProdutos() {
             Classificação :<br />{" "}
             <input
               type="text"
-              value={classif}
-              onChange={(e) => setClassif(e.target.value)}
+              value={vinho.classificacao_vinho}
+              onChange={(e) => setVinho({ ...vinho, classificacao_vinho: e.target.value})}
               placeholder="Digite a classificação do vinho"
             />{" "}
           </div>
@@ -181,19 +159,9 @@ export default function CrudProdutos() {
             Vinicola :<br />{" "}
             <input
               type="text"
-              value={vinicola}
-              onChange={(e) => setVinicola(e.target.value)}
+              value={vinho.vinicola}
+              onChange={(e) => setVinho({ ...vinho, vinicola: e.target.value})}
               placeholder="Digite a Vínicola do vinho"
-            />{" "}
-          </div>
-          <div>
-            {" "}
-            Marca :<br />{" "}
-            <input
-              type="text"
-              value={marca}
-              onChange={(e) => setMarca(e.target.value)}
-              placeholder="Digite a marca do vinho"
             />{" "}
           </div>
         </div>
@@ -203,8 +171,8 @@ export default function CrudProdutos() {
             Uva :
             <input
               type="text"
-              value={uva}
-              onChange={(e) => setUva(e.target.value)}
+              value={vinho.uva_vinho}
+              onChange={(e) => setVinho({ ...vinho, uva_vinho: e.target.value})}
               placeholder="Digite o nome da Uva do vinho"
             />{" "}
           </div>
@@ -213,8 +181,8 @@ export default function CrudProdutos() {
             Teor Alcoólico :
             <input
               type="text"
-              value={teor}
-              onChange={(e) => setTeor(e.target.value)}
+              value={vinho.teor_alcolico}
+              onChange={(e) => setVinho({ ...vinho, teor_alcolico: e.target.value})}
               placeholder="Digite o qtd. do teor alcoólco"
             />{" "}
           </div>
@@ -223,8 +191,8 @@ export default function CrudProdutos() {
             Volume :
             <input
               type="text"
-              value={volume}
-              onChange={(e) => setVolume(e.target.value)}
+              value={vinho.volume_vinho}
+              onChange={(e) => setVinho({ ...vinho, volume_vinho: e.target.value})}
               placeholder="Digite o volume em litros"
             />{" "}
           </div>
@@ -233,8 +201,8 @@ export default function CrudProdutos() {
             Temperatura p/ Servir :
             <input
               type="text"
-              value={temp}
-              onChange={(e) => setTemp(e.target.value)}
+              value={vinho.temperatura_servir}
+              onChange={(e) => setVinho({ ...vinho, temperatura_servir: e.target.value})}
               placeholder="Digite a temperatura que o vinho tem que ser servido"
             />{" "}
           </div>
@@ -243,8 +211,8 @@ export default function CrudProdutos() {
             Pais :
             <input
               type="text"
-              value={pais}
-              onChange={(e) => setPais(e.target.value)}
+              value={vinho.pais}
+              onChange={(e) => setVinho({ ...vinho, pais: e.target.value})}
               placeholder="Digite o país de origem"
             />{" "}
           </div>
@@ -253,8 +221,8 @@ export default function CrudProdutos() {
             Safra :
             <input
               type="text"
-              value={safra}
-              onChange={(e) => setSafra(e.target.value)}
+              value={vinho.safra_vinho}
+              onChange={(e) => setVinho({ ...vinho, safra_vinho: e.target.value})}
               placeholder="Digite o ano da safra do vinho"
             />{" "}
           </div>
@@ -263,8 +231,8 @@ export default function CrudProdutos() {
             Preço (Un) :
             <input
               type="text"
-              value={preco}
-              onChange={(e) => setPreco(e.target.value)}
+              value={vinho.preco_vinho}
+              onChange={(e) => setVinho({ ...vinho, preco_vinho: e.target.value})}
               placeholder="Digite o preço unitário do vinho"
             />
           </div>
@@ -273,8 +241,8 @@ export default function CrudProdutos() {
             Descrição : <br />
             <textarea
               className="area-descricao"
-              value={descr}
-              onChange={(e) => setDescr(e.target.value)}
+              value={vinho.descricao}
+              onChange={(e) => setVinho({ ...vinho, descricao: e.target.value})}
               placeholder="Coloque aqui caracteristicas adicionais para o vinho..."
             />
           </div>

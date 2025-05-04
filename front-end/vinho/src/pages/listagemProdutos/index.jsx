@@ -4,21 +4,41 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ListagemProdutos() {
   const [listaVinhos, setListaVinhos] = useState([]);
+  const [atualizarLista, setAtualizarLista] = useState(false);
   const [nome, setNome] = useState("");
+
+  useEffect(() => {
+    listarVinhos();
+  }, [atualizarLista]);
+
+  const listarVinhos = async () => {
+    try {
+      const resp = await axios.get("http://localhost:5001/estoque");
+      const vinhos = resp.data;
+      
+      setListaVinhos(vinhos);
+
+    } catch (error) {
+      alert(error.response?.data?.erro ?? "Erro ao buscar as informações do estoque");
+    }
+  };
+
+  const atualizarTabela = () => {
+    setAtualizarLista((atualizar) => !atualizar);
+  };
 
   async function Buscar() {
     try {
-      let resp = await axios.get(`http://localhost:5001/estoque/vinho/${nome}`);
+      let resp = await axios.get(`http://localhost:5001/estoque/busca/vinho?vinho=${nome}`);
       setListaVinhos(resp.data);
       alert(`Produto(s) com nome "${nome}" buscado(s) com sucesso!`);
     } catch (error) {
-      alert("Erro ao buscar vinhos: " + error.response?.status);
-      console.error(error);
+      alert(error.response?.data?.erro ?? "Erro ao buscar as informações do estoque");
     }
   }
 
@@ -35,13 +55,20 @@ export default function ListagemProdutos() {
       </section>
       <section className="conteudo">
         <div className="pesquisa">
-          <input
-            type="text"
-            placeholder="Insira o nome do vinho.."
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
-          <input type="button" value="Buscar" onClick={Buscar} />
+          <div className="recarregar-dados">
+            <i class="fa-solid fa-arrows-rotate" onClick={atualizarTabela}></i>
+            <span>Atualizar Tabela</span>
+          </div>
+
+          <div className="busca-vinho">
+            <input
+              type="text"
+              placeholder="Insira o nome do vinho.."
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+            />
+            <input type="button" value="Buscar" onClick={Buscar} />
+          </div>
         </div>
         <table>
           <colgroup>
@@ -57,7 +84,7 @@ export default function ListagemProdutos() {
             <tr>
               <th>ID</th>
               <th>Vinho</th>
-              <th>Descrição</th>
+              <th>Classificação do Vinho</th>
               <th>Vinícola</th>
               <th>Valor Unitário</th>
               <th>Status Estoque</th>
@@ -66,13 +93,10 @@ export default function ListagemProdutos() {
           </thead>
           <tbody>
             {listaVinhos.map((item) => (
-              <tr key={item.id}>
+              <tr key={item.id_vinho}>
                 <td>{item.id_vinho}</td>
-                <td>
-                  {item.vinho}
-                  {item.imagem}
-                </td>
-                <td>{item.descricao}</td>
+                <td>{item.vinho}</td>
+                <td>{item.classificao_vinho}</td>
                 <td>{item.vinicola_vinho}</td>
                 <td>{item.preco_vinho}</td>
                 <td>{item.status_estoque}</td>

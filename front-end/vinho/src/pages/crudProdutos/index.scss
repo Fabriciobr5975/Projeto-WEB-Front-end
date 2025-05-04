@@ -66,6 +66,15 @@
     height: 45px;
     border-radius: 10px;
     color: #fff;
+
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+
+    &:hover {
+      opacity: 0.95;
+      box-shadow: 0rem 0rem 0.15rem #b84363 inset;
+      transform: scale(1.05);
+    }
   }
 
   input[type="text"] {
@@ -75,6 +84,9 @@
     background: #fff;
     height: 45px;
     padding-left: 1rem;
+    font: 400 .85rem 'Poppins';
+    text-align: start !important;
+    color: #000;
   }
 
   .pesquisa1 {
@@ -83,17 +95,6 @@
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
-
-    input[type="button"] {
-      cursor: pointer;
-      transition: opacity 0.5s ease;
-
-      &:hover {
-        opacity: 0.95;
-        box-shadow: 0rem 0rem 0.15rem #b84363 inset;
-        transform: scale(1.05);
-      }
-    }
   }
 
   .busca-imagem-campos {
