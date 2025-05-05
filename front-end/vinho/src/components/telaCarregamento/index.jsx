@@ -12,9 +12,8 @@ export default function TelaCarregamento(props) {
     setTimeout(() => {
       setCarregamento(false);
     }, props.tempo ?? 1000);
-
     
-  }, [props.tempo]);
+  }, [props?.tempo]);
 
   return (
     <main className={`comp-tela-carregamento ${carregamento ? "desfoque" : ""}`}>

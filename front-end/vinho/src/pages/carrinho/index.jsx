@@ -12,7 +12,7 @@ import axios from "axios";
 
 export default function CarrinhoCliente() {
   const [listaItensCarrinho, setListaItensCarrinho] = useState([]);
-  const [valorTotal, setValorTotal] = useState(0);
+  // const [valorTotal, setValorTotal] = useState(0);
 
   useEffect(() => {
     listarPedidos();
@@ -83,7 +83,7 @@ export default function CarrinhoCliente() {
                 <tr key={carrinho.id_itens_carrinho}>
                   <td className="primeira-coluna">
                     {carrinho.vinho}
-                    <img src="/assets/images/vinho-exemplo.svg" />
+                    <img src="/assets/images/vinho-exemplo.svg" alt="imagem vinho"/>
                   </td>
                   <td>
                     <div className="manipulacao-quantidade">
@@ -102,7 +102,7 @@ export default function CarrinhoCliente() {
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {valorTotal}
+                      {0}
                     </div>
                   </td>
                   <td>

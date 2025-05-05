@@ -15,7 +15,7 @@ export default function ListagemProdutos() {
 
   useEffect(() => {
     listarVinhos();
-  }, atualizarLista);
+  }, [atualizarLista === true]);
 
   const listarVinhos = async () => {
     try {
@@ -117,7 +117,7 @@ export default function ListagemProdutos() {
                   <td>{item.id_vinho}</td>
                   <td className="primeira-coluna">
                     {item.vinho}
-                    <img src="/assets/images/vinho-exemplo.svg" />
+                    <img src="/assets/images/vinho-exemplo.svg" alt="imagem vinho" />
                   </td>
                   <td>{item.descricao}</td>
                   <td>{item.vinicola_vinho}</td>
