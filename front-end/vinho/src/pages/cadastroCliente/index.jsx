@@ -4,7 +4,7 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 export default function CadastroCliente() {
@@ -29,18 +29,8 @@ export default function CadastroCliente() {
     logradouro: "",
   });
 
-  useEffect(() => {
-    if (cliente.cep.length === 8 || cliente.cep.length === 9) {
-      pegarEnderecoViaCep();
-    }
-
-    if (cliente.cep !== "" && cliente.cep.length === 0) {
-      limparEndereco();
-    }
-
-  }, [cliente.cep, pegarEnderecoViaCep, limparEndereco]);
-
-  const pegarEnderecoViaCep = async () => {
+  
+  const pegarEnderecoViaCep = useCallback(async () => {
     try {
       const resp = await axios.get(
         `https://viacep.com.br/ws/${cliente.cep}/json/`
@@ -52,35 +42,47 @@ export default function CadastroCliente() {
         return;
       }
 
-      setEndereco({
-        ...endereco,
+      setEndereco((novoEndereco) => ({
+        ...novoEndereco,
         estado: enderecoBusca.uf,
         cidade: enderecoBusca.localidade,
         bairro: enderecoBusca.bairro,
         logradouro: enderecoBusca.logradouro,
-      });
+      }));
 
       setBloqueioCampo(false);
     } catch (err) {
       console.error("Erro ao buscar endereço");
     }
-  };
+  }, [cliente.cep]);
 
-  const limparEndereco = () => {
-    setEndereco({
-      ...endereco,
+  const limparEndereco = useCallback(() => {
+    setEndereco((enderecoLimpo) => ({
+      ...enderecoLimpo,
       estado: "",
       cidade: "",
       bairro: "",
       logradouro: "",
-    });
+    }));
 
-    setCliente({
-      ...cliente,
+    setCliente((clienteSemEndereco) => ({
+      ...clienteSemEndereco,
       numero: "",
       complemento: "",
-    });
-  };
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (cliente.cep.length === 8 || cliente.cep.length === 9) {
+      pegarEnderecoViaCep();
+    }
+
+    if (cliente.cep !== "" && cliente.cep.length === 0) {
+      limparEndereco();
+    }
+
+  }, [cliente.cep, pegarEnderecoViaCep, limparEndereco]);
+
 
   const inserirNovoCliente = async () => {
     try {
@@ -91,6 +93,8 @@ export default function CadastroCliente() {
       alert("O ocorreu um erro na inserção do cliente");
     }
   };
+
+  
 
   return (
     <div className="pagina-cadastro-cliente pagina">
