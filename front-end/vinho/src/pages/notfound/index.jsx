@@ -2,27 +2,26 @@ import "./index.scss";
 
 import { useEffect } from "react";
 
+import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
 export default function NotFound() {
-  useEffect(() => {
-    document.title = "Erro 404 - Página Não Encontrada";
-  });
-
   return (
     <div className="pagina-nao-encontrado pagina">
-      <Header />
+      <TelaCarregamento tempo={250} tituloPagina="Erro 404 - Página Não Encontrada">
+        <Header />
 
-      <div className="mensagem-nao-encontrado">
-        <h1>Página não Encontrada</h1>
-        <p>
-          Verifique se o endereço digitado está correto ou o conteúdo buscado
-          não existe
-        </p>
-      </div>
+        <div className="mensagem-nao-encontrado">
+          <h1>Página não Encontrada</h1>
+          <p>
+            Verifique se o endereço digitado está correto ou o conteúdo buscado
+            não existe
+          </p>
+        </div>
 
-      <Footer />
+        <Footer />
+      </TelaCarregamento>
     </div>
   );
 }

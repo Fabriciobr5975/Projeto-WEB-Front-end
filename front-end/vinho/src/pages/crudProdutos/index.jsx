@@ -1,5 +1,6 @@
 import "./index.scss";
 
+import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
@@ -57,7 +58,7 @@ export default function CrudProdutos() {
     let resp = await axios.delete(`http://localhost:5001/${id}`);
     alert(`O produto (${resp.data.nome}) foi excluido com sucesso! `);
   }
-  
+
   async function Buscar() {
     const resp = await axios.get(`http://localhost:5001/vinho/${Number(id)}`);
     const vinhoBuscado = resp.data;
@@ -88,14 +89,28 @@ export default function CrudProdutos() {
   }
 
   return (
-    <main className="pagina">
+    <main className="pagina-crud-produtos pagina">
+       <TelaCarregamento tempo={500}>
       <Header />
       <section className="banner-abas">
+      <div className="titulo-banner">
+          <h1>Manipulação dos Vinhos</h1>
+        </div>
         <div className="abas-navegacao">
-          <AbaNavegacao nome="Análise de Clientes" />
-          <AbaNavegacao nome="Produtos Cadastrados" />
-          <AbaNavegacao nome="Modificar Produtos" abaAtual={true} />
-          <AbaNavegacao nome="Lista de Pedidos" />
+          <AbaNavegacao
+            nome="Análise de Clientes"
+            navegacao="/analiseclientes"
+          />
+          <AbaNavegacao
+            nome="Produtos Cadastrados"
+            navegacao="/listagemprodutos"
+          />
+          <AbaNavegacao
+            nome="Modificar Produtos"
+            abaAtual={true}
+            navegacao="/crudprodutos"
+          />
+          <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
         </div>
       </section>
       <section className="conteudo">
@@ -125,11 +140,12 @@ export default function CrudProdutos() {
           </div>
           <div>
             {" "}
-            Identificação do Vinho (ID):<br />{" "}
+            Identificação do Vinho (ID):
+            <br />{" "}
             <input
               type="text"
               value={vinho.id_vinho}
-              onChange={(e) => setVinho({ ...vinho, id_vinho: e.target.value})}
+              onChange={(e) => setVinho({ ...vinho, id_vinho: e.target.value })}
               placeholder="ID do vinho"
               readOnly
             />{" "}
@@ -140,7 +156,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.nome_vinho}
-              onChange={(e) => setVinho({ ...vinho, nome_vinho: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, nome_vinho: e.target.value })
+              }
               placeholder="Digite o nome do vinho"
             />{" "}
           </div>
@@ -150,7 +168,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.classificacao_vinho}
-              onChange={(e) => setVinho({ ...vinho, classificacao_vinho: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, classificacao_vinho: e.target.value })
+              }
               placeholder="Digite a classificação do vinho"
             />{" "}
           </div>
@@ -160,7 +180,7 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.vinicola}
-              onChange={(e) => setVinho({ ...vinho, vinicola: e.target.value})}
+              onChange={(e) => setVinho({ ...vinho, vinicola: e.target.value })}
               placeholder="Digite a Vínicola do vinho"
             />{" "}
           </div>
@@ -172,7 +192,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.uva_vinho}
-              onChange={(e) => setVinho({ ...vinho, uva_vinho: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, uva_vinho: e.target.value })
+              }
               placeholder="Digite o nome da Uva do vinho"
             />{" "}
           </div>
@@ -182,7 +204,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.teor_alcolico}
-              onChange={(e) => setVinho({ ...vinho, teor_alcolico: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, teor_alcolico: e.target.value })
+              }
               placeholder="Digite o qtd. do teor alcoólco"
             />{" "}
           </div>
@@ -192,7 +216,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.volume_vinho}
-              onChange={(e) => setVinho({ ...vinho, volume_vinho: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, volume_vinho: e.target.value })
+              }
               placeholder="Digite o volume em litros"
             />{" "}
           </div>
@@ -202,7 +228,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.temperatura_servir}
-              onChange={(e) => setVinho({ ...vinho, temperatura_servir: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, temperatura_servir: e.target.value })
+              }
               placeholder="Digite a temperatura que o vinho tem que ser servido"
             />{" "}
           </div>
@@ -212,7 +240,7 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.pais}
-              onChange={(e) => setVinho({ ...vinho, pais: e.target.value})}
+              onChange={(e) => setVinho({ ...vinho, pais: e.target.value })}
               placeholder="Digite o país de origem"
             />{" "}
           </div>
@@ -222,7 +250,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.safra_vinho}
-              onChange={(e) => setVinho({ ...vinho, safra_vinho: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, safra_vinho: e.target.value })
+              }
               placeholder="Digite o ano da safra do vinho"
             />{" "}
           </div>
@@ -232,7 +262,9 @@ export default function CrudProdutos() {
             <input
               type="text"
               value={vinho.preco_vinho}
-              onChange={(e) => setVinho({ ...vinho, preco_vinho: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, preco_vinho: e.target.value })
+              }
               placeholder="Digite o preço unitário do vinho"
             />
           </div>
@@ -242,7 +274,9 @@ export default function CrudProdutos() {
             <textarea
               className="area-descricao"
               value={vinho.descricao}
-              onChange={(e) => setVinho({ ...vinho, descricao: e.target.value})}
+              onChange={(e) =>
+                setVinho({ ...vinho, descricao: e.target.value })
+              }
               placeholder="Coloque aqui caracteristicas adicionais para o vinho..."
             />
           </div>
@@ -259,6 +293,7 @@ export default function CrudProdutos() {
         </div>
       </section>
       <Footer />
+      </TelaCarregamento>
     </main>
   );
 }

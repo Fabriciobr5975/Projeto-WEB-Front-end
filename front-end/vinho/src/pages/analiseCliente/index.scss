@@ -1,4 +1,4 @@
-.pagina-listagem-produtos {
+.pagina-analise-cliente {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -36,16 +36,16 @@
     }
   }
 
-  .conteudo {
+  .listagem-cliente {
     width: 100%;
     background: #eae9e9;
-    border: 1px solid #000;
+    border: .0625rem solid #000;
     display: flex;
     flex-direction: column;
     padding: 5% 5% 5% 5%;
 
     input[type="button"] {
-      border: 1px solid #000;
+      border: .0625rem solid #000;
       background: #a4596d;
       width: 11.25rem;
       height: 2.8125rem;
@@ -64,11 +64,12 @@
     input[type="text"] {
       width: 100%;
       border-radius: .9375rem;
-      border: 1px solid rgba(0, 0, 0, 0.5);
+      border: 1px solid #00000080;
       background: #fff;
       height: 2.8125rem;
       padding-left: 1rem;
-      text-align: center;
+      text-align: start;
+      color: #000;
     }
 
     .pesquisa {
@@ -101,31 +102,33 @@
         }
       }
 
-      .busca-vinho {
+      .filtro-busca {
+        width: 40%;
         display: flex;
         gap: 1.5rem;
         align-items: center;
         justify-content: flex-end;
+        
       }
     }
 
-    .id,
-    .estoque {
+    .identificacao-cliente,
+    .cliente-ativo {
       width: 8%;
     }
-    .vinho {
+    .nome-cliente {
       width: 20%;
     }
-    .descricao {
+    .email-cliente {
       width: 25%;
     }
-    .vinicola {
+    .cidade-cliente {
       width: 15%;
     }
-    .valor {
+    .bairro-cliente {
       width: 14%;
     }
-    .status {
+    .ticket-medio-cliente {
       width: 10%;
     }
 

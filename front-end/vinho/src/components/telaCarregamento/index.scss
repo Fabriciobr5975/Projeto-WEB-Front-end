@@ -1,0 +1,10 @@
+.comp-tela-carregamento {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  transition: filter 0.5s ease-in-out; 
+}
+
+.desfoque {
+  filter: blur(10px); 
+}

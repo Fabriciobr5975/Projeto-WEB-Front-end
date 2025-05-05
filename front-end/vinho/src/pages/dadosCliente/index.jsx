@@ -1,5 +1,6 @@
 import "./index.scss";
 
+import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
@@ -61,134 +62,139 @@ export default function PerfilCliente() {
 
   return (
     <div className="pagina-perfil-cliente pagina">
-      <Header />
+      <TelaCarregamento tempo={500}>
+        <Header />
 
-      <section className="banner-perfil">
-        <div className="titulo-banner">
-          <h1>Meu Perfil</h1>
-        </div>
-        <div className="abas-navegacao">
-          <AbaNavegacao nome="Perfil" abaAtual={true} />
-          <AbaNavegacao nome="Endereço (s) Cadastrado (s)" />
-          <AbaNavegacao nome="Meus Pedidos" />
-          <AbaNavegacao nome="Meu Carrinho" />
-        </div>
-      </section>
-
-      <section className="dados-cliente">
-        <div className="entrada-dados">
-          <div className="entrada">
-            <label>Nome:</label>
-            <input
-              type="text"
-              placeholder="Seu nome"
-              value={dadosCliente.nome}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  nome: e.target.value,
-                })
-              }
-            />
+        <section className="banner-perfil">
+          <div className="titulo-banner">
+            <h1>Meu Perfil</h1>
           </div>
-
-          <div className="entrada">
-            <label>Sobrenome:</label>
-            <input
-              type="text"
-              placeholder="Seu sobrenome"
-              value={dadosCliente.sobrenome}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  sobrenome: e.target.value,
-                })
-              }
+          <div className="abas-navegacao">
+            <AbaNavegacao nome="Perfil" abaAtual={true} navegacao="/perfil" />
+            <AbaNavegacao
+              nome="Endereço (s) Cadastrado (s)"
+              navegacao="/enderecocliente"
             />
+            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" />
+            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" />
           </div>
+        </section>
 
-          <div className="entrada">
-            <label>E-mail:</label>
-            <input
-              type="email"
-              placeholder="Seu e-mail"
-              value={dadosCliente.email}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  email: e.target.value,
-                })
-              }
-            />
+        <section className="dados-cliente">
+          <div className="entrada-dados">
+            <div className="entrada">
+              <label>Nome:</label>
+              <input
+                type="text"
+                placeholder="Seu nome"
+                value={dadosCliente.nome}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    nome: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="entrada">
+              <label>Sobrenome:</label>
+              <input
+                type="text"
+                placeholder="Seu sobrenome"
+                value={dadosCliente.sobrenome}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    sobrenome: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="entrada">
+              <label>E-mail:</label>
+              <input
+                type="email"
+                placeholder="Seu e-mail"
+                value={dadosCliente.email}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    email: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="entrada">
+              <label>Celular:</label>
+              <input
+                type="text"
+                placeholder="Seu celular"
+                value={dadosCliente.celular}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    celular: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="entrada">
+              <label>Senha:</label>
+              <input
+                type="password"
+                placeholder="Sua Senha Cadastrada"
+                value={dadosCliente.senha}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    senha: e.target.value,
+                  })
+                }
+              />
+              <Link to="/recuperacaosenha">Alterar Senha</Link>
+            </div>
+
+            <div className="entrada">
+              <label>CPF:</label>
+              <input
+                type="text"
+                placeholder="Seu CPF"
+                readOnly
+                value={dadosCliente.cpf}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    cpf: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="entrada">
+              <label>Data de Nascimento</label>
+              <input
+                type="date"
+                value={dadosCliente.data_nascimento}
+                onChange={(e) =>
+                  setDadosCliente({
+                    ...dadosCliente,
+                    data_nascimento: e.target.value,
+                  })
+                }
+              />
+            </div>
           </div>
-
-          <div className="entrada">
-            <label>Celular:</label>
-            <input
-              type="text"
-              placeholder="Seu celular"
-              value={dadosCliente.celular}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  celular: e.target.value,
-                })
-              }
-            />
+          <div className="botao">
+            <button onClick={alterarDados}>Salvar</button>
           </div>
+        </section>
 
-          <div className="entrada">
-            <label>Senha:</label>
-            <input
-              type="password"
-              placeholder="Sua Senha Cadastrada"
-              value={dadosCliente.senha}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  senha: e.target.value,
-                })
-              }
-            />
-            <Link to="/recuperacaosenha">Alterar Senha</Link>
-          </div>
-
-          <div className="entrada">
-            <label>CPF:</label>
-            <input
-              type="text"
-              placeholder="Seu CPF"
-              readOnly
-              value={dadosCliente.cpf}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  cpf: e.target.value,
-                })
-              }
-            />
-          </div>
-
-          <div className="entrada">
-            <label>Data de Nascimento</label>
-            <input
-              type="date"
-              value={dadosCliente.data_nascimento}
-              onChange={(e) =>
-                setDadosCliente({
-                  ...dadosCliente,
-                  data_nascimento: e.target.value,
-                })
-              }
-            />
-          </div>
-        </div>
-        <div className="botao">
-          <button onClick={alterarDados}>Salvar</button>
-        </div>
-      </section>
-
-      <Footer />
+        <Footer />
+      </TelaCarregamento>
     </div>
   );
 }

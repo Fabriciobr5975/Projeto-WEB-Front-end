@@ -6,6 +6,7 @@ import Footer from "../../components/footer";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import TelaCarregamento from "../../components/telaCarregamento";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -60,47 +61,48 @@ export default function Login() {
 
   return (
     <div className="pagina-login pagina">
-      <Header />
+      <TelaCarregamento tempo={500}>
+        <Header />
+        <div className="login">
+          <div className="login-usuario">
+            <span>Login do usuário</span>
 
-      <div className="login">
-        <div className="login-usuario">
-          <span>Login do usuário</span>
-
-          <div className="campos-entrada">
-            <div className="campo-email">
-              <label>E-mail: </label>
-              <input
-                type="text"
-                placeholder="Digite seu E-Mail"
-                value={email}
-                onKeyUp={teclaEnterApertada}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div className="campos-entrada">
+              <div className="campo-email">
+                <label>E-mail: </label>
+                <input
+                  type="text"
+                  placeholder="Digite seu E-Mail"
+                  value={email}
+                  onKeyUp={teclaEnterApertada}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="campo-senha">
+                <label>Senha: </label>
+                <input
+                  type="password"
+                  placeholder="Digite sua Senha"
+                  value={senha}
+                  onKeyUp={teclaEnterApertada}
+                  onChange={(e) => setSenha(e.target.value)}
+                />
+              </div>
+              <Link to="/recuperacaosenha">Esqueci minha senha</Link>
             </div>
-            <div className="campo-senha">
-              <label>Senha: </label>
-              <input
-                type="password"
-                placeholder="Digite sua Senha"
-                value={senha}
-                onKeyUp={teclaEnterApertada}
-                onChange={(e) => setSenha(e.target.value)}
-              />
-            </div>
-            <Link to="/recuperacaosenha">Esqueci minha senha</Link>
-          </div>
-          <div className="campo-botoes">
-            <div className="botoes">
-              <button onClick={buscarCliente}>Entrar</button>
-              <p>Ainda não tem uma conta? Crie uma agora mesmo!</p>
-              <button onClick={() => navigate("/cadastro")}>
-                Cadastra-se
-              </button>
+            <div className="campo-botoes">
+              <div className="botoes">
+                <button onClick={buscarCliente}>Entrar</button>
+                <p>Ainda não tem uma conta? Crie uma agora mesmo!</p>
+                <button onClick={() => navigate("/cadastro")}>
+                  Cadastra-se
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer />
+        <Footer />
+      </TelaCarregamento>
     </div>
   );
 }

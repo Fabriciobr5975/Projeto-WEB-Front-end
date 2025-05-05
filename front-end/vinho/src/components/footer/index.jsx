@@ -16,23 +16,23 @@ export default function Footer(props) {
 
         <div className="vinho-footer">
           <h3 className="subtitulos-footer">VINHOS</h3>
-          <Link to="" >Tinto</Link>
-          <Link to="" >Branco</Link>
-          <Link to="" >Espumante</Link>
-          <Link to="" >Rosé</Link>
-          <Link to="" >Mais Vendidos</Link>
-          <Link to="" >Em Promoção</Link>
-          <Link to="" >Guia de Vinhos</Link>
+          <Link to="/produtos" >Tinto</Link>
+          <Link to="/produtos" >Branco</Link>
+          <Link to="/produtos" >Espumante</Link>
+          <Link to="/produtos" >Rosé</Link>
+          <Link to="/produtos" >Mais Vendidos</Link>
+          <Link to="/produtos" >Em Promoção</Link>
+          <Link to="/produtos" >Guia de Vinhos</Link>
         </div>
 
         <div className="ajuda-footer">
           <h3 className="subtitulos-footer">AJUDA</h3>
-          <Link to="" >Contate-nos</Link>
-          <Link to="" >Perguntas Frequentes</Link>
-          <Link to="" >Política de Privacidade</Link>
-          <Link to="" >Política de Privacidade</Link>
-          <Link to="" >Política de Cancelamento</Link>
-          <Link to="" >Informações sobre Entrega</Link>
+          <Link to="contato" >Contate-nos</Link>
+          <Link to="informacoes" >Perguntas Frequentes</Link>
+          <Link to="politicas" >Política de Privacidade</Link>
+          <Link to="politicas" >Política de Privacidade</Link>
+          <Link to="politicas" >Política de Cancelamento</Link>
+          <Link to="informacoes" >Informações sobre Entrega</Link>
         </div>
 
         <div className="conteudo-adicional-footer">

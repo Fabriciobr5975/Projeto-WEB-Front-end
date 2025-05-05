@@ -8,21 +8,21 @@ import AbaNavegacao from "../../components/abaNavegacao";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function ListagemProdutos() {
-  const [listaVinhos, setListaVinhos] = useState([]);
+export default function AnaliseClientes() {
+  const [listaClientes, setListaClientes] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
-  const [nome, setNome] = useState("");
+  const [filtroBusca, setFiltroBusca] = useState("");
 
   useEffect(() => {
-    listarVinhos();
+    listarClientes();
   }, [atualizarLista]);
 
-  const listarVinhos = async () => {
+  const listarClientes = async () => {
     try {
-      const resp = await axios.get("http://localhost:5001/estoque");
+      const resp = await axios.get("http://localhost:5001/enderecoCliente");
       const vinhos = resp.data;
 
-      setListaVinhos(vinhos);
+      setListaClientes(vinhos);
     } catch (error) {
       alert(
         error.response?.data?.erro ?? "Erro ao buscar as informações do estoque"
@@ -37,40 +37,41 @@ export default function ListagemProdutos() {
   async function Buscar() {
     try {
       let resp = await axios.get(
-        `http://localhost:5001/estoque/busca/vinho?vinho=${nome}`
+        `http://localhost:5001/endereco/busca/cidade?cidade=${filtroBusca}`
       );
-      setListaVinhos(resp.data);
-      alert(`Produto(s) com nome "${nome}" buscado(s) com sucesso!`);
+      setListaClientes(resp.data);
     } catch (error) {
       alert(
-        error.response?.data?.erro ?? "Erro ao buscar as informações do estoque"
+        error.response?.data?.erro ??
+          `Erro ao buscar as informações do filtro ${filtroBusca}`
       );
     }
   }
 
   return (
-    <main className="pagina-listagem-produtos pagina">
+    <div className="pagina-analise-cliente pagina">
       <TelaCarregamento tempo={500}>
         <Header />
         <section className="banner-abas">
           <div className="titulo-banner">
-            <h1>Listagem do Estoque</h1>
+            <h1>Listagem de Clientes</h1>
           </div>
           <div className="abas-navegacao">
             <AbaNavegacao
               nome="Análise de Clientes"
+              abaAtual={true}
               navegacao="/analiseclientes"
             />
             <AbaNavegacao
               nome="Produtos Cadastrados"
-              abaAtual={true}
               navegacao="/listagemprodutos"
             />
             <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
             <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
           </div>
         </section>
-        <section className="conteudo">
+
+        <section className="listagem-cliente">
           <div className="pesquisa">
             <div className="recarregar-dados">
               <i
@@ -80,55 +81,52 @@ export default function ListagemProdutos() {
               <span>Atualizar Tabela</span>
             </div>
 
-            <div className="busca-vinho">
+            <div className="filtro-busca">
               <input
                 type="text"
-                placeholder="Insira o nome do vinho.."
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
+                placeholder="Busque por Cidade, Ticket Médio ou Região"
+                value={filtroBusca}
+                onChange={(e) => setFiltroBusca(e.target.value)}
               />
               <input type="button" value="Buscar" onClick={Buscar} />
             </div>
           </div>
           <table>
             <colgroup>
-              <col className="id" />
-              <col className="vinho" />
-              <col className="descricao" />
-              <col className="vinicola" />
-              <col className="valor" />
-              <col className="status" />
-              <col className="estoque" />
+              <col className="identificacao-cliente" />
+              <col className="nome-cliente" />
+              <col className="email-cliente" />
+              <col className="cidade-cliente" />
+              <col className="bairro-cliente" />
+              <col className="cliente-ativo" />
+              <col className="ticket-medio-cliente" />
             </colgroup>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Vinho</th>
-                <th>Descrição</th>
-                <th>Vinícola</th>
-                <th>Valor Unitário</th>
-                <th>Status Estoque</th>
-                <th>Qtd Estoque</th>
+                <th>Identificação</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Cidade</th>
+                <th>Bairro</th>
+                <th>Ativo?</th>
+                <th>Ticket Médio</th>
               </tr>
             </thead>
             <tbody>
-              {listaVinhos.map((item) => (
-                <tr key={item.id_vinho}>
-                  <td>{item.id_vinho}</td>
-                  <td className="primeira-coluna">
-                    {item.vinho}
-                    <img src="/assets/images/vinho-exemplo.svg" />
-                  </td>
-                  <td>{item.descricao}</td>
-                  <td>{item.vinicola_vinho}</td>
+              {listaClientes.map((item) => (
+                <tr key={item.id_cliente}>
+                  <td>{item.id_cliente}</td>
+                  <td>{item.nome_completo_cliente}</td>
+                  <td>{item.email}</td>
+                  <td>{item.cidade}</td>
+                  <td>{item.bairro}</td>
+                  <td>{"Sim"}</td>
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {item.preco_vinho}
+                      {250.0}
                     </div>
                   </td>
-                  <td>{item.status_estoque}</td>
-                  <td>{item.quantidade_estoque}</td>
                 </tr>
               ))}
             </tbody>
@@ -137,6 +135,6 @@ export default function ListagemProdutos() {
 
         <Footer />
       </TelaCarregamento>
-    </main>
+    </div>
   );
 }

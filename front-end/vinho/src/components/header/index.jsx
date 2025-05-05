@@ -40,14 +40,14 @@ export default function Header(props) {
 
         <div className="dados-usuario-header">
           <span>
-            Welcome,
-            <strong>{props.cliente?.nome_completo || "Visitante"}</strong>
+            Welcome, 
+            <strong> {props.cliente?.nome_completo || "Visitante"}</strong>
           </span>
           <div className="icones">
             <i class="fa-solid fa-circle-user" onClick={() => navegacao()}></i>
             <i
               class="fa-solid fa-cart-shopping"
-              onClick={() => navigate("/carrinho")}
+              onClick={() => navigate("/meucarrinho")}
             ></i>
           </div>
         </div>
