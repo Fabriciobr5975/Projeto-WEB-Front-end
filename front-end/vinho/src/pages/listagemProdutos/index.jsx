@@ -15,7 +15,7 @@ export default function ListagemProdutos() {
 
   useEffect(() => {
     listarVinhos();
-  }, [atualizarLista]);
+  }, atualizarLista);
 
   const listarVinhos = async () => {
     try {

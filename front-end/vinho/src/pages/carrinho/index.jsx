@@ -16,7 +16,7 @@ export default function CarrinhoCliente() {
 
   useEffect(() => {
     listarPedidos();
-  }, []);
+  });
 
   const listarPedidos = async () => {
     try {

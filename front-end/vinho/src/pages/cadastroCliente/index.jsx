@@ -34,7 +34,7 @@ export default function CadastroCliente() {
       pegarEnderecoViaCep();
     }
 
-    if (endereco.estado !== "" && cliente.cep.length === 0) {
+    if (cliente.cep !== "" && cliente.cep.length === 0) {
       limparEndereco();
     }
   }, [cliente.cep]);

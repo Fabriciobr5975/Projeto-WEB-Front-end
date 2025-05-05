@@ -1,7 +1,5 @@
 import "./index.scss";
 
-import { useEffect } from "react";
-
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
