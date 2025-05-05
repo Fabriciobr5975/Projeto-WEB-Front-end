@@ -37,7 +37,8 @@ export default function CadastroCliente() {
     if (cliente.cep !== "" && cliente.cep.length === 0) {
       limparEndereco();
     }
-  }, [cliente.cep]);
+
+  }, [cliente.cep, pegarEnderecoViaCep, limparEndereco]);
 
   const pegarEnderecoViaCep = async () => {
     try {

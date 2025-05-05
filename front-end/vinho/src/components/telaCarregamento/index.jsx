@@ -13,7 +13,7 @@ export default function TelaCarregamento(props) {
       setCarregamento(false);
     }, props.tempo ?? 1000);
     
-  }, [props?.tempo]);
+  }, [props?.tempo, props.tituloPagina]);
 
   return (
     <main className={`comp-tela-carregamento ${carregamento ? "desfoque" : ""}`}>
