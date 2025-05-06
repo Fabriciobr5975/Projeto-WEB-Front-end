@@ -7,7 +7,7 @@ import Footer from "../../components/footer";
 export default function NotFound() {
   return (
     <div className="pagina-nao-encontrado pagina">
-      <TelaCarregamento tempo={250} tituloPagina="Erro 404 - Página Não Encontrada">
+      <TelaCarregamento tempo={200} tituloPagina="Erro 404 - Página Não Encontrada">
         <Header />
 
         <div className="mensagem-nao-encontrado">

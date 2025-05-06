@@ -8,7 +8,7 @@ import AbaNavegacao from "../../components/abaNavegacao";
 export default function EnderecosCliente() {
   return (
     <div className="pagina-enderecos-cliente pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
 
         <section className="banner-perfil">

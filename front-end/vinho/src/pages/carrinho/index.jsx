@@ -36,7 +36,7 @@ export default function CarrinhoCliente() {
 
   return (
     <div className="pagina-carrinho-cliente pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
 
         <section className="banner-perfil">

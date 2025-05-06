@@ -62,7 +62,7 @@ export default function PerfilCliente() {
 
   return (
     <div className="pagina-perfil-cliente pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
 
         <section className="banner-perfil">

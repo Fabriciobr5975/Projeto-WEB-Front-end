@@ -50,7 +50,7 @@ export default function AnaliseClientes() {
 
   return (
     <div className="pagina-analise-cliente pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
         <section className="banner-abas">
           <div className="titulo-banner">

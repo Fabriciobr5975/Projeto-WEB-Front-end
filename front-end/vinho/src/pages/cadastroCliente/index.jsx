@@ -98,7 +98,7 @@ export default function CadastroCliente() {
 
   return (
     <div className="pagina-cadastro-cliente pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
 
         <div className="cadastro">

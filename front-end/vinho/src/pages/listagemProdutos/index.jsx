@@ -50,7 +50,7 @@ export default function ListagemProdutos() {
 
   return (
     <main className="pagina-listagem-produtos pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
         <section className="banner-abas">
           <div className="titulo-banner">

@@ -1,38 +1,41 @@
 import "./index.scss";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Footer(props) {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  
   return (
     <footer className="footer">
       <div className="elementos-footer">
         <div className="mapa-navegacao-footer">
           <h3 className="subtitulos-footer">VIANA VINHOS</h3>
-          <Link to="/" >Home</Link>
-          <Link to="/sobrenos" >Sobre Nós</Link>
-          <Link to="/nossahistoria" >Nossa História</Link>
-          <Link to="guiadevinhos" >Guia de Vinhos</Link>
+          <Link to="/" state={{ cliente }}>Home</Link>
+          <Link to="/sobrenos" state={{ cliente }}>Sobre Nós</Link>
+          <Link to="/nossahistoria" state={{ cliente }}>Nossa História</Link>
+          <Link to="/guiadevinhos" state={{ cliente }}>Guia de Vinhos</Link>
         </div>
 
         <div className="vinho-footer">
           <h3 className="subtitulos-footer">VINHOS</h3>
-          <Link to="/produtos" >Tinto</Link>
-          <Link to="/produtos" >Branco</Link>
-          <Link to="/produtos" >Espumante</Link>
-          <Link to="/produtos" >Rosé</Link>
-          <Link to="/produtos" >Mais Vendidos</Link>
-          <Link to="/produtos" >Em Promoção</Link>
-          <Link to="/produtos" >Guia de Vinhos</Link>
+          <Link to="/produtos" state={{ cliente }}>Tinto</Link>
+          <Link to="/produtos" state={{ cliente }}>Branco</Link>
+          <Link to="/produtos" state={{ cliente }}>Espumante</Link>
+          <Link to="/produtos" state={{ cliente }}>Rosé</Link>
+          <Link to="/produtos" state={{ cliente }}>Mais Vendidos</Link>
+          <Link to="/produtos" state={{ cliente }}>Em Promoção</Link>
+          <Link to="/produtos" state={{ cliente }}>Guia de Vinhos</Link>
         </div>
 
         <div className="ajuda-footer">
           <h3 className="subtitulos-footer">AJUDA</h3>
-          <Link to="contato" >Contate-nos</Link>
-          <Link to="informacoes" >Perguntas Frequentes</Link>
-          <Link to="politicas" >Política de Privacidade</Link>
-          <Link to="politicas" >Política de Privacidade</Link>
-          <Link to="politicas" >Política de Cancelamento</Link>
-          <Link to="informacoes" >Informações sobre Entrega</Link>
+          <Link to="contato" state={{ cliente }}>Contate-nos</Link>
+          <Link to="informacoes" state={{ cliente }}>Perguntas Frequentes</Link>
+          <Link to="politicas" state={{ cliente }}>Política de Privacidade</Link>
+          <Link to="politicas" state={{ cliente }}>Política de Privacidade</Link>
+          <Link to="politicas" state={{ cliente }}>Política de Cancelamento</Link>
+          <Link to="informacoes" state={{ cliente }}>Informações sobre Entrega</Link>
         </div>
 
         <div className="conteudo-adicional-footer">

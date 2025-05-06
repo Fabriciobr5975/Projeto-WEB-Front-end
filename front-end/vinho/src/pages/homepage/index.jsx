@@ -14,7 +14,7 @@ export default function HomePage() {
 
   return (
     <div className="pagina-principal pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
 
         <main className="banner">
@@ -118,7 +118,7 @@ export default function HomePage() {
 
         <Disclaimer />
 
-        <Footer />
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );

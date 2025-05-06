@@ -5,6 +5,7 @@ import NotFound from "./pages/notfound";
 import CrudProdutos from "./pages/crudProdutos";
 import ListagemProdutos from "./pages/listagemProdutos";
 import AnaliseClientes from "./pages/analiseCliente";
+import ListaPedidosClientes from "./pages/listaPedidosClientes";
 import Login from "./pages/login";
 import SobreNos from "./pages/sobreNos";
 import RecuperacaoSenha from "./pages/recuperacaoSenha";
@@ -26,6 +27,7 @@ export default function Navegacao() {
         <Route path="/crudprodutos" element={<CrudProdutos />} />
         <Route path="/listagemprodutos" element={<ListagemProdutos />} />
         <Route path="/analiseclientes" element={<AnaliseClientes />} />
+        <Route path="/listapedidos" element={<ListaPedidosClientes />} />
         <Route path="/login" element={<Login />} />
         <Route path="/recuperacaosenha" element={<RecuperacaoSenha />} />
         <Route path="/cadastro" element={<CadastroCliente />} />

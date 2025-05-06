@@ -8,16 +8,17 @@ import AbaNavegacao from "../../components/abaNavegacao";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function PedidosCliente() {
+export default function ListaPedidosClientes() {
   const [listaPedidos, setListaPedidos] = useState([]);
+  const [atualizarLista, setAtualizarLista] = useState(false);
 
   useEffect(() => {
-    listarPedidos();
-  }, []);
+    listarPedidosClientes();
+  }, [atualizarLista]);
 
-  const listarPedidos = async () => {
+  const listarPedidosClientes = async () => {
     try {
-      const url = `http://localhost:5001/pedido/busca/cliente?cliente=60741430053`;
+      const url = `http://localhost:5001/pedido`;
 
       const resp = await axios.get(url);
       const pedidos = resp.data;
@@ -26,52 +27,55 @@ export default function PedidosCliente() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-          "Erro ao buscar as informações dos seus pedidos"
+          "Erro ao buscar as informações dos pedidos"
       );
     }
   };
 
+  const atualizarTabela = () => {
+    setAtualizarLista((atualizar) => !atualizar);
+  };
+
   return (
-    <div className="pagina-pedidos-cliente pagina">
+    <main className="pagina-listagem-produtos-clientes pagina">
       <TelaCarregamento tempo={250}>
         <Header />
-
-        <section className="banner-perfil">
+        <section className="banner-abas">
           <div className="titulo-banner">
-            <h1>Meu Perfil</h1>
+            <h1>Listagem do Pedidos</h1>
           </div>
           <div className="abas-navegacao">
-            <AbaNavegacao nome="Perfil" navegacao="/perfil" />
             <AbaNavegacao
-              nome="Endereço (s) Cadastrado (s)"
-              navegacao="/enderecocliente"
+              nome="Análise de Clientes"
+              navegacao="/analiseclientes"
             />
             <AbaNavegacao
-              nome="Meus Pedidos"
+              nome="Produtos Cadastrados"
+              navegacao="/listagemprodutos"
+            />
+            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
+            <AbaNavegacao
+              nome="Lista de Pedidos"
+              navegacao="/listapedidos"
               abaAtual={true}
-              navegacao="/meuspedidos"
             />
-            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" />
           </div>
         </section>
 
         <section className="pedidos-cliente">
-          <div className="filtragem-pedidos">
-            <span>Período:</span>
-            <select name="filtragem">
-              <option value="todos">Mostrar todos os pedidos</option>
-              <option>Últimos 12 meses</option>
-              <option>Último mês</option>
-              <option>última Compra</option>
-            </select>
-          </div>
+          <section className="recarregar-dados">
+            <i class="fa-solid fa-arrows-rotate" onClick={atualizarTabela}></i>
+            <span>Atualizar Tabela</span>
+          </section>
 
-          <div className="listagem-pedidos">
+          <div className="listagem-pedidos-clientes">
             <table>
               <colgroup>
                 <col className="numero-pedido" />
                 <col className="quantidade-pedido" />
                 <col className="descricao-pedido" />
+                <col className="valor-total-pedido" />
+                <col className="contato" />
                 <col className="status-pedido" />
                 <col className="data-pedido" />
               </colgroup>
@@ -80,6 +84,8 @@ export default function PedidosCliente() {
                   <th>Nº do Pedido</th>
                   <th>Qtd.</th>
                   <th>Descrição</th>
+                  <th>Valor Total do Pedido</th>
+                  <th>Contato</th>
                   <th>Status do Pedido</th>
                   <th>Data/Mês/Ano</th>
                 </tr>
@@ -105,6 +111,13 @@ export default function PedidosCliente() {
                         </div>
                       ))}
                     </td>
+                    <td>
+                      <div className="preco">
+                        <span>R$</span>
+                        {1000}
+                      </div>
+                    </td>
+                    <td className="contato-cliente">{pedido.celular}</td>
                     <td>{pedido.status_pedido}</td>
                     <td>{pedido.data_pedido}</td>
                   </tr>
@@ -116,6 +129,6 @@ export default function PedidosCliente() {
 
         <Footer />
       </TelaCarregamento>
-    </div>
+    </main>
   );
 }

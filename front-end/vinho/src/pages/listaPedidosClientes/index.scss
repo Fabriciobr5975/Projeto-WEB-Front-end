@@ -1,0 +1,170 @@
+.pagina-listagem-produtos-clientes {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 20rem;
+  flex-shrink: 1;
+  font-style: normal;
+  line-height: normal;
+
+  .banner-abas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 22.1rem;
+    background-image: url("../../../public/assets/images/banner/BannerUserSpace.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-items: start;
+    justify-content: flex-end;
+
+    .titulo-banner {
+      display: flex;
+      padding: 2rem 2rem 5rem 2rem;
+      font: 700 2rem / normal "Poppins";
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .abas-navegacao {
+      width: 59.3rem;
+      height: 5.1rem;
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+  .pedidos-cliente {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #eae9e9;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2rem 3rem 5rem 3rem;
+
+    .recarregar-dados {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: -1.5rem;
+  
+      span {
+        font: 500 1rem "Poppins";
+      }
+  
+      i {
+        transition: opacity 0.5s ease;
+        cursor: pointer;
+  
+        &:hover {
+          opacity: 0.9;
+          text-shadow: 0rem 0rem 1rem #fff inset;
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .listagem-pedidos-clientes {
+      width: 100%;
+      table {
+        width: 100%;
+        border-spacing: 0rem 0.625rem;
+        padding-top: 2rem;
+        font: 500 1rem / normal "Poppins";
+
+        .primeira-coluna {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+
+          button {
+            width: 50%;
+            height: 2.5rem;
+            font: 400 0.8rem "Poppins";
+            color: #fff;
+            border-radius: 51.25rem;
+            border: none;
+            background: #a4596d;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+
+            &:hover {
+              opacity: 0.95;
+              box-shadow: 0rem 0rem 0.15rem #b84363 inset;
+              transform: scale(1.05);
+            }
+          }
+        }
+
+        .conteudo-lista {
+          padding: 0.5rem;
+        }
+
+        .numero-pedido {
+          width: 18%;
+        }
+
+        .quantidade-pedido {
+          width: 5%;
+        }
+
+        .status-pedido {
+          width: 10%;
+        }
+        .descricao-pedido {
+          width: 28%;
+        }
+
+        .valor-total-pedido {
+          width: 12%;
+        }
+
+        .contato {
+          width: 16%;
+        }
+
+        .data-pedido {
+          width: 11%;
+        }
+
+        .preco {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.3rem;
+        }
+
+        .contato-cliente {
+          letter-spacing: 0.12rem;
+        }
+
+        th,
+        td {
+          text-align: center;
+          padding: 0.625rem;
+        }
+
+        td {
+          border-top: 0.125rem dashed #000;
+          border-bottom: 0.125rem dashed #000;
+        }
+
+        tr td:first-child {
+          border-left: 0.125rem dashed #000;
+        }
+
+        tr td:last-child {
+          border-right: 0.125rem dashed #000;
+        }
+      }
+    }
+  }
+}

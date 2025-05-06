@@ -4,12 +4,16 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Vinho from "../../components/vinho";
+import { useLocation } from "react-router-dom";
 
 export default function Produtos() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+
   return (
     <div className="pagina-produtos pagina">
-      <TelaCarregamento tempo={500}>
-        <Header />
+      <TelaCarregamento tempo={250}>
+        <Header cliente={cliente} />
 
         <section className="banner-perfil"></section>
         <section className="titulo-banner">
@@ -131,7 +135,7 @@ export default function Produtos() {
           </div>
         </section>
 
-        <Footer />
+        <Footer cliente={cliente}/>
       </TelaCarregamento>
     </div>
   );

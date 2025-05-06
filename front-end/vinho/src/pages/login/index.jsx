@@ -17,7 +17,7 @@ export default function Login() {
 
   const buscarCliente = async () => {
     if (validarCampos()) {
-      const url = `http://localhost:5001/cliente/informacao/email?email=${email}`;
+      const url = `http://localhost:5001/cliente/busca/email?email=${email}`;
 
       const resp = await axios.get(url);
 
@@ -30,9 +30,9 @@ export default function Login() {
         cliente.push(clienteValido);
         setCliente(cliente);
         alert(
-          `Login realizado com sucesso! Logado como ${cliente[0].nome_completo}`
+          `Login realizado com sucesso! Logado como ${cliente[0].primeiro_nome} ${cliente[0].sobrenome}`
         );
-        navigate("/homepage", { state: { cliente: cliente[0] } });
+        navigate("/homepage", {state: { cliente: cliente[0] }});
       } else {
         alert("O usuário não foi encontrado!");
       }
@@ -61,7 +61,7 @@ export default function Login() {
 
   return (
     <div className="pagina-login pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
         <div className="login">
           <div className="login-usuario">

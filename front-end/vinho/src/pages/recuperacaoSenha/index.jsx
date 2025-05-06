@@ -12,7 +12,7 @@ export default function RecuperacaoSenha() {
 
   return (
     <div className="pagina-recuperacao-senha pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
 
         <div className="recuperacao-senha">

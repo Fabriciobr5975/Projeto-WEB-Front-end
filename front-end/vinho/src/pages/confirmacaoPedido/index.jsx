@@ -7,7 +7,7 @@ import Footer from "../../components/footer";
 export default function ConfirmacaoPedido() {
   return (
     <div className="pagina-confirmacao-pedido pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header />
         <main className="confirmacao-pedido">
           <div className="banner">

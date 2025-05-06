@@ -4,8 +4,12 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function Vinho() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+
   const [quantidade, setQuantidade] = useState(1);
 
   useEffect(() => {
@@ -29,8 +33,8 @@ export default function Vinho() {
 
   return (
     <div className="pagina-vinho pagina">
-      <TelaCarregamento tempo={500}>
-        <Header />
+      <TelaCarregamento tempo={250}>
+        <Header cliente={cliente} />
 
         <main className="informacoes-vinho">
           <div className="caracteristicas-vinho">

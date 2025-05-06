@@ -13,7 +13,7 @@ export default function SobreNos() {
 
   return (
     <div className="pagina-sobre-nos pagina">
-      <TelaCarregamento tempo={500}>
+      <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
         <main className="sobre-nos">
           <div className="banner">
@@ -82,7 +82,7 @@ export default function SobreNos() {
             </div>
           </div>
         </main>
-        <Footer />
+        <Footer cliente={cliente}/>
       </TelaCarregamento>
     </div>
   );
