@@ -17,6 +17,7 @@ import CarrinhoCliente from "./pages/carrinho";
 import ConfirmacaoPedido from "./pages/confirmacaoPedido";
 import Produtos from "./pages/produto";
 import Vinho from "./pages/vinho";
+import CheckOut from "./pages/checkOut";
 
 export default function Navegacao() {
   return (
@@ -38,6 +39,7 @@ export default function Navegacao() {
         <Route path="/sobrenos" element={<SobreNos />} />
         <Route path="/produtos" element={<Produtos />} />
         <Route path="/vinho" element={<Vinho />} />
+        <Route path="/checkout" element={<CheckOut />} />
         <Route path="/confirmacaopedido" element={<ConfirmacaoPedido />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
