@@ -3,12 +3,16 @@ import "./index.scss";
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import { useLocation } from "react-router-dom";
 
 export default function ConfirmacaoPedido() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  
   return (
     <div className="pagina-confirmacao-pedido pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
         <main className="confirmacao-pedido">
           <div className="banner">
             <h1>Confirmação do Pedido</h1>
@@ -42,7 +46,7 @@ export default function ConfirmacaoPedido() {
           </div>
         </main>
 
-        <Footer />
+        <Footer cliente={cliente}/>
       </TelaCarregamento>
     </div>
   );

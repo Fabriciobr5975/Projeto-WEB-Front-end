@@ -5,19 +5,19 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export default function PedidosCliente() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  const [cpfCliente] = useState(cliente.cpf);
   const [listaPedidos, setListaPedidos] = useState([]);
 
-  useEffect(() => {
-    listarPedidos();
-  }, []);
-
-  const listarPedidos = async () => {
+  const listarPedidos = useCallback(async () => {
     try {
-      const url = `http://localhost:5001/pedido/busca/cliente?cliente=60741430053`;
+      const url = `http://localhost:5001/pedido/busca/cliente?cliente=${cpfCliente}`;
 
       const resp = await axios.get(url);
       const pedidos = resp.data;
@@ -29,29 +29,41 @@ export default function PedidosCliente() {
           "Erro ao buscar as informações dos seus pedidos"
       );
     }
-  };
+  }, [cpfCliente]);
+
+  useEffect(() => {
+    if (cpfCliente) {
+      listarPedidos();
+    }
+  }, [cpfCliente, listarPedidos]);
 
   return (
     <div className="pagina-pedidos-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
 
         <section className="banner-perfil">
           <div className="titulo-banner">
             <h1>Meu Perfil</h1>
           </div>
           <div className="abas-navegacao">
-            <AbaNavegacao nome="Perfil" navegacao="/perfil" />
+            <AbaNavegacao nome="Perfil" navegacao="/perfil" cliente={cliente} />
             <AbaNavegacao
               nome="Endereço (s) Cadastrado (s)"
               navegacao="/enderecocliente"
+              cliente={cliente}
             />
             <AbaNavegacao
               nome="Meus Pedidos"
               abaAtual={true}
               navegacao="/meuspedidos"
+              cliente={cliente}
             />
-            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" />
+            <AbaNavegacao
+              nome="Meu Carrinho"
+              navegacao="/meucarrinho"
+              cliente={cliente}
+            />
           </div>
         </section>
 
@@ -114,7 +126,7 @@ export default function PedidosCliente() {
           </div>
         </section>
 
-        <Footer />
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );

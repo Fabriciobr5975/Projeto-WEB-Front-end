@@ -23,8 +23,9 @@ export default function Header(props) {
           <img
             src="/assets/images/logo.svg"
             alt="Logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/homepage", {state: { cliente: cliente }})}
           />
+
         </picture>
 
         <div className="links-header">
@@ -50,7 +51,7 @@ export default function Header(props) {
             <i class="fa-solid fa-circle-user" onClick={() => navegacao()}></i>
             <i
               class="fa-solid fa-cart-shopping"
-              onClick={() => navigate("/meucarrinho")}
+              onClick={() => navigate("/meucarrinho", {state: { cliente: cliente }})}
             ></i>
           </div>
         </div>
