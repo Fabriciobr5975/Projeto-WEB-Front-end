@@ -91,6 +91,7 @@ export default function CadastroCliente() {
       const url = `http://localhost:5001/cliente`;
       const resp = await axios.post(url, clienteCadastro);
       alert(resp.data.resposta);
+      navigate("/login");
     } catch (err) {
       alert("O ocorreu um erro na inserção do cliente");
     }

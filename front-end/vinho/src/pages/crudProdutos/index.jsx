@@ -45,7 +45,6 @@ export default function CrudProdutos() {
 
   const colocarImagemNoCampo = (e) => {
     limparCampoImagem();
-
     const arquivo = e.target.files[0];
 
     if (arquivo) {
@@ -67,7 +66,7 @@ export default function CrudProdutos() {
     try {
       const formData = new FormData();
       formData.append("imagem_vinho", vinho.imagem_vinho);
-      formData.append("imagem_vinho", nomeImagem);
+      formData.append("nome_imagem", vinho.nome_imagem);
       formData.append("nome", vinho.nome_vinho);
       formData.append("uva", vinho.uva_vinho);
       formData.append("teor_alcolico", vinho.teor_alcolico);
@@ -86,6 +85,7 @@ export default function CrudProdutos() {
 
       alert(`(${resp.data.resposta})`);
       limpar();
+      limparCampoImagem();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao inserir o vinho");
     }
@@ -95,6 +95,7 @@ export default function CrudProdutos() {
     try {
       const formData = new FormData();
       formData.append("imagem_vinho", vinho.imagem_vinho);
+      formData.append("nome_imagem", vinho.nome_imagem);
       formData.append("nome", vinho.nome_vinho);
       formData.append("uva", vinho.uva_vinho);
       formData.append("teor_alcolico", vinho.teor_alcolico);
@@ -136,7 +137,6 @@ export default function CrudProdutos() {
       const vinhoBuscado = resp.data;
 
       setVinho(() => ({ ...vinhoBuscado }));
-
 
       limparCampoImagem();
       setImagemCampo(vinho.imagem_vinho);

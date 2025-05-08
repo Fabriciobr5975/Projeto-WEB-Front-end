@@ -40,7 +40,7 @@ export default function Navegacao() {
         <Route path="/finalizarpedido" element={<FinalizarPedido />} />
         <Route path="/sobrenos" element={<SobreNos />} />
         <Route path="/produtos" element={<Produtos />} />
-        <Route path="/vinho" element={<Vinho />} />
+        <Route path="/vinho/" element={<Vinho />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/confirmacaopedido" element={<ConfirmacaoPedido />} />
         <Route path="*" element={<NotFound />} />
