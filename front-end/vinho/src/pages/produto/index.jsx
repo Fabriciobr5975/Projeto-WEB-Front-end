@@ -5,10 +5,33 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Vinho from "../../components/vinho";
 import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Produtos() {
   const location = useLocation();
   const { cliente } = location.state || {};
+
+  const [listaVinhos, setListaVinhos] = useState([]);
+
+  useEffect(() => {
+    listarVinhos();
+  }, []);
+
+  const listarVinhos = async () => {
+    try {
+      const url = `http://localhost:5001/vinho`;
+
+      const resp = await axios.get(url);
+      const vinhos = resp.data;
+
+      setListaVinhos(vinhos);
+    } catch (error) {
+      alert(
+        error.response?.data?.erro ?? "Erro ao buscar as informações dos vinhos"
+      );
+    }
+  };
 
   return (
     <div className="pagina-produtos pagina">
@@ -87,18 +110,9 @@ export default function Produtos() {
           </div>
 
           <div className="produtos">
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
-            <Vinho />
+            {listaVinhos.map((item) => (
+              <Vinho vinhos={item} key={item.id_vinho} /> 
+            ))}
           </div>
 
           <section className="manipulacao-paginas-produtos">
@@ -135,7 +149,7 @@ export default function Produtos() {
           </div>
         </section>
 
-        <Footer cliente={cliente}/>
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );

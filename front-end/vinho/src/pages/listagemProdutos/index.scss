@@ -49,7 +49,7 @@
       background: #a4596d;
       width: 11.25rem;
       height: 2.8125rem;
-      border-radius: .625rem;
+      border-radius: 0.625rem;
       color: #fff;
       cursor: pointer;
       transition: opacity 0.5s ease;
@@ -63,7 +63,7 @@
 
     input[type="text"] {
       width: 100%;
-      border-radius: .9375rem;
+      border-radius: 0.9375rem;
       border: 1px solid rgba(0, 0, 0, 0.5);
       background: #fff;
       height: 2.8125rem;
@@ -129,19 +129,6 @@
       width: 10%;
     }
 
-    .primeira-coluna {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-
-      img {
-        width: 20%;
-        image-rendering: optimizeQuality;
-      }
-    }
-
     .preco {
       display: inline-flex;
       align-items: center;
@@ -151,36 +138,50 @@
 
     table {
       width: 100%;
-      border-spacing: 0rem .625rem;
+      border-spacing: 0rem 0.625rem;
       padding-top: 2rem;
       font: 500 1rem / normal "Poppins";
 
       th,
       td {
         text-align: center;
-        padding: .625rem;
+        padding: 0.625rem;
       }
 
       th {
-        border-bottom: .125rem solid #000;
-        border: #000 solid .125rem;
+        border-bottom: 0.125rem solid #000;
+        border: #000 solid 0.125rem;
       }
 
       td {
-        border-top: .125rem solid #000;
-        border-bottom: .125rem solid #000;
+        border-top: 0.125rem solid #000;
+        border-bottom: 0.125rem solid #000;
+
+        .primeira-coluna {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1.25rem;
+          flex-wrap: wrap;
+
+          img {
+            width: 20%;
+            image-rendering: optimizeQuality;
+          }
+        }
       }
 
       tr td:first-child {
-        border-left: .125rem solid #000;
-        border-top-left-radius: .625rem;
-        border-bottom-left-radius: .625rem;
+        border-left: 0.125rem solid #000;
+        border-top-left-radius: 0.625rem;
+        border-bottom-left-radius: 0.625rem;
       }
 
       tr td:last-child {
-        border-right: .125rem solid #000;
-        border-top-right-radius: .625rem;
-        border-bottom-right-radius: .625rem;
+        border-right: 0.125rem solid #000;
+        border-top-right-radius: 0.625rem;
+        border-bottom-right-radius: 0.625rem;
       }
     }
   }

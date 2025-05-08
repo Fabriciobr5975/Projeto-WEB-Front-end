@@ -7,8 +7,12 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export default function ListagemProdutos() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+
   const [listaVinhos, setListaVinhos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
   const [nome, setNome] = useState("");
@@ -51,7 +55,7 @@ export default function ListagemProdutos() {
   return (
     <main className="pagina-listagem-produtos pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Listagem do Estoque</h1>
@@ -104,20 +108,25 @@ export default function ListagemProdutos() {
               <tr>
                 <th>ID</th>
                 <th>Vinho</th>
-                <th>Descrição</th>
+                <th>Nome do Vinho</th>
                 <th>Vinícola</th>
                 <th>Valor Unitário</th>
                 <th>Status Estoque</th>
-                <th>Qtd Estoque</th>
+                <th>Quantidade</th>
               </tr>
             </thead>
             <tbody>
               {listaVinhos.map((item) => (
                 <tr key={item.id_vinho}>
                   <td>{item.id_vinho}</td>
-                  <td className="primeira-coluna">
-                    {item.vinho}
-                    <img src="/assets/images/vinho-exemplo.svg" alt="imagem vinho" />
+                  <td>
+                    <div className="primeira-coluna">
+                      {item.vinho}
+                      <img
+                        src="/assets/images/vinho-exemplo.svg"
+                        alt="imagem vinho"
+                      />
+                    </div>
                   </td>
                   <td>{item.descricao}</td>
                   <td>{item.vinicola_vinho}</td>
@@ -135,7 +144,7 @@ export default function ListagemProdutos() {
           </table>
         </section>
 
-        <Footer />
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </main>
   );

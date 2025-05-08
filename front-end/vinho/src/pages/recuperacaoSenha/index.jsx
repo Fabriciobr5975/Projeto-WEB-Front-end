@@ -5,15 +5,19 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function RecuperacaoSenha() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+
   const [email, setEmail] = useState("");
   const [codigo, setCodigo] = useState("");
 
   return (
     <div className="pagina-recuperacao-senha pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
 
         <div className="recuperacao-senha">
           <span>Recuperação de Senha</span>
@@ -45,7 +49,7 @@ export default function RecuperacaoSenha() {
           </button>
         </div>
 
-        <Footer />
+        <Footer cliente={cliente}/>
       </TelaCarregamento>
     </div>
   );

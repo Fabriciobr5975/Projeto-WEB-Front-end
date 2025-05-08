@@ -7,8 +7,12 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export default function ListaPedidosClientes() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+
   const [listaPedidos, setListaPedidos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
 
@@ -39,7 +43,7 @@ export default function ListaPedidosClientes() {
   return (
     <main className="pagina-listagem-produtos-clientes pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Listagem do Pedidos</h1>
@@ -73,7 +77,7 @@ export default function ListaPedidosClientes() {
               <colgroup>
                 <col className="numero-pedido" />
                 <col className="quantidade-pedido" />
-                <col className="descricao-pedido" />
+                <col className="nome-vinho-pedido" />
                 <col className="valor-total-pedido" />
                 <col className="contato" />
                 <col className="status-pedido" />
@@ -82,8 +86,8 @@ export default function ListaPedidosClientes() {
               <thead>
                 <tr>
                   <th>Nº do Pedido</th>
-                  <th>Qtd.</th>
-                  <th>Descrição</th>
+                  <th>Quantidade</th>
+                  <th>Nome do Vinho</th>
                   <th>Valor Total do Pedido</th>
                   <th>Contato</th>
                   <th>Status do Pedido</th>
@@ -93,9 +97,11 @@ export default function ListaPedidosClientes() {
               <tbody>
                 {listaPedidos.map((pedido) => (
                   <tr key={pedido.id_pedido}>
-                    <td className="primeira-coluna">
-                      <div className="conteudo-lista">{pedido.id_pedido}</div>
-                      <button>Ver Pedido Completo</button>
+                    <td>
+                      <div className="primeira-coluna">
+                        {pedido.id_pedido}
+                        <button>Ver Pedido Completo</button>
+                      </div>
                     </td>
                     <td>
                       {pedido.itens.map((item) => (
@@ -107,7 +113,7 @@ export default function ListaPedidosClientes() {
                     <td>
                       {pedido.itens.map((item) => (
                         <div className="conteudo-lista">
-                          <div key={item.id_vinho}>{item.descricao}</div>
+                          <div key={item.id_vinho}>{item.vinho}</div>
                         </div>
                       ))}
                     </td>
@@ -127,7 +133,7 @@ export default function ListaPedidosClientes() {
           </div>
         </section>
 
-        <Footer />
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </main>
   );

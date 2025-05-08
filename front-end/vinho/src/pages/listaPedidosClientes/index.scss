@@ -78,32 +78,6 @@
         padding-top: 2rem;
         font: 500 1rem / normal "Poppins";
 
-        .primeira-coluna {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
-
-          button {
-            width: 50%;
-            height: 2.5rem;
-            font: 400 0.8rem "Poppins";
-            color: #fff;
-            border-radius: 51.25rem;
-            border: none;
-            background: #a4596d;
-            cursor: pointer;
-            transition: opacity 0.5s ease;
-
-            &:hover {
-              opacity: 0.95;
-              box-shadow: 0rem 0rem 0.15rem #b84363 inset;
-              transform: scale(1.05);
-            }
-          }
-        }
-
         .conteudo-lista {
           padding: 0.5rem;
         }
@@ -119,7 +93,7 @@
         .status-pedido {
           width: 10%;
         }
-        .descricao-pedido {
+        .valor-total-pedido {
           width: 28%;
         }
 
@@ -150,11 +124,39 @@
         td {
           text-align: center;
           padding: 0.625rem;
+          height: 100%;
         }
 
         td {
+          height: 100%;
           border-top: 0.125rem dashed #000;
           border-bottom: 0.125rem dashed #000;
+
+          .primeira-coluna {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+
+          button {
+            width: 50%;
+            height: 2.5rem;
+            font: 400 0.8rem "Poppins";
+            color: #fff;
+            border-radius: 51.25rem;
+            border: none;
+            background: #a4596d;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+
+            &:hover {
+              opacity: 0.95;
+              box-shadow: 0rem 0rem 0.15rem #b84363 inset;
+              transform: scale(1.05);
+            }
+          }
+        }
         }
 
         tr td:first-child {

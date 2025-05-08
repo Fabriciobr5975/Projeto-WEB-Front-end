@@ -14,7 +14,6 @@ export default function Footer(props) {
           <Link to="/" state={{ cliente }}>Home</Link>
           <Link to="/sobrenos" state={{ cliente }}>Sobre Nós</Link>
           <Link to="/nossahistoria" state={{ cliente }}>Nossa História</Link>
-          <Link to="/guiadevinhos" state={{ cliente }}>Guia de Vinhos</Link>
         </div>
 
         <div className="vinho-footer">
@@ -25,7 +24,6 @@ export default function Footer(props) {
           <Link to="/produtos" state={{ cliente }}>Rosé</Link>
           <Link to="/produtos" state={{ cliente }}>Mais Vendidos</Link>
           <Link to="/produtos" state={{ cliente }}>Em Promoção</Link>
-          <Link to="/produtos" state={{ cliente }}>Guia de Vinhos</Link>
         </div>
 
         <div className="ajuda-footer">
@@ -35,7 +33,6 @@ export default function Footer(props) {
           <Link to="politicas" state={{ cliente }}>Política de Privacidade</Link>
           <Link to="politicas" state={{ cliente }}>Política de Privacidade</Link>
           <Link to="politicas" state={{ cliente }}>Política de Cancelamento</Link>
-          <Link to="informacoes" state={{ cliente }}>Informações sobre Entrega</Link>
         </div>
 
         <div className="conteudo-adicional-footer">

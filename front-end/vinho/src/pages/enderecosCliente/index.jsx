@@ -4,26 +4,31 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
+import { useLocation } from "react-router-dom";
 
 export default function EnderecosCliente() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  
   return (
     <div className="pagina-enderecos-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente}/>
 
         <section className="banner-perfil">
           <div className="titulo-banner">
             <h1>Meu Perfil</h1>
           </div>
           <div className="abas-navegacao">
-            <AbaNavegacao nome="Perfil" navegacao="/perfil" />
+            <AbaNavegacao nome="Perfil" navegacao="/perfil" cliente={cliente}/>
             <AbaNavegacao
               nome="Endereço (s) Cadastrado (s)"
               abaAtual={true}
               navegacao="/enderecocliente"
+              cliente={cliente}
             />
-            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" />
-            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" />
+            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" cliente={cliente}/>
+            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" cliente={cliente}/>
           </div>
         </section>
 
@@ -92,7 +97,7 @@ export default function EnderecosCliente() {
           </div>
         </section>
 
-        <Footer />
+        <Footer cliente={cliente}/>
       </TelaCarregamento>
     </div>
   );

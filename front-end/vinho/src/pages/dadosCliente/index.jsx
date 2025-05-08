@@ -5,11 +5,15 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 export default function PerfilCliente() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  const [idCliente] = useState(cliente.id_cliente);
+
   const [dadosCliente, setDadosCliente] = useState({
     nome: "",
     sobrenome: "",
@@ -20,13 +24,9 @@ export default function PerfilCliente() {
     celular: "",
   });
 
-  useEffect(() => {
-    buscarCliente();
-  }, []);
-
   const alterarDados = async () => {
     try {
-      const url = `http://localhost:5001/cliente/1`;
+      const url = `http://localhost:5001/cliente/${idCliente}`;
       const resp = await axios.put(url, dadosCliente);
 
       const resposta = resp.data.resposta;
@@ -35,16 +35,15 @@ export default function PerfilCliente() {
         alert("Os seus dados foram alterados com sucesso!");
       }
     } catch (error) {
-      alert(error.response?.data?.erro ?? "Erro ao buscar o cliente");
+      alert(error.response?.data?.erro ?? "Erro ao alterar o cliente");
     }
   };
 
-  // Apenas para testes
-  const buscarCliente = async () => {
+  const buscarCliente = useCallback(async () => {
     try {
-      const url = `http://localhost:5001/cliente/1`;
+      const url = `http://localhost:5001/cliente/${idCliente}`;
       const resp = await axios.get(url);
-
+  
       const cliente = resp.data[0];
       setDadosCliente({
         nome: cliente.primeiro_nome,
@@ -58,25 +57,32 @@ export default function PerfilCliente() {
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao buscar o cliente");
     }
-  };
+  }, [idCliente]); 
+
+  useEffect(() => {
+    if(idCliente) {
+      buscarCliente();
+    }
+  }, [idCliente, buscarCliente]);
 
   return (
     <div className="pagina-perfil-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
 
         <section className="banner-perfil">
           <div className="titulo-banner">
             <h1>Meu Perfil</h1>
           </div>
           <div className="abas-navegacao">
-            <AbaNavegacao nome="Perfil" abaAtual={true} navegacao="/perfil" />
+            <AbaNavegacao nome="Perfil" abaAtual={true} navegacao="/perfil" cliente={cliente}/>
             <AbaNavegacao
               nome="Endereço (s) Cadastrado (s)"
               navegacao="/enderecocliente"
+              cliente={cliente}
             />
-            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" />
-            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" />
+            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" cliente={cliente}/>
+            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" cliente={cliente}/>
           </div>
         </section>
 
@@ -193,7 +199,7 @@ export default function PerfilCliente() {
           </div>
         </section>
 
-        <Footer />
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );

@@ -6,11 +6,16 @@ import Footer from "../../components/footer";
 
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CadastroCliente() {
+  const location = useLocation();
+  const { cliente } = location.state || {};
+  const navigate = useNavigate();
+
   const [bloqueioCampo, setBloqueioCampo] = useState(true);
 
-  const [cliente, setCliente] = useState({
+  const [clienteCadastro, setCliente] = useState({
     nome: "",
     sobrenome: "",
     cpf: "",
@@ -29,11 +34,10 @@ export default function CadastroCliente() {
     logradouro: "",
   });
 
-  
   const pegarEnderecoViaCep = useCallback(async () => {
     try {
       const resp = await axios.get(
-        `https://viacep.com.br/ws/${cliente.cep}/json/`
+        `https://viacep.com.br/ws/${clienteCadastro.cep}/json/`
       );
       const enderecoBusca = resp.data;
 
@@ -54,7 +58,7 @@ export default function CadastroCliente() {
     } catch (err) {
       console.error("Erro ao buscar endereço");
     }
-  }, [cliente.cep]);
+  }, [clienteCadastro.cep]);
 
   const limparEndereco = useCallback(() => {
     setEndereco((enderecoLimpo) => ({
@@ -73,33 +77,30 @@ export default function CadastroCliente() {
   }, []);
 
   useEffect(() => {
-    if (cliente.cep.length === 8 || cliente.cep.length === 9) {
+    if (clienteCadastro.cep.length === 8 || clienteCadastro.cep.length === 9) {
       pegarEnderecoViaCep();
     }
 
-    if (cliente.cep !== "" && cliente.cep.length === 0) {
+    if (clienteCadastro.cep !== "" && clienteCadastro.cep.length === 0) {
       limparEndereco();
     }
-
-  }, [cliente.cep, pegarEnderecoViaCep, limparEndereco]);
-
+  }, [clienteCadastro.cep, pegarEnderecoViaCep, limparEndereco]);
 
   const inserirNovoCliente = async () => {
     try {
       const url = `http://localhost:5001/cliente`;
-      const resp = await axios.post(url, cliente);
+      const resp = await axios.post(url, clienteCadastro);
       alert(resp.data.resposta);
+      navigate("/login");
     } catch (err) {
       alert("O ocorreu um erro na inserção do cliente");
     }
   };
 
-  
-
   return (
     <div className="pagina-cadastro-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
 
         <div className="cadastro">
           <div className="cadastro-usuario">
@@ -111,9 +112,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite seu primeiro nome"
-                  value={cliente.nome}
+                  value={clienteCadastro.nome}
                   onChange={(e) =>
-                    setCliente({ ...cliente, nome: e.target.value })
+                    setCliente({ ...clienteCadastro, nome: e.target.value })
                   }
                   required
                 />
@@ -125,9 +126,12 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite seu sobrenome"
-                  value={cliente.sobrenome}
+                  value={clienteCadastro.sobrenome}
                   onChange={(e) =>
-                    setCliente({ ...cliente, sobrenome: e.target.value })
+                    setCliente({
+                      ...clienteCadastro,
+                      sobrenome: e.target.value,
+                    })
                   }
                   required
                 />
@@ -139,9 +143,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite seu CPF"
-                  value={cliente.cpf}
+                  value={clienteCadastro.cpf}
                   onChange={(e) =>
-                    setCliente({ ...cliente, cpf: e.target.value })
+                    setCliente({ ...clienteCadastro, cpf: e.target.value })
                   }
                   required
                 />
@@ -153,9 +157,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite seu E-mail"
-                  value={cliente.email}
+                  value={clienteCadastro.email}
                   onChange={(e) =>
-                    setCliente({ ...cliente, email: e.target.value })
+                    setCliente({ ...clienteCadastro, email: e.target.value })
                   }
                   required
                 />
@@ -167,9 +171,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite sua senha"
-                  value={cliente.senha}
+                  value={clienteCadastro.senha}
                   onChange={(e) =>
-                    setCliente({ ...cliente, senha: e.target.value })
+                    setCliente({ ...clienteCadastro, senha: e.target.value })
                   }
                   required
                 />
@@ -181,9 +185,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite o número de celular"
-                  value={cliente.celular}
+                  value={clienteCadastro.celular}
                   onChange={(e) =>
-                    setCliente({ ...cliente, celular: e.target.value })
+                    setCliente({ ...clienteCadastro, celular: e.target.value })
                   }
                   required
                 />
@@ -197,9 +201,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite seu CEP"
-                  value={cliente.cep}
+                  value={clienteCadastro.cep}
                   onChange={(e) =>
-                    setCliente({ ...cliente, cep: e.target.value })
+                    setCliente({ ...clienteCadastro, cep: e.target.value })
                   }
                 />
               </div>
@@ -250,9 +254,9 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite o número do seu imóvel"
-                  value={cliente.numero}
+                  value={clienteCadastro.numero}
                   onChange={(e) =>
-                    setCliente({ ...cliente, numero: e.target.value })
+                    setCliente({ ...clienteCadastro, numero: e.target.value })
                   }
                   readOnly={bloqueioCampo}
                 />
@@ -263,9 +267,12 @@ export default function CadastroCliente() {
                 <input
                   type="text"
                   placeholder="Digite o complemento do seu endereço"
-                  value={cliente.complemento}
+                  value={clienteCadastro.complemento}
                   onChange={(e) =>
-                    setCliente({ ...cliente, complemento: e.target.value })
+                    setCliente({
+                      ...clienteCadastro,
+                      complemento: e.target.value,
+                    })
                   }
                   readOnly={bloqueioCampo}
                 />
@@ -278,7 +285,7 @@ export default function CadastroCliente() {
 
           <div className="finalizacao-cadastro">
             <div className="icone-voltar">
-              <i class="fa-solid fa-circle-chevron-left"></i>
+              <i class="fa-solid fa-circle-chevron-left" onClick={() => navigate("/login")}></i>
               <p>Voltar</p>
             </div>
             <div className="botao">
@@ -287,7 +294,7 @@ export default function CadastroCliente() {
           </div>
         </div>
 
-        <Footer />
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );
