@@ -7,12 +7,8 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 export default function ListagemProdutos() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
-
   const [listaVinhos, setListaVinhos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
   const [nome, setNome] = useState("");
@@ -55,7 +51,7 @@ export default function ListagemProdutos() {
   return (
     <main className="pagina-listagem-produtos pagina">
       <TelaCarregamento tempo={250}>
-        <Header cliente={cliente}/>
+        <Header />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Listagem do Estoque</h1>
@@ -139,7 +135,7 @@ export default function ListagemProdutos() {
           </table>
         </section>
 
-        <Footer cliente={cliente}/>
+        <Footer />
       </TelaCarregamento>
     </main>
   );

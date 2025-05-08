@@ -1,25 +1,26 @@
 import "./index.scss";
 
+import "./index.scss";
+
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 export default function CarrinhoCliente() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
-  const [cpfCliente] = useState(cliente.cpf);
-
   const [listaItensCarrinho, setListaItensCarrinho] = useState([]);
   // const [valorTotal, setValorTotal] = useState(0);
 
-  const listarPedidos = useCallback(async () => {
+  useEffect(() => {
+    listarPedidos();
+  });
+
+  const listarPedidos = async () => {
     try {
-      const url = `http://localhost:5001/itenscarrinho/busca/cliente?cliente=${cpfCliente}`;
+      const url = `http://localhost:5001/itenscarrinho/busca/cliente?cliente=60741430053`;
 
       const resp = await axios.get(url);
       const carrinho = resp.data;
@@ -31,40 +32,28 @@ export default function CarrinhoCliente() {
           "Erro ao buscar as informações dos seus pedidos"
       );
     }
-  }, [cpfCliente]);
-
-  useEffect(() => {
-    if (cpfCliente) {
-      listarPedidos();
-    }
-  }, [cpfCliente, listarPedidos]);
+  };
 
   return (
     <div className="pagina-carrinho-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header cliente={cliente} />
+        <Header />
 
         <section className="banner-perfil">
           <div className="titulo-banner">
             <h1>Meu Perfil</h1>
           </div>
           <div className="abas-navegacao">
-            <AbaNavegacao nome="Perfil" navegacao="/perfil" cliente={cliente} />
+            <AbaNavegacao nome="Perfil" navegacao="/perfil" />
             <AbaNavegacao
               nome="Endereço (s) Cadastrado (s)"
               navegacao="/enderecocliente"
-              cliente={cliente}
             />
-            <AbaNavegacao
-              nome="Meus Pedidos"
-              navegacao="/meuspedidos"
-              cliente={cliente}
-            />
+            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" />
             <AbaNavegacao
               nome="Meu Carrinho"
               abaAtual={true}
               navegacao="/meucarrinho"
-              cliente={cliente}
             />
           </div>
         </section>
@@ -94,10 +83,7 @@ export default function CarrinhoCliente() {
                 <tr key={carrinho.id_itens_carrinho}>
                   <td className="primeira-coluna">
                     {carrinho.vinho}
-                    <img
-                      src="/assets/images/vinho-exemplo.svg"
-                      alt="imagem vinho"
-                    />
+                    <img src="/assets/images/vinho-exemplo.svg" alt="imagem vinho"/>
                   </td>
                   <td>
                     <div className="manipulacao-quantidade">
@@ -130,7 +116,7 @@ export default function CarrinhoCliente() {
           </table>
         </section>
 
-        <Footer cliente={cliente} />
+        <Footer />
       </TelaCarregamento>
     </div>
   );

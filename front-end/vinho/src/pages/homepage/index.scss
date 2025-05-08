@@ -129,10 +129,18 @@
 
     .secao-vinhos {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 3.5rem;
-      flex-wrap: wrap;
+
+      .secao01-vinho,
+      .secao02-vinho {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+      }
     }
 
     .confira-mais {
@@ -288,6 +296,17 @@
       align-items: center;
       justify-content: center;
       gap: 3.5rem;
+
+      .secao01-vinho,
+      .secao02-vinho {
+        display: grid !important;
+        flex-direction: column !important;
+        grid-template-columns: auto auto !important;
+
+        align-items: center;
+        justify-content: center;
+        gap: 1rem !important;
+      }
     }
   }
 

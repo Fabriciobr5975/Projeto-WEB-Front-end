@@ -7,12 +7,8 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 export default function AnaliseClientes() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
-  
   const [listaClientes, setListaClientes] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
   const [filtroBusca, setFiltroBusca] = useState("");
@@ -55,7 +51,7 @@ export default function AnaliseClientes() {
   return (
     <div className="pagina-analise-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header cliente={cliente}/>
+        <Header />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Listagem de Clientes</h1>
@@ -137,7 +133,7 @@ export default function AnaliseClientes() {
           </table>
         </section>
 
-        <Footer cliente={cliente}/>
+        <Footer />
       </TelaCarregamento>
     </div>
   );

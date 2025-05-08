@@ -14,7 +14,6 @@ export default function Login() {
   const [cliente, setCliente] = useState([]);
 
   const navigate = useNavigate();
-  // Futura melhoria: localStorage.setItem("cliente", JSON.stringify(cliente));
 
   const buscarCliente = async () => {
     if (validarCampos()) {

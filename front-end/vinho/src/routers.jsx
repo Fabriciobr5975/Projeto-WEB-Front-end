@@ -14,7 +14,6 @@ import PerfilCliente from "./pages/dadosCliente";
 import EnderecosCliente from "./pages/enderecosCliente";
 import PedidosCliente from "./pages/pedidos";
 import CarrinhoCliente from "./pages/carrinho";
-import FinalizarPedido from "./pages/finalizarPedido";
 import ConfirmacaoPedido from "./pages/confirmacaoPedido";
 import Produtos from "./pages/produto";
 import Vinho from "./pages/vinho";
@@ -37,10 +36,9 @@ export default function Navegacao() {
         <Route path="/enderecoCliente" element={<EnderecosCliente />} />
         <Route path="/meuspedidos" element={<PedidosCliente />} />
         <Route path="/meucarrinho" element={<CarrinhoCliente />} />
-        <Route path="/finalizarpedido" element={<FinalizarPedido />} />
         <Route path="/sobrenos" element={<SobreNos />} />
         <Route path="/produtos" element={<Produtos />} />
-        <Route path="/vinho/" element={<Vinho />} />
+        <Route path="/vinho" element={<Vinho />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/confirmacaopedido" element={<ConfirmacaoPedido />} />
         <Route path="*" element={<NotFound />} />

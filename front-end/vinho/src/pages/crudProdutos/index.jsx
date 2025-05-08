@@ -7,19 +7,37 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 export default function CrudProdutos() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
-
   const [imagemCampo, setImagemCampo] = useState(null);
   const [nomeImagem, setNomeImagem] = useState("");
+
+  const limparCampoImagem = () => {
+    if (imagemCampo || vinho.imagem) {
+      setImagemCampo(null);
+      setVinho({ ...vinho, imagem: "" });
+      setNomeImagem("");
+    }
+  };
+
+  const colocarImagemNoCampo = (e) => {
+    limparCampoImagem();
+
+    const arquivo = e.target.files[0];
+
+    if (arquivo) {
+      const imagemUrl = URL.createObjectURL(arquivo);
+      setImagemCampo(imagemUrl);
+      setNomeImagem(arquivo.name);
+      setVinho({ ...vinho, imagem: arquivo });
+    }
+  };
+
   const [id, setId] = useState("");
 
   const [vinho, setVinho] = useState({
     id_vinho: 0,
-    imagem_vinho: "",
+    imagem: "",
     nome_imagem: "",
     extensao: "",
     nome_vinho: "",
@@ -35,38 +53,18 @@ export default function CrudProdutos() {
     descricao: "",
   });
 
-  const limparCampoImagem = () => {
-    if (imagemCampo || vinho.imagem_vinho) {
-      setImagemCampo(null);
-      setVinho({ ...vinho, imagem_vinho: "", nome_imagem: "" });
-      setNomeImagem("");
-    }
-  };
-
-  const colocarImagemNoCampo = (e) => {
-    limparCampoImagem();
-    const arquivo = e.target.files[0];
-
-    if (arquivo) {
-      const imagemUrl = URL.createObjectURL(arquivo);
-      setImagemCampo(imagemUrl);
-      setNomeImagem(arquivo.name);
-      setVinho({ ...vinho, imagem_vinho: arquivo, nome_imagem: arquivo.name });
-    }
-  };
-
   useEffect(() => {
-    if (vinho && vinho.imagem_vinho) {
-      setImagemCampo(vinho.imagem_vinho);
+    if (vinho && vinho.imagem) {
+      setImagemCampo(vinho.imagem);
       setNomeImagem(vinho.nome_imagem);
-    } 
+    }
   }, [vinho]);
 
   const cadastrar = async () => {
     try {
       const formData = new FormData();
-      formData.append("imagem_vinho", vinho.imagem_vinho);
-      formData.append("nome_imagem", vinho.nome_imagem);
+      formData.append("imagem_vinho", vinho.imagem);
+      formData.append("imagem_vinho", nomeImagem);
       formData.append("nome", vinho.nome_vinho);
       formData.append("uva", vinho.uva_vinho);
       formData.append("teor_alcolico", vinho.teor_alcolico);
@@ -85,7 +83,6 @@ export default function CrudProdutos() {
 
       alert(`(${resp.data.resposta})`);
       limpar();
-      limparCampoImagem();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao inserir o vinho");
     }
@@ -94,8 +91,7 @@ export default function CrudProdutos() {
   const alterar = async () => {
     try {
       const formData = new FormData();
-      formData.append("imagem_vinho", vinho.imagem_vinho);
-      formData.append("nome_imagem", vinho.nome_imagem);
+      formData.append("imagem_vinho", vinho.imagem);
       formData.append("nome", vinho.nome_vinho);
       formData.append("uva", vinho.uva_vinho);
       formData.append("teor_alcolico", vinho.teor_alcolico);
@@ -122,7 +118,9 @@ export default function CrudProdutos() {
 
   async function Excluir() {
     try {
-      await axios.delete(`http://localhost:5001/vinho/${vinho.id_vinho}`);
+      await axios.delete(
+        `http://localhost:5001/vinho/${vinho.id_vinho}`
+      );
       alert(`O produto (${vinho.nome_vinho}) foi excluido com sucesso! `);
 
       limpar();
@@ -136,10 +134,27 @@ export default function CrudProdutos() {
       const resp = await axios.get(`http://localhost:5001/vinho/${id}`);
       const vinhoBuscado = resp.data;
 
-      setVinho(() => ({ ...vinhoBuscado }));
+      setVinho({
+        ...vinho,
+        id_vinho: vinhoBuscado.id_vinho,
+        imagem: vinhoBuscado.imagem_vinho,
+        nome_imagem: vinhoBuscado.nome_imagem,
+        extensao: vinhoBuscado.extensao,
+        nome_vinho: vinhoBuscado.nome_vinho,
+        classificacao_vinho: vinhoBuscado.classificacao_vinho,
+        vinicola: vinhoBuscado.vinicola,
+        uva_vinho: vinhoBuscado.uva_vinho,
+        teor_alcolico: vinhoBuscado.teor_alcolico,
+        volume_vinho: vinhoBuscado.volume_vinho,
+        temperatura_servir: vinhoBuscado.temperatura_servir,
+        pais: vinhoBuscado.pais,
+        safra_vinho: vinhoBuscado.safra_vinho,
+        preco_vinho: vinhoBuscado.preco_vinho,
+        descricao: vinhoBuscado.descricao,
+      });
 
       limparCampoImagem();
-      setImagemCampo(vinho.imagem_vinho);
+      setImagemCampo(vinho.imagem);
       setNomeImagem(vinho.nome_imagem);
 
       alert(
@@ -152,8 +167,9 @@ export default function CrudProdutos() {
 
   function limpar() {
     setVinho({
+      ...vinho,
       id_vinho: 0,
-      imagem_vinho: "",
+      imagem: "",
       nome_imagem: "",
       extensao: "",
       nome_vinho: "",
@@ -173,7 +189,7 @@ export default function CrudProdutos() {
   return (
     <main className="pagina-crud-produtos pagina">
       <TelaCarregamento tempo={250}>
-        <Header cliente={cliente}/>
+        <Header />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Manipulação dos Vinhos</h1>
@@ -367,7 +383,7 @@ export default function CrudProdutos() {
           </div>
         </section>
 
-        <Footer cliente={cliente}/>
+        <Footer />
       </TelaCarregamento>
     </main>
   );

@@ -144,7 +144,7 @@ export default function Vinho() {
           </div>
         </main>
 
-        <Footer cliente={cliente} />
+        <Footer />
       </TelaCarregamento>
     </div>
   );

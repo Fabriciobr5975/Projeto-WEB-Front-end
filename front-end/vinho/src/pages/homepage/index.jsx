@@ -7,33 +7,10 @@ import Vinho from "../../components/vinho";
 import Disclaimer from "../../components/disclaimer";
 
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function HomePage() {
   const location = useLocation();
   const { cliente } = location.state || {};
-
-  const [listaVinhos, setListaVinhos] = useState([]);
-
-  useEffect(() => {
-    listarVinhos();
-  }, []);
-
-  const listarVinhos = async () => {
-    try {
-      const url = `http://localhost:5001/vinho`;
-
-      const resp = await axios.get(url);
-      const vinhos = resp.data;
-
-      setListaVinhos(vinhos);
-    } catch (error) {
-      alert(
-        error.response?.data?.erro ?? "Erro ao buscar as informações dos vinhos"
-      );
-    }
-  };
 
   return (
     <div className="pagina-principal pagina">
@@ -118,9 +95,19 @@ export default function HomePage() {
           </div>
 
           <div className="secao-vinhos">
-            {listaVinhos.map((item) => (
-              <Vinho vinhos={item} key={item.id_vinho} />
-            ))}
+            <div className="secao01-vinho">
+              <Vinho />
+              <Vinho />
+              <Vinho />
+              <Vinho />
+            </div>
+
+            <div className="secao02-vinho">
+              <Vinho />
+              <Vinho />
+              <Vinho />
+              <Vinho />
+            </div>
           </div>
 
           <div className="confira-mais">
