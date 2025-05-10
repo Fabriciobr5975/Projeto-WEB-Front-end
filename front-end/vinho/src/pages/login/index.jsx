@@ -11,32 +11,34 @@ import TelaCarregamento from "../../components/telaCarregamento";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [cliente, setCliente] = useState([]);
 
   const navigate = useNavigate();
-  // Futura melhoria: localStorage.setItem("cliente", JSON.stringify(cliente));
 
   const buscarCliente = async () => {
-    if (validarCampos()) {
-      const url = `http://localhost:5001/cliente/busca/email?email=${email}`;
+    try {
+      if (validarCampos()) {
+        const url = `http://localhost:5001/cliente/busca/email?email=${email}`;
 
-      const resp = await axios.get(url);
+        const resp = await axios.get(url);
 
-      const clienteValido = resp.data.find(
-        (clienteBusca) =>
-          clienteBusca.email === email && clienteBusca.senha === senha
-      );
-
-      if (clienteValido) {
-        cliente.push(clienteValido);
-        setCliente(cliente);
-        alert(
-          `Login realizado com sucesso! Logado como ${cliente[0].primeiro_nome} ${cliente[0].sobrenome}`
+        const clienteValido = resp.data.find(
+          (clienteBusca) =>
+            clienteBusca.email === email && clienteBusca.senha === senha
         );
-        navigate("/homepage", {state: { cliente: cliente[0] }});
-      } else {
-        alert("O usuário não foi encontrado!");
+
+        if (clienteValido) {
+          alert(
+            `Login realizado com sucesso! Logado como ${clienteValido.primeiro_nome} ${clienteValido.sobrenome}`
+          );
+          sessionStorage.setItem("cliente", JSON.stringify(clienteValido));
+          navigate("/homepage");
+          
+        } else {
+          alert("O usuário não foi encontrado!");
+        }
       }
+    } catch (error) {
+      alert(error.response?.data?.erro ?? "Erro ao validar as credenciais");
     }
   };
 

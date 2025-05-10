@@ -3,6 +3,7 @@ import "./index.scss";
 
 export default function Vinho(props) {
   const navigate = useNavigate();
+  
 
   return (
     <section className="componente-vinho">
@@ -17,7 +18,7 @@ export default function Vinho(props) {
         <h5>{props.vinhos.nome_vinho ?? "Vinho"}</h5>
         <span>{props.vinhos.classificacao_vinho ?? "Classificação"}</span>
         <p className="preco">R$ {props.vinhos.preco_vinho ?? "0.0"}</p>
-        <button className="btn-reversa-vinho" onClick={() => navigate("/vinho")}>Reservar</button>
+        <button className="btn-reversa-vinho" onClick={() => navigate(`/vinho/${props.vinhos.id_vinho}`)}>Reservar</button>
       </div>
     </section>
   );

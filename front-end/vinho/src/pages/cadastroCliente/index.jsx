@@ -6,11 +6,10 @@ import Footer from "../../components/footer";
 
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CadastroCliente() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const navigate = useNavigate();
 
   const [bloqueioCampo, setBloqueioCampo] = useState(true);

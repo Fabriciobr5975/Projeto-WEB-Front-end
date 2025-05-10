@@ -7,11 +7,10 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 export default function PedidosCliente() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  
   const [cpfCliente] = useState(cliente.cpf);
   const [listaPedidos, setListaPedidos] = useState([]);
 

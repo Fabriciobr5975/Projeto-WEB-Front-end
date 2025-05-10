@@ -5,11 +5,9 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 export default function RecuperacaoSenha() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
   const [email, setEmail] = useState("");
   const [codigo, setCodigo] = useState("");
@@ -49,7 +47,7 @@ export default function RecuperacaoSenha() {
           </button>
         </div>
 
-        <Footer cliente={cliente}/>
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );

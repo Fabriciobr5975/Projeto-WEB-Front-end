@@ -6,14 +6,11 @@ import Footer from "../../components/footer";
 import Vinho from "../../components/vinho";
 import Disclaimer from "../../components/disclaimer";
 
-import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function HomePage() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
-
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};  
   const [listaVinhos, setListaVinhos] = useState([]);
 
   useEffect(() => {
@@ -130,7 +127,6 @@ export default function HomePage() {
         </section>
 
         <Disclaimer />
-
         <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>

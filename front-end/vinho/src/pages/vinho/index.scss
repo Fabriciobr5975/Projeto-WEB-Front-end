@@ -19,7 +19,6 @@
       display: flex;
       gap: 5rem;
       width: 100%;
-      //flex-wrap: wrap;
 
       .imagem-vinho {
         display: flex;
@@ -27,6 +26,11 @@
         align-items: center;
         width: 35%;
         background-color: #e6e6e6;
+
+        img {
+          width: 100%;
+          mix-blend-mode: multiply;
+        }
       }
 
       .caracteristicas {
@@ -115,7 +119,6 @@
               display: inline-flex;
               align-items: center;
               justify-content: center;
-              width: 1.2rem;
               height: 1.2rem;
               border-radius: 50%;
               cursor: pointer;
@@ -143,8 +146,6 @@
 
             input[type="number"] {
               all: none;
-              width: 5rem !important;
-
               text-align: center;
               font: 500 1rem / normal "Poppins";
               color: #000;

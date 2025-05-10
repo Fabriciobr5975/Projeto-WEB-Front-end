@@ -3,13 +3,17 @@ import "./index.scss";
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Vinho() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
+  const navigate = useNavigate();
+  
+  const { id } = useParams();
+  const [vinho, setVinhos] = useState({});
   const [quantidade, setQuantidade] = useState(1);
 
   useEffect(() => {
@@ -18,6 +22,24 @@ export default function Vinho() {
       alert("A quantidade informada é inválida!");
     }
   }, [quantidade]);
+
+  const pegarVinho = useCallback(async () => {
+    try {
+      const url = `http://localhost:5001/vinho/${id}`;
+
+      const resp = await axios.get(url);
+      const vinhoBuscado = resp.data;
+
+      setVinhos(vinhoBuscado);
+    } catch (error) {
+      navigate("/notfound");
+    }
+  }, [id, navigate]);
+  
+  useEffect(() => {
+    pegarVinho();
+  }, [pegarVinho, navigate]);
+
 
   const aumentarQuantidade = () => {
     if (quantidade < 100) {
@@ -40,12 +62,12 @@ export default function Vinho() {
           <div className="caracteristicas-vinho">
             <div className="imagem-vinho">
               <picture>
-                <img src="/assets/images/vinho-exemplo.svg" alt="Vinho" />
+                <img src={vinho.imagem_vinho} alt="Vinho" />
               </picture>
             </div>
 
             <div className="caracteristicas">
-              <h2>VINOSIA LE SORBOLE - MALBEC RESERVA 2019</h2>
+              <h2>{vinho.nome_vinho}</h2>
 
               <div className="lista-caracteristicas">
                 <div className="tipo-caracteristicas">
@@ -60,17 +82,20 @@ export default function Vinho() {
 
                 <div className="dados-caracteristicas">
                   <ul>
-                    <li>Chandonnay</li>
-                    <li>2020</li>
-                    <li>Vinã Cobos</li>
-                    <li>15,00%</li>
-                    <li>10ºC</li>
+                    <li>{vinho.uva_vinho}</li>
+                    <li>{vinho.safra_vinho}</li>
+                    <li>{vinho.vinicola}</li>
+                    <li>{vinho.teor_alcolico}</li>
+                    <li>{vinho.temperatura_servir}</li>
                   </ul>
                 </div>
               </div>
 
               <div className="preco">
-                <span>R$ 3.000,00</span>
+                <span>
+                  R$
+                  {vinho.preco_vinho}
+                </span>
               </div>
 
               <div className="reserva-vinho">
@@ -110,14 +135,7 @@ export default function Vinho() {
 
             <div className="informacoes-adicionais-vinho">
               <div className="descricao">
-                <p>
-                  A versão Chardonnay da linha Bramare foi elaborada a partir de
-                  uvas cultivadas no Valle de Uco, uma das principais regiões
-                  vitivinícolas de Mendoza. Amadurecido por 10 meses em barris
-                  de carvalho, o vinho adquiriu caráter aromático, com boa
-                  acidez e frescor no paladar, além de notas de frutas brancas e
-                  amarelas frescas, com leve toque mineral no nariz.
-                </p>
+                <p>{vinho.quantidade}</p>
               </div>
 
               <div className="informacoes-adicionais">

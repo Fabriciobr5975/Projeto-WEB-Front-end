@@ -5,13 +5,12 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 export default function PerfilCliente() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const [idCliente] = useState(cliente.id_cliente);
 
   const [dadosCliente, setDadosCliente] = useState({
@@ -43,7 +42,7 @@ export default function PerfilCliente() {
     try {
       const url = `http://localhost:5001/cliente/${idCliente}`;
       const resp = await axios.get(url);
-  
+
       const cliente = resp.data[0];
       setDadosCliente({
         nome: cliente.primeiro_nome,
@@ -57,10 +56,10 @@ export default function PerfilCliente() {
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao buscar o cliente");
     }
-  }, [idCliente]); 
+  }, [idCliente]);
 
   useEffect(() => {
-    if(idCliente) {
+    if (idCliente) {
       buscarCliente();
     }
   }, [idCliente, buscarCliente]);
@@ -75,14 +74,27 @@ export default function PerfilCliente() {
             <h1>Meu Perfil</h1>
           </div>
           <div className="abas-navegacao">
-            <AbaNavegacao nome="Perfil" abaAtual={true} navegacao="/perfil" cliente={cliente}/>
+            <AbaNavegacao
+              nome="Perfil"
+              abaAtual={true}
+              navegacao="/perfil"
+              cliente={cliente}
+            />
             <AbaNavegacao
               nome="Endereço (s) Cadastrado (s)"
               navegacao="/enderecocliente"
               cliente={cliente}
             />
-            <AbaNavegacao nome="Meus Pedidos" navegacao="/meuspedidos" cliente={cliente}/>
-            <AbaNavegacao nome="Meu Carrinho" navegacao="/meucarrinho" cliente={cliente}/>
+            <AbaNavegacao
+              nome="Meus Pedidos"
+              navegacao="/meuspedidos"
+              cliente={cliente}
+            />
+            <AbaNavegacao
+              nome="Meu Carrinho"
+              navegacao="/meucarrinho"
+              cliente={cliente}
+            />
           </div>
         </section>
 

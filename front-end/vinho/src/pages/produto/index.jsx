@@ -4,13 +4,11 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Vinho from "../../components/vinho";
-import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Produtos() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
   const [listaVinhos, setListaVinhos] = useState([]);
 
@@ -111,7 +109,7 @@ export default function Produtos() {
 
           <div className="produtos">
             {listaVinhos.map((item) => (
-              <Vinho vinhos={item} key={item.id_vinho} /> 
+              <Vinho vinhos={item} key={item.id_vinho} />
             ))}
           </div>
 

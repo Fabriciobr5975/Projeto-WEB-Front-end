@@ -5,13 +5,21 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
 
 export default function ListaPedidosClientes() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
+  const cliente = useMemo(() => {
+      return JSON.parse(sessionStorage.getItem("cliente")) || {};
+    }, []);
+  
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      impedirAcessoTelaAdministrador(cliente, navigate);
+    }, [cliente, navigate]);
 
   const [listaPedidos, setListaPedidos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);

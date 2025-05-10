@@ -3,16 +3,16 @@ import "./index.scss";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import TelaCarregamento from "../../components/telaCarregamento";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckOut() {
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const navigate = useNavigate();
+
   return (
     <main className="pagina-check-out pagina">
       <TelaCarregamento tempo={250}>
-        <Header />
+        <Header cliente={cliente} />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Check - Out</h1>
@@ -192,7 +192,7 @@ export default function CheckOut() {
             </div>
           </div>
         </section>
-        <Footer />
+        <Footer cliente={cliente}/>
       </TelaCarregamento>
     </main>
   );

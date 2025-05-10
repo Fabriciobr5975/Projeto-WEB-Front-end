@@ -5,14 +5,22 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
 
 export default function AnaliseClientes() {
-  const location = useLocation();
-  const { cliente } = location.state || {};
-  
+  const cliente = useMemo(() => {
+    return JSON.parse(sessionStorage.getItem("cliente")) || {};
+  }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    impedirAcessoTelaAdministrador(cliente, navigate);
+  }, [cliente, navigate]);
+
   const [listaClientes, setListaClientes] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
   const [filtroBusca, setFiltroBusca] = useState("");
@@ -55,7 +63,7 @@ export default function AnaliseClientes() {
   return (
     <div className="pagina-analise-cliente pagina">
       <TelaCarregamento tempo={250}>
-        <Header cliente={cliente}/>
+        <Header cliente={cliente} />
         <section className="banner-abas">
           <div className="titulo-banner">
             <h1>Listagem de Clientes</h1>
@@ -137,7 +145,7 @@ export default function AnaliseClientes() {
           </table>
         </section>
 
-        <Footer cliente={cliente}/>
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );
