@@ -5,16 +5,35 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { calcularValorTotalCarrinho } from "../../service/calculosCarrinho/calculosCarrinhoCliente";
+import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
 
 export default function CarrinhoCliente() {
-  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  const cliente = useMemo(() => {
+    return JSON.parse(sessionStorage.getItem("cliente")) || {};
+  }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const [cpfCliente] = useState(cliente.cpf);
-
   const [listaItensCarrinho, setListaItensCarrinho] = useState([]);
+  const [precoTotal, setPrecoTotal] = useState(0);
 
-  const listarPedidos = useCallback(async () => {
+  useEffect(() => {
+    setPrecoTotal(calcularValorTotalCarrinho(listaItensCarrinho));
+  }, [listaItensCarrinho]);
+
+  /* Listar todos os itens do carrinho */
+  const listarItensCarrinho = useCallback(async () => {
     try {
       const url = `http://localhost:5001/itenscarrinho/busca/cliente?cliente=${cpfCliente}`;
 
@@ -30,6 +49,7 @@ export default function CarrinhoCliente() {
     }
   }, [cpfCliente]);
 
+  /* Remover um item do carrinho */
   const removerItemCarrinho = async (idItemCarrinho) => {
     try {
       const url = `http://localhost:5001/itenscarrinho/${idItemCarrinho}`;
@@ -37,7 +57,7 @@ export default function CarrinhoCliente() {
 
       alert("O item foi removido com sucesso do carrinho!");
 
-      listarPedidos();
+      listarItensCarrinho();
     } catch (error) {
       alert(
         error.response?.data?.erro ?? "Erro ao remover o item do carrinho!"
@@ -47,23 +67,61 @@ export default function CarrinhoCliente() {
 
   useEffect(() => {
     if (cpfCliente) {
-      listarPedidos();
+      listarItensCarrinho();
     }
-  }, [cpfCliente, listarPedidos]);
+  }, [cpfCliente, listarItensCarrinho]);
 
-  const aumentarQuantidade = (idItenCarrinho) => {
-    if (listaItensCarrinho[idItenCarrinho].quantidade < 100) {
-      listaItensCarrinho[idItenCarrinho].quantidade += 1;
-      setListaItensCarrinho([...listaItensCarrinho]);
-    }
-  };
+  /* Alterar um item do carrinho */
+  const alterarItemCarrinho = useCallback(
+    async (idItemCarrinho) => {
+      try {
+        if (sessionStorage.getItem("cliente")) {
+          const itemCarrinho = {
+            carrinho: cliente.id_cliente,
+            vinho: listaItensCarrinho[idItemCarrinho].id_vinho,
+            quantidade: listaItensCarrinho[idItemCarrinho].quantidade,
+          };
 
-  const diminuirQuantidade = (idItenCarrinho) => {
-    if (listaItensCarrinho[idItenCarrinho].quantidade > 1) {
-       listaItensCarrinho[idItenCarrinho].quantidade -= 1;
-      setListaItensCarrinho([...listaItensCarrinho]);
-    }
-  };
+          const url = `http://localhost:5001/itenscarrinho/${listaItensCarrinho[idItemCarrinho].id_itens_carrinho}`;
+          await axios.put(url, itemCarrinho);
+
+          alert("A quantidade foi alterada com sucesso!");
+        }
+      } catch (error) {
+        alert(
+          error.response?.data?.erro ??
+            "Erro ao alterar a quantidade de vinhos no carrinho"
+        );
+      }
+    },
+    [listaItensCarrinho, cliente]
+  );
+
+  /* Aumentar a quantidade do vinho */
+  const aumentarQuantidade = useCallback(
+    (idItemCarrinho) => {
+      if (listaItensCarrinho[idItemCarrinho].quantidade < 100) {
+        listaItensCarrinho[idItemCarrinho].quantidade += 1;
+        setListaItensCarrinho((prev) => [...prev]);
+
+        alterarItemCarrinho(idItemCarrinho);
+      }
+    },
+    [listaItensCarrinho, alterarItemCarrinho]
+  );
+
+  /* diminuir a quantidade do vinho */
+  const diminuirQuantidade = useCallback(
+    (idItemCarrinho) => {
+      if (listaItensCarrinho[idItemCarrinho].quantidade > 1) {
+        listaItensCarrinho[idItemCarrinho].quantidade -= 1;
+        setListaItensCarrinho((prev) => [...prev]);
+
+        alterarItemCarrinho(idItemCarrinho);
+      }
+    },
+    [listaItensCarrinho, alterarItemCarrinho]
+  );
 
   return (
     <div className="pagina-carrinho-cliente pagina">
@@ -129,7 +187,7 @@ export default function CarrinhoCliente() {
                       <span onClick={() => aumentarQuantidade(index)}>+</span>
                     </div>
                   </td>
-                  <td>{carrinho.vinho}</td>
+                  <td>{imprimirNumeroComVirgula(carrinho.vinho)}</td>
                   <td>
                     <div className="preco">
                       <span>R$</span>
@@ -139,7 +197,7 @@ export default function CarrinhoCliente() {
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {Number(carrinho.preco_vinho) * carrinho.quantidade}
+                      {imprimirNumeroComVirgula(Number(carrinho.preco_vinho) * carrinho.quantidade)}
                     </div>
                   </td>
                   <td>
@@ -156,6 +214,24 @@ export default function CarrinhoCliente() {
               ))}
             </tbody>
           </table>
+
+          <span className="valor-total-carrinho">
+            Valor Total:{" "}
+            <strong>R$ {imprimirNumeroComVirgula((precoTotal.toFixed(2)))}</strong>
+          </span>
+
+          <button
+            className="botao-finalizar-compra"
+            onClick={() =>
+              listaItensCarrinho.length > 0
+                ? navigate("/checkout")
+                : alert(
+                    "Para finalizar o pedido é necessário adicionar itens ao carrinho!"
+                  )
+            }
+          >
+            Finalizar Compra
+          </button>
         </section>
 
         <Footer cliente={cliente} />

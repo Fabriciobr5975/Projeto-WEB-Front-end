@@ -11,16 +11,15 @@ import axios from "axios";
 
 export default function PerfilCliente() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
-
   const navigate = useNavigate();
-
-  const [idCliente] = useState(cliente.id_cliente);
 
   useEffect(() => {
     if (!sessionStorage.getItem("cliente")) {
       navigate("/");
     }
   }, [navigate]);
+
+  const [idCliente] = useState(cliente.id_cliente);
 
   const [dadosCliente, setDadosCliente] = useState({
     nome: "",

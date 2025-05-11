@@ -158,5 +158,40 @@
         border-right: 0.125rem dashed #000;
       }
     }
+
+      .valor-total-carrinho {
+        display: inline-flex;
+        align-self: flex-end;
+        justify-self: center;
+        padding: 0.5rem;
+        border-radius: 0.4rem;
+        border: .0625rem solid #000;
+        background: #dddddd;
+        gap: 2rem;
+        font: 500 1.15rem/normal "Poppins";
+        letter-spacing: 0.05rem;
+      }
+
+      .botao-finalizar-compra {
+        font: 400 1.5rem / normal "Poppins";
+        background-color: #a4596d;
+        display: inline-flex;
+        width: 15rem;
+        height: 3.2rem;
+        border-radius: 0.625rem;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        cursor: pointer;
+        transition: opacity 0.5s ease;
+
+        &:hover {
+          opacity: 0.9;
+          box-shadow: 0rem 0rem 0.3rem #b84363 inset;
+          transform: scale(1.05);
+        }
+      }
+    
   }
 }

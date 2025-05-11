@@ -8,9 +8,12 @@ import Disclaimer from "../../components/disclaimer";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};  
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  const navigate = useNavigate();
+
   const [listaVinhos, setListaVinhos] = useState([]);
 
   useEffect(() => {
@@ -90,18 +93,21 @@ export default function HomePage() {
               <img
                 src="/assets/images/classificao-vinhos/Tinto.svg"
                 alt="Categoria Tinto"
+                onClick={() => navigate("/produtos")}
               />
             </picture>
             <picture className="categoria rose">
               <img
                 src="/assets/images/classificao-vinhos/Rose.svg"
                 alt="Categoria Rose"
+                onClick={() => navigate("/produtos")}
               />
             </picture>
             <picture className="categoria branco">
               <img
                 src="/assets/images/classificao-vinhos/Branco.svg"
                 alt="Categoria Branco"
+                onClick={() => navigate("/produtos")}
               />
             </picture>
           </div>

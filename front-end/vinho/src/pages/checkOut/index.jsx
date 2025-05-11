@@ -3,11 +3,108 @@ import "./index.scss";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import TelaCarregamento from "../../components/telaCarregamento";
+
 import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import axios from "axios";
+import { calcularValorTotalCarrinho } from "../../service/calculosCarrinho/calculosCarrinhoCliente";
+import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
 
 export default function CheckOut() {
-  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  const cliente = useMemo(() => {
+    return JSON.parse(sessionStorage.getItem("cliente")) || {};
+  }, []);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const [cpfCliente] = useState(cliente.cpf);
+  const [listaItensCarrinho, setListaItensCarrinho] = useState([]);
+  const [precoTotal, setPrecoTotal] = useState(0);
+
+  /* Listar todos os itens do carrinho */
+  const listarItensCarrinho = useCallback(async () => {
+    try {
+      const url = `http://localhost:5001/itenscarrinho/busca/cliente?cliente=${cpfCliente}`;
+
+      const resp = await axios.get(url);
+      const carrinho = resp.data;
+
+      setListaItensCarrinho(carrinho);
+    } catch (error) {
+      alert(
+        error.response?.data?.erro ??
+          "Erro ao buscar as informações dos seus pedidos"
+      );
+    }
+  }, [cpfCliente]);
+
+  useEffect(() => {
+    setPrecoTotal(calcularValorTotalCarrinho(listaItensCarrinho));
+  }, [listaItensCarrinho]);
+
+  useEffect(() => {
+    if (cpfCliente) {
+      listarItensCarrinho();
+    }
+  }, [cpfCliente, listarItensCarrinho]);
+
+  /* Alterar um item do carrinho */
+  const alterarItemCarrinho = useCallback(
+    async (idItemCarrinho) => {
+      try {
+        if (sessionStorage.getItem("cliente")) {
+          const itemCarrinho = {
+            carrinho: cliente.id_cliente,
+            vinho: listaItensCarrinho[idItemCarrinho].id_vinho,
+            quantidade: listaItensCarrinho[idItemCarrinho].quantidade,
+          };
+
+          const url = `http://localhost:5001/itenscarrinho/${listaItensCarrinho[idItemCarrinho].id_itens_carrinho}`;
+          await axios.put(url, itemCarrinho);
+
+          alert("A quantidade foi alterada com sucesso!");
+        }
+      } catch (error) {
+        alert(
+          error.response?.data?.erro ??
+            "Erro ao alterar a quantidade de vinhos no carrinho"
+        );
+      }
+    },
+    [listaItensCarrinho, cliente]
+  );
+
+  /* Aumentar a quantidade do vinho */
+  const aumentarQuantidade = useCallback(
+    (idItemCarrinho) => {
+      if (listaItensCarrinho[idItemCarrinho].quantidade < 100) {
+        listaItensCarrinho[idItemCarrinho].quantidade += 1;
+        setListaItensCarrinho((prev) => [...prev]);
+
+        alterarItemCarrinho(idItemCarrinho);
+      }
+    },
+    [listaItensCarrinho, alterarItemCarrinho]
+  );
+
+  /* diminuir a quantidade do vinho */
+  const diminuirQuantidade = useCallback(
+    (idItemCarrinho) => {
+      if (listaItensCarrinho[idItemCarrinho].quantidade > 1) {
+        listaItensCarrinho[idItemCarrinho].quantidade -= 1;
+        setListaItensCarrinho((prev) => [...prev]);
+
+        alterarItemCarrinho(idItemCarrinho);
+      }
+    },
+    [listaItensCarrinho, alterarItemCarrinho]
+  );
 
   return (
     <main className="pagina-check-out pagina">
@@ -27,17 +124,29 @@ export default function CheckOut() {
             </div>
             <div className="container-conteudo">
               <div className="itens-revisao">
-                {[1, 2].map((item, index) => (
+                {listaItensCarrinho.map((item, index) => (
                   <div className="item-revisao" key={index}>
-                    <img src="/assets/images/vinho-exemplo.svg" alt="Produto" />
+                    <img src={item.imagem_vinho} alt="Imagem Vinho" />
                     <div className="info">
-                      <strong>Nome: Cabernet Sauvignon</strong>
-                      <span>Marca: Salton</span>
+                      <strong>Nome: {item.vinho}</strong>
+                      <span>Vinícola: {item.vinicola_vinho}</span>
                       <div className="quantidade-preco">
-                        <div className="quantidade">
-                          <span>Quantidade: 1</span>
+                        <div className="manipulacao-quantidade">
+                          <span onClick={() => diminuirQuantidade(index)}>
+                            -
+                          </span>
+                          {item.quantidade}
+                          <span onClick={() => aumentarQuantidade(index)}>
+                            +
+                          </span>
                         </div>
-                        <span className="preco">R$ 59,90</span>
+                        <span className="preco">
+                          {" "}
+                          <span className="cifrao">R$</span>
+                          {imprimirNumeroComVirgula(
+                            Number(item.preco_vinho) * item.quantidade
+                          )}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -50,7 +159,9 @@ export default function CheckOut() {
                 </span>
                 <span>
                   <h3>
-                    <strong>R$ 59,99</strong>
+                    <strong>
+                      R$ {imprimirNumeroComVirgula(precoTotal.toFixed(2))}
+                    </strong>
                   </h3>
                 </span>
               </div>
@@ -75,53 +186,56 @@ export default function CheckOut() {
               <div className="container-conteudo-endereco">
                 <div className="campo">
                   <span> Apelido do Endereço: </span>
-                  <input type="text" placeholder="Digite o apelido do endereço"/>
+                  <input
+                    type="text"
+                    placeholder="Digite o apelido do endereço"
+                  />
                 </div>
                 <div className="campo-duplo1">
                   <div className="campo">
                     <span> Primeiro Nome: </span>
-                    <input type="text" placeholder="Primeiro nome"/>
+                    <input type="text" placeholder="Primeiro nome" />
                   </div>
                   <div className="campo">
                     <span> Último Nome: </span>
-                    <input type="text" placeholder="Sobrenome"/>
+                    <input type="text" placeholder="Sobrenome" />
                   </div>
                 </div>
                 <div className="campo-duplo2">
                   <div className="campo">
                     <span> Estado: </span>
-                    <input type="text" placeholder="Estado"/>
+                    <input type="text" placeholder="Estado" />
                   </div>
                   <div className="campo">
                     <span> Cidade: </span>
-                    <input type="text" placeholder="Cidade"/>
+                    <input type="text" placeholder="Cidade" />
                   </div>
                 </div>
                 <div className="campo">
                   <span> Bairro: </span>
-                  <input type="text" placeholder="Bairro"/>
+                  <input type="text" placeholder="Bairro" />
                 </div>
                 <div className="campo">
                   <span> Logradouro: </span>
-                  <input type="text" placeholder="Logradouro"/>
+                  <input type="text" placeholder="Logradouro" />
                 </div>
                 <div className="campo-duplo2">
                   <div className="campo">
                     <span> Número: </span>
-                    <input type="text" placeholder="Número"/>
+                    <input type="text" placeholder="Número" />
                   </div>
                   <div className="campo">
                     <span> CEP: </span>
-                    <input type="text" placeholder="CEP"/>
+                    <input type="text" placeholder="CEP" />
                   </div>
                 </div>
                 <div className="campo">
                   <span> E-mail: </span>
-                  <input type="text" placeholder="E-mail"/>
+                  <input type="text" placeholder="E-mail" />
                 </div>
                 <div className="campo">
                   <span> Número para Contato: </span>
-                  <input type="text" placeholder="Celular"/>
+                  <input type="text" placeholder="Celular" />
                 </div>
               </div>
             </div>
@@ -153,38 +267,47 @@ export default function CheckOut() {
                   <strong>4. SUMÁRIO DO PEDIDO</strong>
                 </h1>
               </div>
-              <div className="container-conteudo">
-                <div className="opcoes">
-                  <div className="opcao">
-                    <input type="checkbox" /> <span>Cartão Crédito</span>
+              {listaItensCarrinho.map((item, index) => (
+                <div className="container-conteudo" key={index}>
+                  <div className="opcoes">
+                    <div className="opcao">
+                      <input type="checkbox" /> <span>Cartão Crédito</span>
+                    </div>
+                    <div className="opcao">
+                      <input type="checkbox" /> <span>Pix</span>
+                    </div>
                   </div>
-                  <div className="opcao">
-                    <input type="checkbox" /> <span>Pix</span>
+                  <div className="resumo-item">
+                    <div className="info-vinho">
+                      <span className="quantidade">{item.quantidade}</span>
+                      <span className="nome">Nome: {item.vinho}</span>
+                    </div>
+                    <span className="preco">
+                      R$
+                      {imprimirNumeroComVirgula(
+                        Number(item.preco_vinho) * item.quantidade
+                      )}
+                    </span>
                   </div>
                 </div>
-                <div className="resumo-item">
-                  <div className="info-vinho">
-                    <span className="quantidade">1</span>
-                    <span className="nome">Nome: Carbenet Sauvignon</span>
-                  </div>
-                  <span className="preco">R$ 59,90</span>
-                </div>
-                <div className="total">
-                  <span>
-                    <h3>Total:</h3>
-                  </span>
-                  <span>
-                    <h3>
-                      <strong>R$ 59,99</strong>
-                    </h3>
-                  </span>
-                </div>
+              ))}
+              <div className="preco-total-pedido">
+                <span>
+                  <h3>Total:</h3>
+                </span>
+                <span>
+                  <h3>
+                    <strong>
+                      R$ {imprimirNumeroComVirgula(precoTotal.toFixed(2))}
+                    </strong>
+                  </h3>
+                </span>
               </div>
               <div className="container-conteudo">
                 <div className="button">
                   <input
                     type="button"
-                    value="Finalizar Compra"
+                    value="Confirmar Pedido"
                     onClick={() => navigate("/confirmacaopedido")}
                   />
                 </div>
@@ -192,7 +315,7 @@ export default function CheckOut() {
             </div>
           </div>
         </section>
-        <Footer cliente={cliente}/>
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </main>
   );

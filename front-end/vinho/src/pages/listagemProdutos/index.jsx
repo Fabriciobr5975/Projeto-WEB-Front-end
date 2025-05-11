@@ -9,6 +9,8 @@ import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
+import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
+
 
 export default function ListagemProdutos() {
   const cliente = useMemo(() => {
@@ -141,7 +143,7 @@ export default function ListagemProdutos() {
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {item.preco_vinho}
+                      {imprimirNumeroComVirgula(item.preco_vinho)}
                     </div>
                   </td>
                   <td>{item.status_estoque}</td>

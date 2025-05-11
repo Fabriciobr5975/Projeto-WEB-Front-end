@@ -136,7 +136,7 @@ export default function AnaliseClientes() {
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {250.0}
+                      {0}
                     </div>
                   </td>
                 </tr>

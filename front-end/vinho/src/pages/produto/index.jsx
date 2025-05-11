@@ -40,7 +40,7 @@ export default function Produtos() {
         <section className="titulo-banner">
           <h1>Vinhos</h1>
           <hr className="barra-banner-produtos" />
-          <p className="paginas">1-12 de 40 resultados</p>
+          <p className="paginas">{listaVinhos.length >= 1 ? 1 : 0}-{listaVinhos.length ?? 0} de {listaVinhos.length ?? 0} resultados</p>
         </section>
 
         <section className="conteudo-produtos">

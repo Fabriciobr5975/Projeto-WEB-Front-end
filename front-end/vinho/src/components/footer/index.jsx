@@ -1,64 +1,45 @@
+import { useState } from "react";
 import "./index.scss";
 
 import { Link } from "react-router-dom";
 
 export default function Footer(props) {
-  
+  const [clienteEspecial] = useState(props.cliente?.acesso);
+
   return (
     <footer className="footer">
       <div className="elementos-footer">
         <div className="mapa-navegacao-footer">
           <h3 className="subtitulos-footer">VIANA VINHOS</h3>
-          <Link to="/">
-            Home
-          </Link>
-          <Link to="/sobrenos">
-            Sobre Nós
-          </Link>
-          <Link to="/nossahistoria">
-            Nossa História
+          <Link to="/">Home</Link>
+          <Link to="/sobrenos">Sobre Nós</Link>
+          <Link to="/nossahistoria">Nossa História</Link>
+          <Link
+            to="/listagemprodutos"
+            style={{ display: clienteEspecial ? "" : "none" }}
+            id="link-tela-adm"
+          >
+            <i class="fas fa-key"></i>  Administrador 
           </Link>
         </div>
 
         <div className="vinho-footer">
           <h3 className="subtitulos-footer">VINHOS</h3>
-          <Link to="/produtos">
-            Tinto
-          </Link>
-          <Link to="/produtos">
-            Branco
-          </Link>
-          <Link to="/produtos">
-            Espumante
-          </Link>
-          <Link to="/produtos">
-            Rosé
-          </Link>
-          <Link to="/produtos">
-            Mais Vendidos
-          </Link>
-          <Link to="/produtos">
-            Em Promoção
-          </Link>
+          <Link to="/produtos">Tinto</Link>
+          <Link to="/produtos">Branco</Link>
+          <Link to="/produtos">Espumante</Link>
+          <Link to="/produtos">Rosé</Link>
+          <Link to="/produtos">Mais Vendidos</Link>
+          <Link to="/produtos">Em Promoção</Link>
         </div>
 
         <div className="ajuda-footer">
           <h3 className="subtitulos-footer">AJUDA</h3>
-          <Link to="contato">
-            Contate-nos
-          </Link>
-          <Link to="informacoes">
-            Perguntas Frequentes
-          </Link>
-          <Link to="politicas">
-            Política de Privacidade
-          </Link>
-          <Link to="politicas">
-            Política de Privacidade
-          </Link>
-          <Link to="politicas">
-            Política de Cancelamento
-          </Link>
+          <Link to="contato">Contate-nos</Link>
+          <Link to="informacoes">Perguntas Frequentes</Link>
+          <Link to="politicas">Política de Privacidade</Link>
+          <Link to="politicas">Política de Privacidade</Link>
+          <Link to="politicas">Política de Cancelamento</Link>
         </div>
 
         <div className="conteudo-adicional-footer">

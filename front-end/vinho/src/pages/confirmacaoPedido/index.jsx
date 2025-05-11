@@ -3,10 +3,19 @@ import "./index.scss";
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ConfirmacaoPedido() {
-    const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
-  
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <div className="pagina-confirmacao-pedido pagina">
       <TelaCarregamento tempo={250}>
@@ -44,7 +53,7 @@ export default function ConfirmacaoPedido() {
           </div>
         </main>
 
-        <Footer cliente={cliente}/>
+        <Footer cliente={cliente} />
       </TelaCarregamento>
     </div>
   );

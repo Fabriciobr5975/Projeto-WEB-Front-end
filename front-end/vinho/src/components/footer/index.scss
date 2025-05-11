@@ -27,6 +27,26 @@
       align-items: flex-start;
       justify-content: flex-start;
       gap: 1rem;
+
+      #link-tela-adm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .9rem;
+        font-weight: 700;
+        gap: .5rem;
+
+        i {
+          font-size: .9rem;
+          color: #ffcc00;
+        }
+
+        &:hover {
+          opacity: 0.95;
+          text-shadow: 0rem 0rem 0.08rem #f6edd9;
+          transform: scale(1.09);
+        }
+      }
     }
 
     .vinho-footer {
@@ -74,6 +94,7 @@
             border: none;
             color: #fdecec;
             outline: none;
+            padding-left: .6rem;
             font: 400 0.85rem / normal "Poppins";
           }
 
@@ -111,7 +132,7 @@
           justify-content: center;
           gap: 0.8rem;
           color: #fff;
-          font: 500 1.05rem / normal "Poppins";
+          font: 500 0.95rem / normal "Poppins";
 
           .whatsapp {
             cursor: pointer;
@@ -142,7 +163,7 @@
         .redes-sociais {
           display: flex;
           gap: 0.8rem;
-          font-size: 2rem;
+          font-size: 1.8rem;
           cursor: pointer;
           transition: opacity 0.5s ease;
 
@@ -436,7 +457,6 @@
 
 @media (min-width: 320px) and (max-width: 500px) {
   .footer {
-    display: flexbox;
     padding: 0.3rem;
 
     .elementos-footer {
@@ -473,6 +493,20 @@
 
           .input-footer {
             width: 5rem;
+          }
+
+          .whatsapp {
+            font-size: 1.4rem !important;
+
+            &:hover {
+              opacity: 0.8;
+              text-shadow: 0rem 0rem 0.5rem #1a9848 inset;
+              transform: scale(1.15);
+            }
+          }
+
+          span {
+            font-size: .5rem !important;
           }
         }
       }
