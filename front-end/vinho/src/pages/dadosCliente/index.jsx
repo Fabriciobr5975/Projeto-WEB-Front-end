@@ -5,13 +5,22 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 export default function PerfilCliente() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+
+  const navigate = useNavigate();
+
   const [idCliente] = useState(cliente.id_cliente);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [dadosCliente, setDadosCliente] = useState({
     nome: "",

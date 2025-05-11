@@ -131,7 +131,7 @@ export default function ListagemProdutos() {
                     <div className="primeira-coluna">
                       {item.vinho}
                       <img
-                        src="/assets/images/vinho-exemplo.svg"
+                        src={item.imagem_vinho}
                         alt="imagem vinho"
                       />
                     </div>

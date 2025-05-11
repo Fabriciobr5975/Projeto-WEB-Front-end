@@ -13,7 +13,6 @@ export default function CarrinhoCliente() {
   const [cpfCliente] = useState(cliente.cpf);
 
   const [listaItensCarrinho, setListaItensCarrinho] = useState([]);
-  // const [valorTotal, setValorTotal] = useState(0);
 
   const listarPedidos = useCallback(async () => {
     try {
@@ -31,11 +30,40 @@ export default function CarrinhoCliente() {
     }
   }, [cpfCliente]);
 
+  const removerItemCarrinho = async (idItemCarrinho) => {
+    try {
+      const url = `http://localhost:5001/itenscarrinho/${idItemCarrinho}`;
+      await axios.delete(url);
+
+      alert("O item foi removido com sucesso do carrinho!");
+
+      listarPedidos();
+    } catch (error) {
+      alert(
+        error.response?.data?.erro ?? "Erro ao remover o item do carrinho!"
+      );
+    }
+  };
+
   useEffect(() => {
     if (cpfCliente) {
       listarPedidos();
     }
   }, [cpfCliente, listarPedidos]);
+
+  const aumentarQuantidade = (idItenCarrinho) => {
+    if (listaItensCarrinho[idItenCarrinho].quantidade < 100) {
+      listaItensCarrinho[idItenCarrinho].quantidade += 1;
+      setListaItensCarrinho([...listaItensCarrinho]);
+    }
+  };
+
+  const diminuirQuantidade = (idItenCarrinho) => {
+    if (listaItensCarrinho[idItenCarrinho].quantidade > 1) {
+       listaItensCarrinho[idItenCarrinho].quantidade -= 1;
+      setListaItensCarrinho([...listaItensCarrinho]);
+    }
+  };
 
   return (
     <div className="pagina-carrinho-cliente pagina">
@@ -88,20 +116,17 @@ export default function CarrinhoCliente() {
               </tr>
             </thead>
             <tbody>
-              {listaItensCarrinho.map((carrinho) => (
-                <tr key={carrinho.id_itens_carrinho}>
+              {listaItensCarrinho.map((carrinho, index) => (
+                <tr key={index /*carrinho.id_itens_carrinho*/}>
                   <td className="primeira-coluna">
                     {carrinho.vinho}
-                    <img
-                      src="/assets/images/vinho-exemplo.svg"
-                      alt="imagem vinho"
-                    />
+                    <img src={carrinho.imagem_vinho} alt="imagem vinho" />
                   </td>
                   <td>
                     <div className="manipulacao-quantidade">
-                      <span>-</span>
+                      <span onClick={() => diminuirQuantidade(index)}>-</span>
                       {carrinho.quantidade}
-                      <span>+</span>
+                      <span onClick={() => aumentarQuantidade(index)}>+</span>
                     </div>
                   </td>
                   <td>{carrinho.vinho}</td>
@@ -114,12 +139,17 @@ export default function CarrinhoCliente() {
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {0}
+                      {Number(carrinho.preco_vinho) * carrinho.quantidade}
                     </div>
                   </td>
                   <td>
                     <div className="icone-excluir">
-                      <i class="fa-solid fa-trash-can"></i>
+                      <i
+                        class="fa-solid fa-trash-can"
+                        onClick={() =>
+                          removerItemCarrinho(carrinho.id_itens_carrinho)
+                        }
+                      ></i>
                     </div>
                   </td>
                 </tr>

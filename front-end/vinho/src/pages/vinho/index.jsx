@@ -9,9 +9,8 @@ import axios from "axios";
 
 export default function Vinho() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
-
   const navigate = useNavigate();
-  
+
   const { id } = useParams();
   const [vinho, setVinhos] = useState({});
   const [quantidade, setQuantidade] = useState(1);
@@ -35,11 +34,38 @@ export default function Vinho() {
       navigate("/notfound");
     }
   }, [id, navigate]);
-  
+
   useEffect(() => {
     pegarVinho();
   }, [pegarVinho, navigate]);
 
+  const reservarVinho = async () => {
+    try {
+      if ((cliente && cliente.id_cliente) || sessionStorage.getItem("cliente")) {
+        const itemCarrinho = {
+          carrinho: cliente.id_cliente,
+          vinho: vinho.id_vinho,
+          quantidade: quantidade,
+        };
+
+        console.log(itemCarrinho);
+
+        const url = `http://localhost:5001/itenscarrinho`;
+        const resp = await axios.post(url, itemCarrinho);
+
+        alert(resp.data.resposta);
+      } else {
+        alert(
+          "Para adicionar esse vinho ao carrinho é necessário ter uma conta!"
+        );
+        navigate("/login");
+      }
+    } catch (error) {
+      alert(
+        error.response?.data?.erro ?? "Erro ao inserir o vinho no carrinho"
+      );
+    }
+  };
 
   const aumentarQuantidade = () => {
     if (quantidade < 100) {
@@ -121,7 +147,7 @@ export default function Vinho() {
                     +
                   </p>
                 </div>
-                <button>Reservar</button>
+                <button onClick={reservarVinho}>Reservar</button>
               </div>
             </div>
           </div>
@@ -135,7 +161,7 @@ export default function Vinho() {
 
             <div className="informacoes-adicionais-vinho">
               <div className="descricao">
-                <p>{vinho.quantidade}</p>
+                <p>{vinho.descricao}</p>
               </div>
 
               <div className="informacoes-adicionais">
