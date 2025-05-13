@@ -63,13 +63,13 @@ export default function HomePage() {
             <h2>NOSSA JORNADA</h2>
             <hr />
             <p>
-              A empresa Viana Vinhos Finos foi criada em 1992. Representante
+              A empresa <strong>Viana Vinhos Finos</strong> foi criada em 1992. Representante
               Ronilton de Melo Viana.
             </p>
             <p>
               A empresa tem como objetivo atender as pessoas que apreciam um bom
-              vinho. Nossos parceiros profissionais: Vinícola Gões e Vinícola XV
-              de Novembro.
+              vinho. Nossos parceiros profissionais: <strong>Vinícola Gões e Vinícola XV
+              de Novembro</strong>.
             </p>
             <p>
               Os nossos serviços vão desde o consumo cotidiano até os brindes
@@ -77,7 +77,7 @@ export default function HomePage() {
             </p>
             <p>
               Descubra rótulos exclusivos e experiências únicas na loja que é
-              referência entre os amantes do bom vinho.
+              referência entre os amantes do bom vinho.  
             </p>
           </div>
         </section>

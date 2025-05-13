@@ -15,12 +15,10 @@
     justify-content: center;
     width: 100%;
     height: 10.5rem;
-    //background-image: url("../../../public/assets/images/vinho-exemplo.svg");
 
-
-      img {
-        image-rendering: optimizeQuality;
-      }
+    img {
+      image-rendering: optimizeQuality;
+    }
   }
 
   .informacoes-vinho {
@@ -53,7 +51,7 @@
       text-align: center;
     }
 
-    .btn-reversa-vinho {
+    .btn-reserva-vinho {
       width: 11.359rem;
       height: 2.9rem;
       background: #99343b;

@@ -53,15 +53,15 @@
       align-items: center;
       gap: 1.5rem;
       margin-bottom: -1.5rem;
-  
+
       span {
         font: 500 1rem "Poppins";
       }
-  
+
       i {
         transition: opacity 0.5s ease;
         cursor: pointer;
-  
+
         &:hover {
           opacity: 0.9;
           text-shadow: 0rem 0rem 1rem #fff inset;
@@ -83,7 +83,7 @@
         }
 
         .numero-pedido {
-          width: 18%;
+          width: 15%;
         }
 
         .quantidade-pedido {
@@ -91,7 +91,7 @@
         }
 
         .status-pedido {
-          width: 10%;
+          width: 13%;
         }
         .valor-total-pedido {
           width: 28%;
@@ -129,34 +129,70 @@
 
         td {
           height: 100%;
-          border-top: 0.125rem dashed #000;
-          border-bottom: 0.125rem dashed #000;
+          border-top: .125rem dashed #000;
+          border-bottom: .125rem dashed #000;
+
+          .select-status-pedido {
+            border-radius: 0.6rem;
+            padding: .3rem;
+            font: 500 .9rem/normal "Poppins";
+            background-color: #eae9e9;
+          }
 
           .primeira-coluna {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
 
-          button {
-            width: 50%;
-            height: 2.5rem;
-            font: 400 0.8rem "Poppins";
-            color: #fff;
-            border-radius: 51.25rem;
-            border: none;
-            background: #a4596d;
-            cursor: pointer;
-            transition: opacity 0.5s ease;
+            button {
+              width: 50%;
+              height: 2.5rem;
+              font: 400 0.8rem "Poppins";
+              color: #fff;
+              border-radius: 51.25rem;
+              border: none;
+              background: #a4596d;
+              cursor: pointer;
+              transition: opacity 0.5s ease;
 
-            &:hover {
-              opacity: 0.95;
-              box-shadow: 0rem 0rem 0.15rem #b84363 inset;
-              transform: scale(1.05);
+              &:hover {
+                opacity: 0.95;
+                box-shadow: 0rem 0rem 0.15rem #b84363 inset;
+                transform: scale(1.05);
+              }
             }
           }
-        }
+
+          .manipulacao-lista-pedidos-cliente {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            button {
+              width: 100%;
+              height: auto;
+              border-radius: .4rem;
+              font: 400 0.8rem "Poppins";
+              color: #fff;
+              padding: .1rem;
+              border: none;
+              background: #a4596d;
+              cursor: pointer;
+              transition: opacity 0.5s ease;
+
+              &:hover {
+                opacity: 0.95;
+                box-shadow: 0rem 0rem 0.15rem #b84363 inset;
+                transform: scale(1.05);
+              }
+            }
+          }
+
+          .span-status-pedido {
+            cursor: pointer;
+          }
         }
 
         tr td:first-child {

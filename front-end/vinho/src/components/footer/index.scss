@@ -132,13 +132,14 @@
           justify-content: center;
           gap: 0.8rem;
           color: #fff;
-          font: 500 0.95rem / normal "Poppins";
+          font: 500 .95rem / normal "Poppins";
 
           .whatsapp {
             cursor: pointer;
             transition: opacity 0.5s ease;
             color: #25d366;
-            font-size: 1.6rem;
+            font-size: 1.45rem;
+            flex-wrap: wrap;
 
             &:hover {
               opacity: 0.8;
@@ -163,7 +164,7 @@
         .redes-sociais {
           display: flex;
           gap: 0.8rem;
-          font-size: 1.8rem;
+          font-size: 1.75rem;
           cursor: pointer;
           transition: opacity 0.5s ease;
 
@@ -174,7 +175,7 @@
             &:hover {
               opacity: 0.8;
               text-shadow: 0rem 0rem 0.5rem #1e469c inset;
-              transform: scale(1.1);
+              transform: scale(1.15);
             }
           }
 
@@ -506,7 +507,7 @@
           }
 
           span {
-            font-size: .5rem !important;
+            font-size: .75rem !important;
           }
         }
       }

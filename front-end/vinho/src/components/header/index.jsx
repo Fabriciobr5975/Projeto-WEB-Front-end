@@ -27,7 +27,7 @@ export default function Header(props) {
         <div className="links-header">
           <ul className="lista-links-header">
             <li>
-              <Link to="/vinho" className="link-header">
+              <Link to="/produtos" className="link-header">
                 Vinho
               </Link>
             </li>

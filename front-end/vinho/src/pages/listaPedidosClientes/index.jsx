@@ -12,17 +12,19 @@ import impedirAcessoTelaAdministrador from "../../service/administrador/impedirA
 
 export default function ListaPedidosClientes() {
   const cliente = useMemo(() => {
-      return JSON.parse(sessionStorage.getItem("cliente")) || {};
-    }, []);
-  
-    const navigate = useNavigate();
-  
-    useEffect(() => {
-      impedirAcessoTelaAdministrador(cliente, navigate);
-    }, [cliente, navigate]);
+    return JSON.parse(sessionStorage.getItem("cliente")) || {};
+  }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    impedirAcessoTelaAdministrador(cliente, navigate);
+  }, [cliente, navigate]);
 
   const [listaPedidos, setListaPedidos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
+  const [atualizarStatusPedido, setAtualizarStatusPedido] = useState(false);
+  const [statusPedido, setStatusPedido] = useState("");
 
   useEffect(() => {
     listarPedidosClientes();
@@ -46,6 +48,45 @@ export default function ListaPedidosClientes() {
 
   const atualizarTabela = () => {
     setAtualizarLista((atualizar) => !atualizar);
+  };
+
+  const alterarPedidoCliente = async (index) => {
+    try {
+      const pedidoCliente = {
+        status_pedido: listaPedidos[index].status_pedido,
+        data_pedido: listaPedidos[index].data_pedido,
+      };
+
+      if (sessionStorage.getItem("cliente")) {
+        const url = `http://localhost:5001/pedido/${listaPedidos[index].id_pedido}`;
+        await axios.put(url, pedidoCliente);
+
+        alert(
+          `O pedido de número ${listaPedidos[index].id_pedido} foi alterado com sucesso com sucesso!`
+        );
+        listarPedidosClientes();
+        // Apenas para o site ser compilado no netlify
+        setAtualizarStatusPedido(false);
+      }
+    } catch (error) {
+      alert(error.response?.data?.erro ?? "Erro ao alterar o pedido!");
+    }
+  };
+
+  const removerPedidoCliente = async (idPedido) => {
+    try {
+      if (sessionStorage.getItem("cliente")) {
+        const url = `http://localhost:5001/pedido/${idPedido}`;
+        await axios.delete(url);
+
+        alert(`O pedido de número ${idPedido} foi removido com sucesso!`);
+        listarPedidosClientes();
+        // Apenas para o site ser compilado no netlify
+        setAtualizarStatusPedido(false);
+      }
+    } catch (error) {
+      alert(error.response?.data?.erro ?? "Erro ao remover o pedido!");
+    }
   };
 
   return (
@@ -103,7 +144,7 @@ export default function ListaPedidosClientes() {
                 </tr>
               </thead>
               <tbody>
-                {listaPedidos.map((pedido) => (
+                {listaPedidos.map((pedido, index) => (
                   <tr key={pedido.id_pedido}>
                     <td>
                       <div className="primeira-coluna">
@@ -121,7 +162,7 @@ export default function ListaPedidosClientes() {
                     <td>
                       {pedido.itens.map((item) => (
                         <div className="conteudo-lista">
-                          <div key={item.id_vinho}>{item.vinho}</div>
+                          <div key={item.id_vinho}>{item.id_pedido}</div>
                         </div>
                       ))}
                     </td>
@@ -132,8 +173,44 @@ export default function ListaPedidosClientes() {
                       </div>
                     </td>
                     <td className="contato-cliente">{pedido.celular}</td>
-                    <td>{pedido.status_pedido}</td>
+                    <td>
+                      <select
+                        className="select-status-pedido"
+                        style={{ display: atualizarStatusPedido ? "" : "none" }}
+                        value={statusPedido}
+                        onChange={(e) => setStatusPedido(e.target.value)}
+                        onMouseEnter={() => setAtualizarLista(true)}
+                      >
+                        <option value="PENDENTE" onSelect={statusPedido}>
+                          PENDENTE
+                        </option>
+                        <option value="EM ANDAMENTO">EM ANDAMENTO</option>
+                        <option value="ENVIADO">ENVIADO</option>
+                        <option value="ENTREGUE">ENTREGUE</option>
+                      </select>
+
+                      <span className="span-status-pedido"
+                        style={{ display: atualizarStatusPedido ? "none" : "" }}
+                      >
+                        {pedido.status_pedido}
+                      </span>
+                    </td>
                     <td>{pedido.data_pedido}</td>
+
+                    <td>
+                      <div className="manipulacao-lista-pedidos-cliente">
+                        <button onClick={() => alterarPedidoCliente(index)}>
+                          {atualizarStatusPedido
+                            ? "Salvar Alteração"
+                            : "Alterar Pedido"}
+                        </button>
+                        <button
+                          onClick={() => removerPedidoCliente(pedido.id_pedido)}
+                        >
+                          Excluir pedido
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
