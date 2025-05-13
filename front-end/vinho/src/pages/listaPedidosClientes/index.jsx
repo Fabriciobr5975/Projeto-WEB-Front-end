@@ -162,7 +162,7 @@ export default function ListaPedidosClientes() {
                     <td>
                       {pedido.itens.map((item) => (
                         <div className="conteudo-lista">
-                          <div key={item.id_vinho}>{item.id_pedido}</div>
+                          <div key={item.id_vinho}>{item.vinho}</div>
                         </div>
                       ))}
                     </td>
