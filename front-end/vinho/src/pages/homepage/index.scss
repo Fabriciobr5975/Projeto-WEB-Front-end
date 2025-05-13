@@ -23,8 +23,7 @@
     background: #000;
     background-image: url("../../../public/assets/images/imagem-banner.svg");
     background-size: 100%;
-    background-position: right;
-    image-rendering: crisp-edges;
+    image-rendering: optimizeQuality;
     background-repeat: no-repeat;
     flex-wrap: wrap;
 

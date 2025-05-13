@@ -23,8 +23,6 @@ export default function ListaPedidosClientes() {
 
   const [listaPedidos, setListaPedidos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
-  const [atualizarStatusPedido, setAtualizarStatusPedido] = useState(false);
-  const [statusPedido, setStatusPedido] = useState("");
 
   useEffect(() => {
     listarPedidosClientes();
@@ -65,8 +63,6 @@ export default function ListaPedidosClientes() {
           `O pedido de número ${listaPedidos[index].id_pedido} foi alterado com sucesso com sucesso!`
         );
         listarPedidosClientes();
-        // Apenas para o site ser compilado no netlify
-        setAtualizarStatusPedido(false);
       }
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao alterar o pedido!");
@@ -81,8 +77,6 @@ export default function ListaPedidosClientes() {
 
         alert(`O pedido de número ${idPedido} foi removido com sucesso!`);
         listarPedidosClientes();
-        // Apenas para o site ser compilado no netlify
-        setAtualizarStatusPedido(false);
       }
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao remover o pedido!");
@@ -176,33 +170,24 @@ export default function ListaPedidosClientes() {
                     <td>
                       <select
                         className="select-status-pedido"
-                        style={{ display: atualizarStatusPedido ? "" : "none" }}
-                        value={statusPedido}
-                        onChange={(e) => setStatusPedido(e.target.value)}
-                        onMouseEnter={() => setAtualizarLista(true)}
+                        value={pedido.status_pedido}
+                        onChange={(e) => {
+                          pedido.status_pedido = e.target.value;
+                          setListaPedidos([...listaPedidos]);
+                        }}
                       >
-                        <option value="PENDENTE" onSelect={statusPedido}>
-                          PENDENTE
-                        </option>
+                        <option value="PENDENTE">PENDENTE</option>
                         <option value="EM ANDAMENTO">EM ANDAMENTO</option>
                         <option value="ENVIADO">ENVIADO</option>
                         <option value="ENTREGUE">ENTREGUE</option>
                       </select>
-
-                      <span className="span-status-pedido"
-                        style={{ display: atualizarStatusPedido ? "none" : "" }}
-                      >
-                        {pedido.status_pedido}
-                      </span>
                     </td>
                     <td>{pedido.data_pedido}</td>
 
                     <td>
                       <div className="manipulacao-lista-pedidos-cliente">
                         <button onClick={() => alterarPedidoCliente(index)}>
-                          {atualizarStatusPedido
-                            ? "Salvar Alteração"
-                            : "Alterar Pedido"}
+                          Alterar Pedido
                         </button>
                         <button
                           onClick={() => removerPedidoCliente(pedido.id_pedido)}

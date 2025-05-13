@@ -129,14 +129,15 @@
 
         td {
           height: 100%;
-          border-top: .125rem dashed #000;
-          border-bottom: .125rem dashed #000;
+          border-top: 0.125rem dashed #000;
+          border-bottom: 0.125rem dashed #000;
 
           .select-status-pedido {
             border-radius: 0.6rem;
-            padding: .3rem;
-            font: 500 .9rem/normal "Poppins";
+            padding: 0.3rem;
+            font: 500 0.9rem/normal "Poppins";
             background-color: #eae9e9;
+            cursor: pointer;
           }
 
           .primeira-coluna {
@@ -173,10 +174,10 @@
             button {
               width: 100%;
               height: auto;
-              border-radius: .4rem;
+              border-radius: 0.4rem;
               font: 400 0.8rem "Poppins";
               color: #fff;
-              padding: .1rem;
+              padding: 0.1rem;
               border: none;
               background: #a4596d;
               cursor: pointer;
@@ -188,10 +189,6 @@
                 transform: scale(1.05);
               }
             }
-          }
-
-          .span-status-pedido {
-            cursor: pointer;
           }
         }
 

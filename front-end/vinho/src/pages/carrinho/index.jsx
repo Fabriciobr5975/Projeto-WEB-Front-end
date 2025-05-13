@@ -187,11 +187,11 @@ export default function CarrinhoCliente() {
                       <span onClick={() => aumentarQuantidade(index)}>+</span>
                     </div>
                   </td>
-                  <td>{imprimirNumeroComVirgula(carrinho.vinho)}</td>
+                  <td>{carrinho.vinho}</td>
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {carrinho.preco_vinho}
+                      {imprimirNumeroComVirgula(carrinho.preco_vinho)}
                     </div>
                   </td>
                   <td>
