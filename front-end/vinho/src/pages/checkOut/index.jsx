@@ -17,11 +17,33 @@ export default function CheckOut() {
 
   const navigate = useNavigate();
 
+  const [listaEnderecos, setListaEnderecos] = useState([]);
+  const [enderecoSelecionado, setEnderecoSelecionado] = useState({});
+
   useEffect(() => {
     if (!sessionStorage.getItem("cliente")) {
       navigate("/");
     }
   }, [navigate]);
+
+  const listarEnderecosCliente = useCallback(async () => {
+    try {
+      const url = `http://localhost:5001/enderecocliente/busca/cliente?cliente=${cliente.cpf}`;
+      const resp = await axios.get(url);
+
+      const resposta = resp.data;
+
+      setListaEnderecos([...resposta]);
+    } catch (error) {
+      alert(
+        error.response?.data?.erro ?? "Erro ao buscar os seus endereços salvos"
+      );
+    }
+  }, [cliente]);
+
+  useEffect(() => {
+    listarEnderecosCliente();
+  }, [listarEnderecosCliente]);
 
   const [cpfCliente] = useState(cliente.cpf);
   const [listaItensCarrinho, setListaItensCarrinho] = useState([]);
@@ -175,12 +197,24 @@ export default function CheckOut() {
             </div>
             <div className="container-conteudo">
               <div className="busca">
-                <input
-                  type="text"
-                  // value={id}
-                  // onChange={(e) => setId(e.target.value)}
-                  placeholder="lista de endereço(s)"
-                />
+                {listaEnderecos.map((endereco, index) => (
+                  <select
+                    key={index}
+                    name="lista-enderecos"
+                    value={enderecoSelecionado?.id_cliente ?? -1}
+                    onChange={(e) =>
+                      setEnderecoSelecionado(listaEnderecos[e.target.value])
+                    }
+                  >
+                    <option value={-1} disabled selected>
+                      Lista de Endereços
+                    </option> 
+                    <option value={index}>
+                      {endereco.logradouro} {endereco.numero} - {endereco.cep},{" "}
+                      {endereco.numero}, {endereco.cidade}
+                    </option>
+                  </select>
+                ))}
                 <input type="button" value="Adicionar Novo" />
               </div>
               <div className="container-conteudo-endereco">
@@ -194,48 +228,134 @@ export default function CheckOut() {
                 <div className="campo-duplo1">
                   <div className="campo">
                     <span> Primeiro Nome: </span>
-                    <input type="text" placeholder="Primeiro nome" />
+                    <input
+                      type="text"
+                      placeholder="Primeiro nome"
+                      value={cliente.primeiro_nome}
+                      readOnly
+                    />
                   </div>
                   <div className="campo">
                     <span> Último Nome: </span>
-                    <input type="text" placeholder="Sobrenome" />
+                    <input
+                      type="text"
+                      placeholder="Sobrenome"
+                      value={cliente.sobrenome}
+                      readOnly
+                    />
                   </div>
                 </div>
                 <div className="campo-duplo2">
                   <div className="campo">
                     <span> Estado: </span>
-                    <input type="text" placeholder="Estado" />
+                    <input
+                      type="text"
+                      placeholder="Estado"
+                      value={enderecoSelecionado.uf}
+                      onChange={(e) =>
+                        setEnderecoSelecionado({
+                          ...enderecoSelecionado,
+                          uf: e.target.value,
+                        })
+                      }
+                      readOnly
+                    />
                   </div>
                   <div className="campo">
                     <span> Cidade: </span>
-                    <input type="text" placeholder="Cidade" />
+                    <input
+                      type="text"
+                      placeholder="Cidade"
+                      value={enderecoSelecionado.cidade}
+                      onChange={(e) =>
+                        setEnderecoSelecionado({
+                          ...enderecoSelecionado,
+                          cidade: e.target.value,
+                        })
+                      }
+                      readOnly
+                    />
                   </div>
                 </div>
                 <div className="campo">
                   <span> Bairro: </span>
-                  <input type="text" placeholder="Bairro" />
+                  <input
+                    type="text"
+                    placeholder="Bairro"
+                    value={enderecoSelecionado.bairro}
+                    onChange={(e) =>
+                      setEnderecoSelecionado({
+                        ...enderecoSelecionado,
+                        bairro: e.target.value,
+                      })
+                    }
+                    readOnly
+                  />
                 </div>
                 <div className="campo">
                   <span> Logradouro: </span>
-                  <input type="text" placeholder="Logradouro" />
+                  <input
+                    type="text"
+                    placeholder="Logradouro"
+                    value={enderecoSelecionado.logradouro}
+                    onChange={(e) =>
+                      setEnderecoSelecionado({
+                        ...enderecoSelecionado,
+                        logradouro: e.target.value,
+                      })
+                    }
+                    readOnly
+                  />
                 </div>
                 <div className="campo-duplo2">
                   <div className="campo">
                     <span> Número: </span>
-                    <input type="text" placeholder="Número" />
+                    <input
+                      type="text"
+                      placeholder="Número"
+                      value={enderecoSelecionado.numero}
+                      onChange={(e) =>
+                        setEnderecoSelecionado({
+                          ...enderecoSelecionado,
+                          numero: e.target.value,
+                        })
+                      }
+                      readOnly
+                    />
                   </div>
                   <div className="campo">
                     <span> CEP: </span>
-                    <input type="text" placeholder="CEP" />
+                    <input
+                      type="text"
+                      placeholder="CEP"
+                      value={enderecoSelecionado.cep}
+                      onChange={(e) =>
+                        setEnderecoSelecionado({
+                          ...enderecoSelecionado,
+                          cep: e.target.value,
+                        })
+                      }
+                      readOnly
+                    />
                   </div>
                 </div>
                 <div className="campo">
                   <span> E-mail: </span>
-                  <input type="text" placeholder="E-mail" />
+                  <input
+                    type="text"
+                    placeholder="E-mail"
+                    value={cliente.email}
+                    readOnly
+                  />
                 </div>
                 <div className="campo">
                   <span> Número para Contato: </span>
-                  <input type="text" placeholder="Celular" />
+                  <input
+                    type="text"
+                    placeholder="Celular"
+                    value={cliente.celular}
+                    readOnly
+                  />
                 </div>
               </div>
             </div>

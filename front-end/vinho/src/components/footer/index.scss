@@ -32,12 +32,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: .9rem;
+        font-size: 0.9rem;
         font-weight: 700;
-        gap: .5rem;
+        gap: 0.5rem;
 
         i {
-          font-size: .9rem;
+          font-size: 0.9rem;
           color: #ffcc00;
         }
 
@@ -85,6 +85,13 @@
         justify-content: center;
         gap: 0.5rem;
 
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+          transition: 5000s ease-in-out 0s;
+        }
+
         .input-email-footer {
           display: flex;
           border-radius: 0.5625rem;
@@ -94,7 +101,7 @@
             border: none;
             color: #fdecec;
             outline: none;
-            padding-left: .6rem;
+            padding-left: 0.6rem;
             font: 400 0.85rem / normal "Poppins";
           }
 
@@ -132,7 +139,7 @@
           justify-content: center;
           gap: 0.8rem;
           color: #fff;
-          font: 500 .95rem / normal "Poppins";
+          font: 500 0.95rem / normal "Poppins";
 
           .whatsapp {
             cursor: pointer;
@@ -507,7 +514,7 @@
           }
 
           span {
-            font-size: .75rem !important;
+            font-size: 0.75rem !important;
           }
         }
       }

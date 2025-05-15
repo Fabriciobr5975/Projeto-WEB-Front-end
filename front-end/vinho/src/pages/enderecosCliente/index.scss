@@ -76,7 +76,7 @@
         height: 2.5rem;
       }
 
-      .botao-adicionar-novo {
+      .botao-limpar-endereco {
         font: 400 1rem / normal "Poppins";
         width: 10rem;
         height: inherit;
@@ -117,20 +117,19 @@
         padding-bottom: 1rem;
       }
 
-      .ultima-linha  {
-        width: 100%;
-        display: grid;
-        grid-column: 1 / span 2;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 2rem;
-      
+      .ultima-linha {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        justify-content: space-around;
+
         .entrada {
           display: inline-flex;
           flex-direction: column;
           align-items: stretch;
           justify-content: flex-start;
           gap: 0.5rem;
-      
+
           input {
             width: 100%;
             border-radius: 0.5rem !important;
@@ -141,15 +140,22 @@
           }
         }
       }
-      
     }
 
-    .botao-salvar {
-      font: 400 1.5rem / normal "Poppins";
-      display: inline-flex;
-      width: 15rem;
-      height: 3.2rem;
-      border-radius: 0.625rem;
+    .botoes-endereco {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 2.5rem;
+
+      .botao-salvar,
+      .botao-excluir {
+        font: 400 1.3rem / normal "Poppins";
+        display: inline-flex;
+        width: 12rem;
+        height: 3.2rem;
+        border-radius: 0.625rem;
+      }
     }
   }
 }
