@@ -59,7 +59,11 @@
       .container-conteudo {
         display: flex;
         flex-direction: column;
-        padding: 1rem .8rem;
+        padding: 1rem 0.8rem;
+
+        .select-check-out {
+          width: 100%;
+        }
 
         .busca {
           display: flex;
@@ -122,12 +126,12 @@
             }
 
             .preco {
-            display: inline-flex;
+              display: inline-flex;
               align-items: center;
               justify-content: center;
               font-weight: bold;
-              font-size: .95rem;
-              gap: .2rem;
+              font-size: 0.95rem;
+              gap: 0.2rem;
 
               .cifrao {
                 font-size: inherit;
@@ -141,6 +145,7 @@
           grid-template-columns: 55% 45%;
           justify-items: end;
           padding-right: 1rem;
+          padding-top: 1rem;
         }
 
         .container-conteudo-endereco {
@@ -154,14 +159,32 @@
             padding-bottom: 0.5rem;
           }
 
+          input {
+            width: 100%;
+          }
+
           .campo-duplo1 {
             display: grid;
-            grid-template-columns: 50% 65%;
+            grid-template-columns: auto auto;
+            gap: 1.5rem;
           }
 
           .campo-duplo2 {
             display: grid;
-            grid-template-columns: 43% 75%;
+            grid-template-columns: auto auto;
+            gap: 1.5rem;
+          }
+
+          .botao-salvar-endereco {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding-top: 1rem;
+
+            input[type="button"] {
+              width: 40%;
+            }
           }
 
           span {

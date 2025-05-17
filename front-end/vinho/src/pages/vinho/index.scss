@@ -201,16 +201,8 @@
         }
       }
 
-      .informacoes-adicionais-vinho {
-        display: flex;
-        align-items: start;
-        flex-direction: inherit;
-        justify-content: center;
-        text-align: justify;
-        color: #000;
-        font: 400 1.1rem / normal "Poppins";
-        gap: 1.5rem;
-        padding-top: 3rem;
+      .conteudo-descricao {
+        padding-top: 1.5rem;
       }
     }
   }

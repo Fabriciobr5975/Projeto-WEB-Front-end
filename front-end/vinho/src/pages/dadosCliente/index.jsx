@@ -5,7 +5,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -20,6 +20,7 @@ export default function PerfilCliente() {
   }, [navigate]);
 
   const [idCliente] = useState(cliente.id_cliente);
+  const [bloqueioSenha, setBloqueioSenha] = useState(true);
 
   const [dadosCliente, setDadosCliente] = useState({
     nome: "",
@@ -31,6 +32,11 @@ export default function PerfilCliente() {
     celular: "",
   });
 
+  const habilitarCampoSenha = () => {
+    setBloqueioSenha((senha) => !senha);
+    alert("O campo da senha foi habilitado!");
+  }
+
   const alterarDados = async () => {
     try {
       const url = `http://localhost:5001/cliente/${idCliente}`;
@@ -41,6 +47,8 @@ export default function PerfilCliente() {
       if (resposta >= 1) {
         alert("Os seus dados foram alterados com sucesso!");
       }
+
+      setBloqueioSenha(true);
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao alterar o cliente");
     }
@@ -142,6 +150,7 @@ export default function PerfilCliente() {
               <label>E-mail:</label>
               <input
                 type="email"
+                style={{background: "#d0d0d0"}}
                 placeholder="Seu e-mail"
                 value={dadosCliente.email}
                 onChange={(e) =>
@@ -150,6 +159,7 @@ export default function PerfilCliente() {
                     email: e.target.value,
                   })
                 }
+                readOnly
               />
             </div>
 
@@ -171,7 +181,8 @@ export default function PerfilCliente() {
             <div className="entrada">
               <label>Senha:</label>
               <input
-                type="password"
+                type={bloqueioSenha ? "password" : "text"}
+                style={{background: bloqueioSenha ? "#d0d0d0" : "inherit"}}
                 placeholder="Sua Senha Cadastrada"
                 value={dadosCliente.senha}
                 onChange={(e) =>
@@ -180,8 +191,9 @@ export default function PerfilCliente() {
                     senha: e.target.value,
                   })
                 }
+                readOnly={bloqueioSenha}
               />
-              <Link to="/recuperacaosenha">Alterar Senha</Link>
+              <span onClick={() => habilitarCampoSenha()}>Alterar Senha</span>
             </div>
 
             <div className="entrada">
@@ -189,6 +201,7 @@ export default function PerfilCliente() {
               <input
                 type="text"
                 placeholder="Seu CPF"
+                style={{background: "#d0d0d0"}}
                 readOnly
                 value={dadosCliente.cpf}
                 onChange={(e) =>

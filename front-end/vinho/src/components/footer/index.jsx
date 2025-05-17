@@ -6,6 +6,16 @@ import { Link } from "react-router-dom";
 export default function Footer(props) {
   const [clienteEspecial] = useState(props.cliente?.acesso);
 
+  const [emailUsuario, setEmailUsuario] = useState("");
+
+  const enviarEmailUsuario = () => {
+    if (!emailUsuario) {
+      alert("Por favor, digite o seu E-mail!");
+      return;
+    }
+    alert(`Obrigado pela inscrição, você receberá um E-mail em breve!`);
+  };
+
   return (
     <footer className="footer">
       <div className="elementos-footer">
@@ -19,7 +29,7 @@ export default function Footer(props) {
             style={{ display: clienteEspecial ? "" : "none" }}
             id="link-tela-adm"
           >
-            <i class="fas fa-key"></i>  Administrador 
+            <i class="fas fa-key"></i> Administrador
           </Link>
         </div>
 
@@ -50,8 +60,10 @@ export default function Footer(props) {
                 type="email"
                 placeholder="seu.email@aqui.com"
                 className="input-footer"
+                value={emailUsuario}
+                onChange={(e) => setEmailUsuario(e.target.value)}
               />
-              <button>Confirmar</button>
+              <button onClick={() => enviarEmailUsuario()}>Confirmar</button>
             </div>
           </div>
 

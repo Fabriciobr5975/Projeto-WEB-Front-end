@@ -4,7 +4,6 @@ import "./index.scss";
 export default function Vinho(props) {
   const navigate = useNavigate();
   
-
   return (
     <section className="componente-vinho">
       <div className="imagem-vinho">

@@ -12,7 +12,26 @@ export default function EnderecosCliente() {
   const cliente = useMemo(() => {
     return JSON.parse(sessionStorage.getItem("cliente")) || {};
   }, []);
+
   const navigate = useNavigate();
+  const [listaEnderecos, setListaEnderecos] = useState([]);
+  const [indexLista, setIndexLista] = useState(-1);
+
+  const [enderecoSelecionado, setEnderecoSelecionado] = useState({
+    id_cliente: 0,
+    nome_completo_cliente: "",
+    cpf: "",
+    email: "",
+    id_endereco: 0,
+    logradouro: "",
+    bairro: "",
+    cidade: "",
+    uf: "",
+    cep: "",
+    apelido_endereco: "",
+    numero: "",
+    complemento: "",
+  });
 
   useEffect(() => {
     if (!sessionStorage.getItem("cliente")) {
@@ -20,8 +39,38 @@ export default function EnderecosCliente() {
     }
   }, [navigate]);
 
-  const [listaEnderecos, setListaEnderecos] = useState([]);
-  const [enderecoSelecionado, setEnderecoSelecionado] = useState({});
+  const pegarEnderecoViaCep = useCallback(async () => {
+    try {
+      const resp = await axios.get(
+        `https://viacep.com.br/ws/${enderecoSelecionado.cep}/json/`
+      );
+      const enderecoBusca = resp.data;
+
+      if (enderecoBusca?.erro) {
+        alert("CEP inválido! Tente novamente.");
+        return;
+      }
+
+      setEnderecoSelecionado((novoEndereco) => ({
+        ...novoEndereco,
+        uf: enderecoBusca.uf,
+        cidade: enderecoBusca.localidade,
+        bairro: enderecoBusca.bairro,
+        logradouro: enderecoBusca.logradouro,
+      }));
+    } catch (err) {
+      console.error("Erro ao buscar endereço");
+    }
+  }, [enderecoSelecionado.cep]);
+
+  useEffect(() => {
+    if (
+      enderecoSelecionado.cep.length === 8 ||
+      enderecoSelecionado.cep.length === 9
+    ) {
+      pegarEnderecoViaCep();
+    }
+  }, [enderecoSelecionado.cep, pegarEnderecoViaCep]);
 
   const listarEnderecosCliente = useCallback(async () => {
     try {
@@ -43,29 +92,52 @@ export default function EnderecosCliente() {
   }, [listarEnderecosCliente]);
 
   const manipularEndereco = () => {
-    if(enderecoSelecionado.id_cliente <= 0 || !enderecoSelecionado.id_cliente) {
+    if (
+      enderecoSelecionado.id_cliente === 0 ||
+      !enderecoSelecionado.id_cliente
+    ) {
       inserirNovoEndereco();
-    
     } else {
       alterarEndereco();
     }
-  }
+  };
 
-  /**
-   * TODO: Precisa de ajustes
-   */
+  const colocarApelidoEnderecoPadrao = (endereco) => {
+    if (!endereco.apelido_endereco) {
+      endereco.apelido_endereco =
+        `${enderecoSelecionado.logradouro} ${enderecoSelecionado.numero} - ${enderecoSelecionado.cep}, ${enderecoSelecionado.numero} ${enderecoSelecionado.cidade}`.replace(
+          /\n/g,
+          " "
+        );
+    }
+  };
+
   const inserirNovoEndereco = async () => {
     try {
-      const url = `http://localhost:5001/enderecocliente/id?/cliente?cliente=${cliente.cpf}`;
-      const resp = await axios.get(url);
+      const enderecoInsercao = {
+        logradouro: enderecoSelecionado.logradouro,
+        bairro: enderecoSelecionado.bairro,
+        localidade: enderecoSelecionado.cidade,
+        uf: enderecoSelecionado.uf,
+        cep: enderecoSelecionado.cep,
+        numero: enderecoSelecionado.numero,
+        complemento: enderecoSelecionado.complemento,
+        apelido_endereco: enderecoSelecionado.apelido_endereco,
+        endereco: enderecoSelecionado.cep,
+        cliente: cliente.cpf,
+      };
+
+      colocarApelidoEnderecoPadrao(enderecoInsercao);
+
+      const url = `http://localhost:5001/enderecocliente`;
+      const resp = await axios.post(url, enderecoInsercao);
 
       const resposta = resp.data;
 
-      setListaEnderecos([...resposta]);
+      alert(resposta.resposta);
+      listarEnderecosCliente();
     } catch (error) {
-      alert(
-        error.response?.data?.erro ?? "Erro ao buscar os seus endereços salvos"
-      );
+      alert(error.response?.data?.erro ?? "Erro ao inserir esse endereço");
     }
   };
 
@@ -76,8 +148,11 @@ export default function EnderecosCliente() {
         cliente: cliente.cpf,
         numero: enderecoSelecionado.numero,
         complemento: enderecoSelecionado.complemento,
+        apelido_endereco: enderecoSelecionado.apelido_endereco,
       };
-      
+
+      colocarApelidoEnderecoPadrao(dadosAlteracaoEndereco);
+
       const url = `http://localhost:5001/enderecocliente/id?endereco=${enderecoSelecionado.cep}&cliente=${cliente.cpf}`;
       await axios.put(url, dadosAlteracaoEndereco);
 
@@ -92,11 +167,11 @@ export default function EnderecosCliente() {
   const removerEndereco = async () => {
     try {
       const url = `http://localhost:5001/enderecocliente/id?endereco=${enderecoSelecionado.cep}&cliente=${cliente.cpf}`;
-      const resp = await axios.delete(url);
+      await axios.delete(url);
 
-      const resposta = resp.data;
-
-      setListaEnderecos([...resposta]);
+      alert("Endereço removido com sucesso!");
+      listarEnderecosCliente();
+      limparEnderecoSelecionado();
     } catch (error) {
       alert(
         error.response?.data?.erro ?? "Erro ao buscar os seus endereços salvos"
@@ -105,22 +180,23 @@ export default function EnderecosCliente() {
   };
 
   const limparEnderecoSelecionado = () => {
-    if (enderecoSelecionado && enderecoSelecionado.id_cliente > 0) {
-      setEnderecoSelecionado({
-        id_cliente: -1,
-        nome_completo_cliente: "",
-        cpf: "",
-        email: "",
-        id_endereco: 0,
-        logradouro: "",
-        bairro: "",
-        cidade: "",
-        uf: "",
-        cep: "",
-        numero: "",
-        complemento: "",
-      });
-    }
+    setEnderecoSelecionado({
+      id_cliente: 0,
+      nome_completo_cliente: "",
+      cpf: "",
+      email: "",
+      id_endereco: 0,
+      logradouro: "",
+      bairro: "",
+      cidade: "",
+      uf: "",
+      cep: "",
+      apelido_endereco: "",
+      numero: "",
+      complemento: "",
+    });
+
+    setIndexLista(-1);
   };
 
   return (
@@ -155,24 +231,26 @@ export default function EnderecosCliente() {
 
         <section className="enderecos-cliente">
           <div className="listagem-enderecos-salvos">
-            {listaEnderecos.map((endereco, index) => (
-              <select
-                key={index}
-                name="lista-enderecos"
-                value={enderecoSelecionado?.id_cliente ?? -1}
-                onChange={(e) =>
-                  setEnderecoSelecionado(listaEnderecos[e.target.value])
-                }
-              >
-                <option value={-1} disabled selected>
-                  Lista de Endereços
+            <select
+              name="lista-enderecos"
+              value={indexLista}
+              onChange={(e) => {
+                const novoIndex = e.target.value;
+                setIndexLista(novoIndex);
+                setEnderecoSelecionado(listaEnderecos[novoIndex]);
+              }}
+            >
+              <option value={-1} disabled selected>
+                Lista de Endereços
+              </option>
+
+              {listaEnderecos.map((endereco, index) => (
+                <option key={endereco.id_cliente} value={index}>
+                  {endereco.apelido_endereco}
                 </option>
-                <option value={index}>
-                  {endereco.logradouro} {endereco.numero} - {endereco.cep},{" "}
-                  {endereco.numero}, {endereco.cidade}
-                </option>
-              </select>
-            ))}
+              ))}
+            </select>
+
             <button
               className="botao-limpar-endereco"
               onClick={limparEnderecoSelecionado}
@@ -187,6 +265,13 @@ export default function EnderecosCliente() {
               <input
                 type="text"
                 placeholder="Digite o apelido que você dar ao endereço"
+                value={enderecoSelecionado.apelido_endereco}
+                onChange={(e) =>
+                  setEnderecoSelecionado({
+                    ...enderecoSelecionado,
+                    apelido_endereco: e.target.value,
+                  })
+                }
               />
             </div>
 
@@ -194,6 +279,7 @@ export default function EnderecosCliente() {
               <label>Estado:</label>
               <input
                 type="text"
+                style={{background: "#d0d0d0"}}
                 placeholder="Estado"
                 value={enderecoSelecionado.uf}
                 onChange={(e) =>
@@ -210,6 +296,7 @@ export default function EnderecosCliente() {
               <label>Logradouro:</label>
               <input
                 type="text"
+                style={{background: "#d0d0d0"}}
                 placeholder="Logradouro"
                 value={enderecoSelecionado.logradouro}
                 onChange={(e) =>
@@ -226,6 +313,7 @@ export default function EnderecosCliente() {
               <label>Cidade:</label>
               <input
                 type="text"
+                style={{background: "#d0d0d0"}}
                 placeholder="Cidade"
                 value={enderecoSelecionado.cidade}
                 onChange={(e) =>
@@ -242,6 +330,7 @@ export default function EnderecosCliente() {
               <label>Bairro:</label>
               <input
                 type="text"
+                style={{background: "#d0d0d0"}}
                 placeholder="Bairro"
                 value={enderecoSelecionado.bairro}
                 onChange={(e) =>
@@ -297,16 +386,20 @@ export default function EnderecosCliente() {
                       cep: e.target.value,
                     })
                   }
-                  disabled
                 />
               </div>
             </div>
           </div>
           <div className="botoes-endereco">
-            <button className="botao-salvar" onClick={() => manipularEndereco()}>
+            <button
+              className="botao-salvar"
+              onClick={() => manipularEndereco()}
+            >
               Salvar
             </button>
-            <button className="botao-excluir" onClick={removerEndereco}>Excluir</button>
+            <button className="botao-excluir" onClick={removerEndereco}>
+              Excluir
+            </button>
           </div>
         </section>
 

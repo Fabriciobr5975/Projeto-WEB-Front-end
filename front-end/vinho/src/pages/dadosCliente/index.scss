@@ -70,15 +70,16 @@
           color: #000;
         }
 
-        a {
+        span {
           display: inline-flex;
           align-self: flex-end;
           font: 500 0.9rem "Poppins";
           color: #2e31d8;
+          cursor: pointer;
           text-decoration: none;
 
           &:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
           }
         }
       }

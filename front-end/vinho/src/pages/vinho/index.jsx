@@ -12,15 +12,15 @@ export default function Vinho() {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const [vinho, setVinhos] = useState({});
-  const [quantidade, setQuantidade] = useState(1);
+  const [ vinho, setVinhos ] = useState({});
+  const [ quantidadeDisponivel, setQuantidadeDisponivel ] = useState(0);
+  const [ quantidade, setQuantidade ] = useState(1);
 
   useEffect(() => {
-    if (quantidade < 1 || quantidade > 100) {
+    if (quantidade > quantidadeDisponivel) {
       setQuantidade(1);
-      alert("A quantidade informada é inválida!");
     }
-  }, [quantidade]);
+  }, [quantidade, quantidadeDisponivel]);
 
   const pegarVinho = useCallback(async () => {
     try {
@@ -30,6 +30,7 @@ export default function Vinho() {
       const vinhoBuscado = resp.data;
 
       setVinhos(vinhoBuscado);
+      setQuantidadeDisponivel(vinhoBuscado.quantidade_disponivel);
     } catch (error) {
       navigate("/notfound");
     }
@@ -47,8 +48,6 @@ export default function Vinho() {
           vinho: vinho.id_vinho,
           quantidade: quantidade,
         };
-
-        console.log(itemCarrinho);
 
         const url = `http://localhost:5001/itenscarrinho`;
         const resp = await axios.post(url, itemCarrinho);
@@ -68,7 +67,7 @@ export default function Vinho() {
   };
 
   const aumentarQuantidade = () => {
-    if (quantidade < 100) {
+    if (quantidade < 100 && quantidade < quantidadeDisponivel) {
       setQuantidade(quantidade + 1);
     }
   };
@@ -103,6 +102,7 @@ export default function Vinho() {
                     <li>Vinícola</li>
                     <li>Teor Alcoólico</li>
                     <li>Temp. de Serviço</li>
+                    <li>Qtd. em Estoque</li>
                   </ul>
                 </div>
 
@@ -113,6 +113,7 @@ export default function Vinho() {
                     <li>{vinho.vinicola}</li>
                     <li>{vinho.teor_alcolico}</li>
                     <li>{vinho.temperatura_servir}</li>
+                    <li>{vinho.quantidade_disponivel}</li>
                   </ul>
                 </div>
               </div>
@@ -136,7 +137,7 @@ export default function Vinho() {
                     id="input"
                     type="number"
                     min={1}
-                    max={10}
+                    max={quantidadeDisponivel}
                     value={quantidade}
                     onChange={(e) => setQuantidade(e.target.value)}
                   />
@@ -161,28 +162,7 @@ export default function Vinho() {
 
             <div className="informacoes-adicionais-vinho">
               <div className="descricao">
-                <p>{vinho.descricao}</p>
-              </div>
-
-              <div className="informacoes-adicionais">
-                <p>
-                  <strong>Gustativo:</strong> Ótima acidez, com corpo médio e
-                  final persistente
-                </p>
-                <p>
-                  <strong>Potencial de Guarda:</strong> Pronto para beber
-                </p>
-                <p>
-                  <strong>Olfativo:</strong> Aromas de frutas brancas e amarelas
-                  frescas, com leve toque mineral
-                </p>
-                <p>
-                  <strong>Harmonização:</strong> Carne de aves ao forno, peixes
-                  grelhados, risoto de cogumelos
-                </p>
-                <p>
-                  <strong>Visual:</strong> Amarelo-palha
-                </p>
+                <p className="conteudo-descricao">{vinho.descricao}</p>
               </div>
             </div>
           </div>

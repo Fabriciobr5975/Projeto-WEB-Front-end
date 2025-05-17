@@ -84,14 +84,16 @@ export default function CarrinhoCliente() {
 
           const url = `http://localhost:5001/itenscarrinho/${listaItensCarrinho[idItemCarrinho].id_itens_carrinho}`;
           await axios.put(url, itemCarrinho);
-
-          alert("A quantidade foi alterada com sucesso!");
         }
       } catch (error) {
         alert(
           error.response?.data?.erro ??
             "Erro ao alterar a quantidade de vinhos no carrinho"
         );
+        listaItensCarrinho[idItemCarrinho].quantidade -= 1;
+        setListaItensCarrinho((prev) => [...prev]);
+
+        alterarItemCarrinho(idItemCarrinho);
       }
     },
     [listaItensCarrinho, cliente]
@@ -100,12 +102,10 @@ export default function CarrinhoCliente() {
   /* Aumentar a quantidade do vinho */
   const aumentarQuantidade = useCallback(
     (idItemCarrinho) => {
-      if (listaItensCarrinho[idItemCarrinho].quantidade < 100) {
-        listaItensCarrinho[idItemCarrinho].quantidade += 1;
-        setListaItensCarrinho((prev) => [...prev]);
+      listaItensCarrinho[idItemCarrinho].quantidade += 1;
+      setListaItensCarrinho((prev) => [...prev]);
 
-        alterarItemCarrinho(idItemCarrinho);
-      }
+      alterarItemCarrinho(idItemCarrinho);
     },
     [listaItensCarrinho, alterarItemCarrinho]
   );
@@ -197,7 +197,9 @@ export default function CarrinhoCliente() {
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {imprimirNumeroComVirgula(Number(carrinho.preco_vinho) * carrinho.quantidade)}
+                      {imprimirNumeroComVirgula(
+                        Number(carrinho.preco_vinho) * carrinho.quantidade
+                      )}
                     </div>
                   </td>
                   <td>
@@ -217,7 +219,9 @@ export default function CarrinhoCliente() {
 
           <span className="valor-total-carrinho">
             Valor Total:{" "}
-            <strong>R$ {imprimirNumeroComVirgula((precoTotal.toFixed(2)))}</strong>
+            <strong>
+              R$ {imprimirNumeroComVirgula(precoTotal.toFixed(2))}
+            </strong>
           </span>
 
           <button

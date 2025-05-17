@@ -18,13 +18,61 @@ export default function CheckOut() {
   const navigate = useNavigate();
 
   const [listaEnderecos, setListaEnderecos] = useState([]);
-  const [enderecoSelecionado, setEnderecoSelecionado] = useState({});
+  const [indexLista, setIndexLista] = useState(-1);
+  const [enderecoSelecionado, setEnderecoSelecionado] = useState({
+    id_cliente: 0,
+    nome_completo_cliente: "",
+    cpf: "",
+    email: "",
+    id_endereco: 0,
+    logradouro: "",
+    bairro: "",
+    cidade: "",
+    uf: "",
+    cep: "",
+    apelido_endereco: "",
+    numero: "",
+    complemento: "",
+  });
 
   useEffect(() => {
     if (!sessionStorage.getItem("cliente")) {
       navigate("/");
     }
   }, [navigate]);
+
+  const pegarEnderecoViaCep = useCallback(async () => {
+    try {
+      const resp = await axios.get(
+        `https://viacep.com.br/ws/${enderecoSelecionado.cep}/json/`
+      );
+      const enderecoBusca = resp.data;
+
+      if (enderecoBusca?.erro) {
+        alert("CEP inválido! Tente novamente.");
+        return;
+      }
+
+      setEnderecoSelecionado((novoEndereco) => ({
+        ...novoEndereco,
+        uf: enderecoBusca.uf,
+        cidade: enderecoBusca.localidade,
+        bairro: enderecoBusca.bairro,
+        logradouro: enderecoBusca.logradouro,
+      }));
+    } catch (err) {
+      console.error("Erro ao buscar endereço");
+    }
+  }, [enderecoSelecionado.cep]);
+
+  useEffect(() => {
+    if (
+      enderecoSelecionado.cep.length === 8 ||
+      enderecoSelecionado.cep.length === 9
+    ) {
+      pegarEnderecoViaCep();
+    }
+  }, [enderecoSelecionado.cep, pegarEnderecoViaCep]);
 
   const listarEnderecosCliente = useCallback(async () => {
     try {
@@ -66,6 +114,67 @@ export default function CheckOut() {
     }
   }, [cpfCliente]);
 
+  const colocarApelidoEnderecoPadrao = (endereco) => {
+    if (!endereco.apelido_endereco) {
+      endereco.apelido_endereco =
+        `${enderecoSelecionado.logradouro} ${enderecoSelecionado.numero} - ${enderecoSelecionado.cep}, ${enderecoSelecionado.numero} ${enderecoSelecionado.cidade}`.replace(
+          /\n/g,
+          " "
+        );
+    }
+  };
+
+  const inserirNovoEndereco = async () => {
+    try {
+      const enderecoInsercao = {
+        logradouro: enderecoSelecionado.logradouro,
+        bairro: enderecoSelecionado.bairro,
+        localidade: enderecoSelecionado.cidade,
+        uf: enderecoSelecionado.uf,
+        cep: enderecoSelecionado.cep,
+        numero: enderecoSelecionado.numero,
+        complemento: enderecoSelecionado.complemento,
+        apelido_endereco: enderecoSelecionado.apelido_endereco,
+        endereco: enderecoSelecionado.cep,
+        cliente: cliente.cpf,
+      };
+
+      colocarApelidoEnderecoPadrao(enderecoInsercao);
+
+      console.log(enderecoInsercao);
+
+      const url = `http://localhost:5001/enderecocliente`;
+      const resp = await axios.post(url, enderecoInsercao);
+
+      const resposta = resp.data;
+
+      alert(resposta.resposta);
+      listarEnderecosCliente();
+    } catch (error) {
+      alert(error.response?.data?.erro ?? "Erro ao inserir esse endereço");
+    }
+  };
+
+  const limparEnderecoSelecionado = () => {
+    setEnderecoSelecionado({
+      id_cliente: 0,
+      nome_completo_cliente: "",
+      cpf: "",
+      email: "",
+      id_endereco: 0,
+      logradouro: "",
+      bairro: "",
+      cidade: "",
+      uf: "",
+      cep: "",
+      apelido_endereco: "",
+      numero: "",
+      complemento: "",
+    });
+
+    setIndexLista(-1);
+  };
+
   useEffect(() => {
     setPrecoTotal(calcularValorTotalCarrinho(listaItensCarrinho));
   }, [listaItensCarrinho]);
@@ -97,6 +206,10 @@ export default function CheckOut() {
           error.response?.data?.erro ??
             "Erro ao alterar a quantidade de vinhos no carrinho"
         );
+        listaItensCarrinho[idItemCarrinho].quantidade -= 1;
+        setListaItensCarrinho((prev) => [...prev]);
+
+        alterarItemCarrinho(idItemCarrinho);
       }
     },
     [listaItensCarrinho, cliente]
@@ -105,12 +218,10 @@ export default function CheckOut() {
   /* Aumentar a quantidade do vinho */
   const aumentarQuantidade = useCallback(
     (idItemCarrinho) => {
-      if (listaItensCarrinho[idItemCarrinho].quantidade < 100) {
-        listaItensCarrinho[idItemCarrinho].quantidade += 1;
-        setListaItensCarrinho((prev) => [...prev]);
+      listaItensCarrinho[idItemCarrinho].quantidade += 1;
+      setListaItensCarrinho((prev) => [...prev]);
 
-        alterarItemCarrinho(idItemCarrinho);
-      }
+      alterarItemCarrinho(idItemCarrinho);
     },
     [listaItensCarrinho, alterarItemCarrinho]
   );
@@ -163,7 +274,6 @@ export default function CheckOut() {
                           </span>
                         </div>
                         <span className="preco">
-                          {" "}
                           <span className="cifrao">R$</span>
                           {imprimirNumeroComVirgula(
                             Number(item.preco_vinho) * item.quantidade
@@ -197,25 +307,31 @@ export default function CheckOut() {
             </div>
             <div className="container-conteudo">
               <div className="busca">
-                {listaEnderecos.map((endereco, index) => (
-                  <select
-                    key={index}
-                    name="lista-enderecos"
-                    value={enderecoSelecionado?.id_cliente ?? -1}
-                    onChange={(e) =>
-                      setEnderecoSelecionado(listaEnderecos[e.target.value])
-                    }
-                  >
-                    <option value={-1} disabled selected>
-                      Lista de Endereços
-                    </option> 
-                    <option value={index}>
-                      {endereco.logradouro} {endereco.numero} - {endereco.cep},{" "}
-                      {endereco.numero}, {endereco.cidade}
+                <select
+                  className="select-check-out"
+                  value={indexLista}
+                  onChange={(e) => {
+                    const novoIndex = e.target.value;
+                    setIndexLista(novoIndex);
+                    setEnderecoSelecionado(listaEnderecos[novoIndex]);
+                  }}
+                >
+                  <option value={-1} disabled selected>
+                    Lista de Endereços
+                  </option>
+
+                  {listaEnderecos.map((endereco, index) => (
+                    <option key={endereco.id_cliente} value={index}>
+                      {endereco.apelido_endereco}
                     </option>
-                  </select>
-                ))}
-                <input type="button" value="Adicionar Novo" />
+                  ))}
+                </select>
+
+                <input
+                  type="button"
+                  value="Limpar Endereço"
+                  onClick={limparEnderecoSelecionado}
+                />
               </div>
               <div className="container-conteudo-endereco">
                 <div className="campo">
@@ -223,6 +339,13 @@ export default function CheckOut() {
                   <input
                     type="text"
                     placeholder="Digite o apelido do endereço"
+                    value={enderecoSelecionado.apelido_endereco}
+                    onChange={(e) =>
+                      setEnderecoSelecionado({
+                        ...enderecoSelecionado,
+                        apelido_endereco: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="campo-duplo1">
@@ -304,7 +427,20 @@ export default function CheckOut() {
                         logradouro: e.target.value,
                       })
                     }
-                    readOnly
+                  />
+                </div>
+                <div className="campo">
+                  <span> Complemento: </span>
+                  <input
+                    type="text"
+                    placeholder="Complemento"
+                    value={enderecoSelecionado.complemento}
+                    onChange={(e) =>
+                      setEnderecoSelecionado({
+                        ...enderecoSelecionado,
+                        complemento: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="campo-duplo2">
@@ -320,7 +456,6 @@ export default function CheckOut() {
                           numero: e.target.value,
                         })
                       }
-                      readOnly
                     />
                   </div>
                   <div className="campo">
@@ -335,7 +470,6 @@ export default function CheckOut() {
                           cep: e.target.value,
                         })
                       }
-                      readOnly
                     />
                   </div>
                 </div>
@@ -355,6 +489,14 @@ export default function CheckOut() {
                     placeholder="Celular"
                     value={cliente.celular}
                     readOnly
+                  />
+                </div>
+
+                <div className="campo botao-salvar-endereco">
+                  <input
+                    type="button"
+                    value="Salvar"
+                    onClick={() => inserirNovoEndereco()}
                   />
                 </div>
               </div>
