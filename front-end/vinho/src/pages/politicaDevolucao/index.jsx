@@ -11,7 +11,7 @@ export default function PoliticaDevolucao() {
     const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
     return (
-        <div className="pagina-devolucao">
+        <div className="pagina-devolucao pagina">
             <TelaCarregamento tempo={250}>
                 <Header cliente={cliente} />
                 <main className="pagina">

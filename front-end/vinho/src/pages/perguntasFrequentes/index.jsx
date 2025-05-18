@@ -11,7 +11,7 @@ export default function PerguntasFrequentes() {
     const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
     return (
-        <div className="pagina-perguntas">
+        <div className="pagina-perguntas pagina">
             <TelaCarregamento tempo={250}>
                 <Header cliente={cliente} />
                 <main className="pagina">

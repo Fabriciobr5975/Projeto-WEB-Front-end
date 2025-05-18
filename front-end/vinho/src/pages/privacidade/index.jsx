@@ -11,7 +11,7 @@ export default function Privacidade() {
     const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
     return (
-        <div className="pagina-privacidade">
+        <div className="pagina-privacidade pagina">
             <TelaCarregamento tempo={250}>
                 <Header cliente={cliente} />
                 <main className="privacidade">

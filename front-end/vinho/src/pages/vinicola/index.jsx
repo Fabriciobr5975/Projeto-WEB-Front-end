@@ -9,7 +9,7 @@ export default function Vinicola() {
     const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
 
     return (
-        <div className="pagina-vinicola">
+        <div className="pagina-vinicola pagina">
             <TelaCarregamento tempo={250}>
                 <Header cliente={cliente} />
                 <main className="vinicola">
