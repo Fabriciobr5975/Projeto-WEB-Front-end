@@ -32,7 +32,7 @@ export default function Header(props) {
               </Link>
             </li>
             <li>
-              <Link to="/vicolas" className="link-header">
+              <Link to="/vinicolas" className="link-header">
                 Vinicola
               </Link>
             </li>

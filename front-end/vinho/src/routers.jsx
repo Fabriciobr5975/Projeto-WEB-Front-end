@@ -18,6 +18,10 @@ import ConfirmacaoPedido from "./pages/confirmacaoPedido";
 import Produtos from "./pages/produto";
 import Vinho from "./pages/vinho";
 import CheckOut from "./pages/checkOut";
+import Vinicola from "./pages/vinicola";
+import Privacidade from "./pages/privacidade";
+import PerguntasFrequentes from "./pages/perguntasFrequentes";
+import PoliticaDevolucao from "./pages/politicaDevolucao";
 
 export default function Navegacao() {
   return (
@@ -40,6 +44,10 @@ export default function Navegacao() {
         <Route path="/produtos" element={<Produtos />} />
         <Route path="/vinho/:id" element={<Vinho />} />
         <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/vinicolas" element={<Vinicola />} />
+        <Route path="/privacidade" element={<Privacidade />} />
+        <Route path="/perguntas-frequentes" element={<PerguntasFrequentes />} />
+        <Route path="/politica-devolucao" element={<PoliticaDevolucao />} />
         <Route path="/confirmacaopedido" element={<ConfirmacaoPedido />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

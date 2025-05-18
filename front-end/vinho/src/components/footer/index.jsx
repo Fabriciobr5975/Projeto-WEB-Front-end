@@ -45,11 +45,10 @@ export default function Footer(props) {
 
         <div className="ajuda-footer">
           <h3 className="subtitulos-footer">AJUDA</h3>
-          <Link to="contato">Contate-nos</Link>
-          <Link to="informacoes">Perguntas Frequentes</Link>
-          <Link to="politicas">Política de Privacidade</Link>
-          <Link to="politicas">Política de Privacidade</Link>
-          <Link to="politicas">Política de Cancelamento</Link>
+          <Link to="/contato">Contate-nos</Link>
+          <Link to="/perguntas-frequentes">Perguntas Frequentes</Link>
+          <Link to="/privacidade">Política de Privacidade</Link>
+          <Link to="/politica-devolucao">Política de Devoluções</Link>
         </div>
 
         <div className="conteudo-adicional-footer">
