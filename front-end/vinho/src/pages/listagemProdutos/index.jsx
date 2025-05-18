@@ -131,14 +131,14 @@ export default function ListagemProdutos() {
                   <td>{item.id_vinho}</td>
                   <td>
                     <div className="primeira-coluna">
-                      {item.vinho}
+                      {/*{item.vinho}*/}
                       <img
                         src={item.imagem_vinho}
                         alt="imagem vinho"
                       />
                     </div>
                   </td>
-                  <td>{item.descricao}</td>
+                  <td>{item.vinho}</td>
                   <td>{item.vinicola_vinho}</td>
                   <td>
                     <div className="preco">
