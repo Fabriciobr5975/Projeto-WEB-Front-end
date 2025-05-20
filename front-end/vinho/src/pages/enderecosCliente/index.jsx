@@ -91,17 +91,6 @@ export default function EnderecosCliente() {
     listarEnderecosCliente();
   }, [listarEnderecosCliente]);
 
-  const manipularEndereco = () => {
-    if (
-      enderecoSelecionado.id_cliente === 0 ||
-      !enderecoSelecionado.id_cliente
-    ) {
-      inserirNovoEndereco();
-    } else {
-      alterarEndereco();
-    }
-  };
-
   const colocarApelidoEnderecoPadrao = (endereco) => {
     if (!endereco.apelido_endereco) {
       endereco.apelido_endereco =
@@ -279,7 +268,7 @@ export default function EnderecosCliente() {
               <label>Estado:</label>
               <input
                 type="text"
-                style={{background: "#d0d0d0"}}
+                style={{ background: "#d0d0d0" }}
                 placeholder="Estado"
                 value={enderecoSelecionado.uf}
                 onChange={(e) =>
@@ -296,7 +285,7 @@ export default function EnderecosCliente() {
               <label>Logradouro:</label>
               <input
                 type="text"
-                style={{background: "#d0d0d0"}}
+                style={{ background: "#d0d0d0" }}
                 placeholder="Logradouro"
                 value={enderecoSelecionado.logradouro}
                 onChange={(e) =>
@@ -313,7 +302,7 @@ export default function EnderecosCliente() {
               <label>Cidade:</label>
               <input
                 type="text"
-                style={{background: "#d0d0d0"}}
+                style={{ background: "#d0d0d0" }}
                 placeholder="Cidade"
                 value={enderecoSelecionado.cidade}
                 onChange={(e) =>
@@ -330,7 +319,7 @@ export default function EnderecosCliente() {
               <label>Bairro:</label>
               <input
                 type="text"
-                style={{background: "#d0d0d0"}}
+                style={{ background: "#d0d0d0" }}
                 placeholder="Bairro"
                 value={enderecoSelecionado.bairro}
                 onChange={(e) =>
@@ -393,11 +382,16 @@ export default function EnderecosCliente() {
           <div className="botoes-endereco">
             <button
               className="botao-salvar"
-              onClick={() => manipularEndereco()}
+              onClick={() => inserirNovoEndereco()}
             >
               Salvar
             </button>
-            <button className="botao-excluir" onClick={removerEndereco}>
+
+            <button className="botao-alterar" onClick={() => alterarEndereco()}>
+              Alterar
+            </button>
+
+            <button className="botao-excluir" onClick={() => removerEndereco()}>
               Excluir
             </button>
           </div>

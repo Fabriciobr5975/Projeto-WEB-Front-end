@@ -27,7 +27,7 @@ export default function HomePage() {
       const resp = await axios.get(url);
       const vinhos = resp.data;
 
-      setListaVinhos(vinhos);
+      setListaVinhos([...vinhos.slice(0, 8)]);
     } catch (error) {
       alert(
         error.response?.data?.erro ?? "Erro ao buscar as informações dos vinhos"

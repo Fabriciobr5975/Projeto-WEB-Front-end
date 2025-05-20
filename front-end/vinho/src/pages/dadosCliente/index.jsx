@@ -34,7 +34,7 @@ export default function PerfilCliente() {
 
   const habilitarCampoSenha = () => {
     setBloqueioSenha((senha) => !senha);
-    alert("O campo da senha foi habilitado!");
+    alert(`${bloqueioSenha ? "O campo da senha foi habilitado!" : "O campo da senha foi desabilitado!" }`);
   };
 
   const alterarDados = async () => {

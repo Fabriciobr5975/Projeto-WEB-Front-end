@@ -255,8 +255,14 @@
     height: 12rem;
 
     .lista-links-header {
-      display: flex;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
       gap: 8.5rem;
+
+      #link-tela-adm {
+        font-size: 1.45rem !important;
+      }
     }
 
     .logo {

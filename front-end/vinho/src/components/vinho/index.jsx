@@ -17,7 +17,9 @@ export default function Vinho(props) {
         <h5>{props.vinhos.nome_vinho ?? "Vinho"}</h5>
         <span>{props.vinhos.classificacao_vinho ?? "Classificação"}</span>
         <p className="preco">R$ {props.vinhos.preco_vinho ?? "0.0"}</p>
+        <div className="botao">
         <button className="btn-reserva-vinho" onClick={() => navigate(`/vinho/${props.vinhos.id_vinho}`)}>Reservar</button>
+      </div>
       </div>
     </section>
   );

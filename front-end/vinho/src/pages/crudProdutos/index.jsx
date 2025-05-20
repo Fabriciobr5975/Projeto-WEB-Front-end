@@ -51,7 +51,7 @@ export default function CrudProdutos() {
 
   const limparCampoImagem = () => {
     if (temImagemCampo) {
-      setImagemCampo(undefined);
+      setImagemCampo("");
       setVinho({ ...vinho, imagem_vinho: "", nome_imagem: "" });
       setNomeImagem("");
       setTemImagemCampo(false);
@@ -103,8 +103,7 @@ export default function CrudProdutos() {
 
       setTemImagemCampo(true);
       alert(`(${resp.data.resposta})`);
-      limpar();
-      limparCampoImagem();
+      limparTodosCampos();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao inserir o vinho");
     }
@@ -129,16 +128,17 @@ export default function CrudProdutos() {
       formData.append("vinicola", vinho.vinicola);
       formData.append("pais", vinho.pais);
 
+      console.log(vinho);
+
       await axios.put(
         `http://localhost:5001/vinho/${vinho.id_vinho}`,
         formData,
         {}
       );
-      
+
       setTemImagemCampo(true);
       alert(`Alteração realizada com sucesso no vinho`);
-      limpar();
-      limparCampoImagem();
+     limparTodosCampos();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao inserir o vinho");
     }
@@ -149,8 +149,7 @@ export default function CrudProdutos() {
       await axios.delete(`http://localhost:5001/vinho/${vinho.id_vinho}`);
       alert(`O produto (${vinho.nome_vinho}) foi excluido com sucesso! `);
 
-      limpar();
-      limparCampoImagem();
+      limparTodosCampos();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro para excluir o vinho");
     }
@@ -176,7 +175,7 @@ export default function CrudProdutos() {
     }
   }
 
-  function limpar() {
+  const limparCampos = () => {
     setVinho((prevState) => ({
       ...prevState,
       id_vinho: 0,
@@ -194,9 +193,15 @@ export default function CrudProdutos() {
       safra_vinho: "",
       preco_vinho: 0.0,
       descricao: "",
+      quantidade_disponivel: 0,
+      status_estoque: "",
     }));
-  }
+  };
 
+  const limparTodosCampos = () => {
+    limparCampoImagem();
+    limparCampos();
+  }
   const listarVinicolas = useCallback(async () => {
     try {
       const resp = await axios.get(`http://localhost:5001/vinicola`);
@@ -311,7 +316,9 @@ export default function CrudProdutos() {
                   <option value="Suave" selected>
                     Suave
                   </option>
-                  <option value="Seco" selected>Seco</option>
+                  <option value="Seco" selected>
+                    Seco
+                  </option>
                   <option value="Demi-Sec">Demi-Sec</option>
                   <option value="Espumante">Espumante</option>
                   <option value="Frisante">Frisante</option>
@@ -471,7 +478,7 @@ export default function CrudProdutos() {
               <input type="button" value="Cadastrar" onClick={cadastrar} />
               <input type="button" value="Alterar" onClick={alterar} />
               <input type="button" value="Excluir" onClick={Excluir} />
-              <input type="button" value="Limpar" onClick={limpar} />
+              <input type="button" value="limparCampos" onClick={() => limparTodosCampos()} />
             </div>
           </div>
         </section>
