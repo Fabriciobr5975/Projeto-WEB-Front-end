@@ -7,6 +7,12 @@ export default function Footer(props) {
   const [clienteEspecial] = useState(props.cliente?.acesso);
 
   const [emailUsuario, setEmailUsuario] = useState("");
+  
+  const teclaEnterApertada = (e) => {
+    if (e.key === "Enter") {
+      enviarEmailUsuario();
+    }
+  };
 
   const enviarEmailUsuario = () => {
     if (!emailUsuario) {
@@ -14,6 +20,7 @@ export default function Footer(props) {
       return;
     }
     alert(`Obrigado pela inscrição, você receberá um E-mail em breve!`);
+    setEmailUsuario("");
   };
 
   return (
@@ -23,7 +30,7 @@ export default function Footer(props) {
           <h3 className="subtitulos-footer">VIANA VINHOS</h3>
           <Link to="/">Home</Link>
           <Link to="/sobrenos">Sobre Nós</Link>
-          <Link to="/nossahistoria">Nossa História</Link>
+          <Link to="/cadastro">Cadastre-se</Link>
           <Link
             to="/listagemprodutos"
             style={{ display: clienteEspecial ? "" : "none" }}
@@ -45,7 +52,6 @@ export default function Footer(props) {
 
         <div className="ajuda-footer">
           <h3 className="subtitulos-footer">AJUDA</h3>
-          <Link to="/contato">Contate-nos</Link>
           <Link to="/perguntas-frequentes">Perguntas Frequentes</Link>
           <Link to="/privacidade">Política de Privacidade</Link>
           <Link to="/politica-devolucao">Política de Devoluções</Link>
@@ -60,6 +66,7 @@ export default function Footer(props) {
                 placeholder="seu.email@aqui.com"
                 className="input-footer"
                 value={emailUsuario}
+                onKeyUp={teclaEnterApertada}
                 onChange={(e) => setEmailUsuario(e.target.value)}
               />
               <button onClick={() => enviarEmailUsuario()}>Confirmar</button>

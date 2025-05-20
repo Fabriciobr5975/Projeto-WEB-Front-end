@@ -1,8 +1,11 @@
+import { useState } from "react";
 import "./index.scss";
 
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Header(props) {
+  const [clienteEspecial] = useState(props.cliente?.acesso);
+
   const navigate = useNavigate();
 
   const navegacao = () => {
@@ -28,18 +31,29 @@ export default function Header(props) {
           <ul className="lista-links-header">
             <li>
               <Link to="/produtos" className="link-header">
-                Vinho
+                Vinhos
               </Link>
             </li>
             <li>
               <Link to="/vinicolas" className="link-header">
-                Vinicola
+                Vinícola
               </Link>
             </li>
             <li>
-              <Link to="/contato" className="link-header">
-                Contato
-              </Link>
+              {clienteEspecial ? (
+                <Link
+                  to="/listagemprodutos"
+                  style={{ display: clienteEspecial ? "" : "none" }}
+                  id="link-tela-adm"
+                  className="link-header"
+                >
+                  <i class="fas fa-key"></i> Administrador
+                </Link>
+              ) : (
+                <Link to="/contato" className="link-header">
+                  Contato
+                </Link>
+              )}
             </li>
           </ul>
         </div>

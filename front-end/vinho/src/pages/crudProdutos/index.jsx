@@ -5,7 +5,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
@@ -22,8 +22,12 @@ export default function CrudProdutos() {
   }, [cliente, navigate]);
 
   const [imagemCampo, setImagemCampo] = useState(null);
+  const [temImagemCampo, setTemImagemCampo] = useState(false);
   const [nomeImagem, setNomeImagem] = useState("");
   const [id, setId] = useState("");
+
+  const [listaVinicolas, setListaVinicolas] = useState([]);
+  const [listaPaises, setListaPaises] = useState([]);
 
   const [vinho, setVinho] = useState({
     id_vinho: 0,
@@ -41,13 +45,16 @@ export default function CrudProdutos() {
     safra_vinho: "",
     preco_vinho: 0.0,
     descricao: "",
+    quantidade_disponivel: 0,
+    status_estoque: "",
   });
 
   const limparCampoImagem = () => {
-    if (imagemCampo || vinho.imagem_vinho) {
-      setImagemCampo(null);
+    if (temImagemCampo) {
+      setImagemCampo(undefined);
       setVinho({ ...vinho, imagem_vinho: "", nome_imagem: "" });
       setNomeImagem("");
+      setTemImagemCampo(false);
     }
   };
 
@@ -60,6 +67,7 @@ export default function CrudProdutos() {
       setImagemCampo(imagemUrl);
       setNomeImagem(arquivo.name);
       setVinho({ ...vinho, imagem_vinho: arquivo, nome_imagem: arquivo.name });
+      setTemImagemCampo(true);
     }
   };
 
@@ -84,6 +92,8 @@ export default function CrudProdutos() {
       formData.append("temperatura_servir", vinho.temperatura_servir);
       formData.append("preco", vinho.preco_vinho);
       formData.append("descricao", vinho.descricao);
+      formData.append("quantidade", vinho.quantidade_disponivel);
+      formData.append("status_estoque", vinho.status_estoque);
       formData.append("vinicola", vinho.vinicola);
       formData.append("pais", vinho.pais);
 
@@ -91,6 +101,7 @@ export default function CrudProdutos() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
+      setTemImagemCampo(true);
       alert(`(${resp.data.resposta})`);
       limpar();
       limparCampoImagem();
@@ -113,6 +124,8 @@ export default function CrudProdutos() {
       formData.append("temperatura_servir", vinho.temperatura_servir);
       formData.append("preco", vinho.preco_vinho);
       formData.append("descricao", vinho.descricao);
+      formData.append("quantidade", vinho.quantidade_disponivel);
+      formData.append("status_estoque", vinho.status_estoque);
       formData.append("vinicola", vinho.vinicola);
       formData.append("pais", vinho.pais);
 
@@ -121,9 +134,11 @@ export default function CrudProdutos() {
         formData,
         {}
       );
-
-      alert(`Alteração realizada com sucesso no vinho"`);
+      
+      setTemImagemCampo(true);
+      alert(`Alteração realizada com sucesso no vinho`);
       limpar();
+      limparCampoImagem();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao inserir o vinho");
     }
@@ -135,6 +150,7 @@ export default function CrudProdutos() {
       alert(`O produto (${vinho.nome_vinho}) foi excluido com sucesso! `);
 
       limpar();
+      limparCampoImagem();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro para excluir o vinho");
     }
@@ -150,6 +166,7 @@ export default function CrudProdutos() {
       setVinho(vinhoBuscado);
       setImagemCampo(vinho.imagem_vinho);
       setNomeImagem(vinho.nome_imagem);
+      setTemImagemCampo(true);
 
       alert(
         `Produto(s) com nome "${vinhoBuscado.nome_vinho}" buscado(s) com sucesso! `
@@ -180,6 +197,31 @@ export default function CrudProdutos() {
     }));
   }
 
+  const listarVinicolas = useCallback(async () => {
+    try {
+      const resp = await axios.get(`http://localhost:5001/vinicola`);
+      setListaVinicolas([...resp.data]);
+    } catch (error) {
+      alert(
+        error.response?.data?.erro ?? `Erro ao buscar as vinícolas salvas!`
+      );
+    }
+  }, []);
+
+  const listarPaises = useCallback(async () => {
+    try {
+      const resp = await axios.get(`http://localhost:5001/pais`);
+      setListaPaises([...resp.data]);
+    } catch (error) {
+      alert(error.response?.data?.erro ?? `Erro ao buscar os países salvos!`);
+    }
+  }, []);
+
+  useEffect(() => {
+    listarVinicolas();
+    listarPaises();
+  }, [listarVinicolas, listarPaises]);
+
   return (
     <main className="pagina-crud-produtos pagina">
       <TelaCarregamento tempo={250}>
@@ -205,6 +247,7 @@ export default function CrudProdutos() {
             <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
           </div>
         </section>
+
         <section className="conteudo">
           <div className="pesquisa1">
             <input type="button" value="Buscar" onClick={Buscar} />
@@ -230,74 +273,112 @@ export default function CrudProdutos() {
               />
               <p>{nomeImagem ? nomeImagem : "Coloque a Imagem aqui!"}</p>
             </div>
-            <div>
-              Identificação do Vinho (ID):
-              <br />
-              <input
-                type="text"
-                value={vinho.id_vinho}
-                onChange={(e) =>
-                  setVinho({ ...vinho, id_vinho: e.target.value })
-                }
-                placeholder="ID do vinho"
-                readOnly
-              />
-            </div>
-            <div>
-              Nome :<br />
-              <input
-                type="text"
-                value={vinho.nome_vinho}
-                onChange={(e) =>
-                  setVinho({ ...vinho, nome_vinho: e.target.value })
-                }
-                placeholder="Digite o nome do vinho"
-              />
-            </div>
-            <div>
-              Classificação :<br />
-              <input
-                type="text"
-                value={vinho.classificacao_vinho}
-                onChange={(e) =>
-                  setVinho({ ...vinho, classificacao_vinho: e.target.value })
-                }
-                placeholder="Digite a classificação do vinho"
-              />
-            </div>
-            <div>
-              Vinicola :<br />
-              <input
-                type="text"
-                value={vinho.vinicola}
-                onChange={(e) =>
-                  setVinho({ ...vinho, vinicola: e.target.value })
-                }
-                placeholder="Digite a Vínicola do vinho"
-              />
+            <div className="secao-informacoes">
+              <div className="lado-esquerdo">
+                Identificação do Vinho (ID):
+                <br />
+                <input
+                  type="text"
+                  style={{ background: "#d0d0d0" }}
+                  value={vinho.id_vinho}
+                  onChange={(e) =>
+                    setVinho({ ...vinho, id_vinho: e.target.value })
+                  }
+                  placeholder="ID do vinho"
+                  readOnly
+                />
+              </div>
+              <div className="lado-direito">
+                Nome :<br />
+                <input
+                  type="text"
+                  value={vinho.nome_vinho}
+                  onChange={(e) =>
+                    setVinho({ ...vinho, nome_vinho: e.target.value })
+                  }
+                  placeholder="Digite o nome do vinho"
+                />
+              </div>
+              <div className="lado-esquerdo">
+                Classificação :<br />
+                <select
+                  name="lista-classificacao-vinho"
+                  value={vinho.classificacao_vinho}
+                  onChange={(e) =>
+                    setVinho({ ...vinho, classificacao_vinho: e.target.value })
+                  }
+                >
+                  <option value="Suave" selected>
+                    Suave
+                  </option>
+                  <option value="Seco" selected>Seco</option>
+                  <option value="Demi-Sec">Demi-Sec</option>
+                  <option value="Espumante">Espumante</option>
+                  <option value="Frisante">Frisante</option>
+                  <option value="Rosé">Rosé</option>
+                  <option value="Sem Classificação">Sem Classificação</option>
+                </select>
+              </div>
+              <div className="lado-direito">
+                Vinicola :<br />
+                <select
+                  name="lista-vinicolas"
+                  value={vinho.vinicola}
+                  onChange={(e) =>
+                    setVinho({ ...vinho, vinicola: e.target.value })
+                  }
+                >
+                  {listaVinicolas.length > 0 ? (
+                    listaVinicolas.map((item) => (
+                      <option value={item.vinicola}>{item.vinicola}</option>
+                    ))
+                  ) : (
+                    <option value={undefined}>Vinícolas não encontradas</option>
+                  )}
+                </select>
+              </div>
+              <div className="lado-esquerdo">
+                Pais :
+                <select
+                  name="lista-paises"
+                  value={vinho.pais}
+                  onChange={(e) => setVinho({ ...vinho, pais: e.target.value })}
+                >
+                  {listaPaises.length > 0 ? (
+                    listaPaises.map((item) => (
+                      <option value={item.vinicola}>{item.pais}</option>
+                    ))
+                  ) : (
+                    <option value={undefined}>Paises não encontrados</option>
+                  )}
+                </select>
+              </div>
+              <div className="lado-direito">
+                Uva :
+                <input
+                  type="text"
+                  value={vinho.uva_vinho}
+                  onChange={(e) =>
+                    setVinho({ ...vinho, uva_vinho: e.target.value })
+                  }
+                  placeholder="Digite o nome da Uva do vinho"
+                />
+              </div>
             </div>
           </div>
+
           <div className="campos-descricao-botao">
             <div>
-              Uva :
+              Safra :
               <input
-                type="text"
-                value={vinho.uva_vinho}
+                type="number"
+                min="1900"
+                max={new Date().getFullYear()}
+                value={vinho.safra_vinho}
                 onChange={(e) =>
-                  setVinho({ ...vinho, uva_vinho: e.target.value })
+                  setVinho({ ...vinho, safra_vinho: e.target.value })
                 }
-                placeholder="Digite o nome da Uva do vinho"
-              />
-            </div>
-            <div>
-              Teor Alcoólico :
-              <input
-                type="text"
-                value={vinho.teor_alcolico}
-                onChange={(e) =>
-                  setVinho({ ...vinho, teor_alcolico: e.target.value })
-                }
-                placeholder="Digite o qtd. do teor alcoólco"
+                placeholder="Digite o ano da safra do vinho"
               />
             </div>
             <div>
@@ -312,6 +393,47 @@ export default function CrudProdutos() {
               />
             </div>
             <div>
+              Qtd. em Estoque :
+              <input
+                type="number"
+                min={0}
+                value={vinho.quantidade_disponivel}
+                onChange={(e) =>
+                  setVinho({ ...vinho, quantidade_disponivel: e.target.value })
+                }
+                placeholder="Digite a quantidade do vinho"
+              />
+            </div>
+            <div className="select-status-estoque">
+              Status do Estoque :
+              <select
+                name="lista-status-estoque"
+                value={vinho.status_estoque}
+                onChange={(e) =>
+                  setVinho({ ...vinho, status_estoque: e.target.value })
+                }
+              >
+                <option value="Sem Informação" selected>
+                  Sem Informação
+                </option>
+                <option value="Vazio">Vazio</option>
+                <option value="Baixo">Baixo</option>
+                <option value="Normal">Normal</option>
+                <option value="Cheio">Cheio</option>
+              </select>
+            </div>
+            <div>
+              Teor Alcoólico :
+              <input
+                type="text"
+                value={vinho.teor_alcolico}
+                onChange={(e) =>
+                  setVinho({ ...vinho, teor_alcolico: e.target.value })
+                }
+                placeholder="Digite o qtd. do teor alcoólco"
+              />
+            </div>
+            <div>
               Temperatura p/ Servir :
               <input
                 type="text"
@@ -320,26 +442,6 @@ export default function CrudProdutos() {
                   setVinho({ ...vinho, temperatura_servir: e.target.value })
                 }
                 placeholder="Digite a temperatura que o vinho tem que ser servido"
-              />
-            </div>
-            <div>
-              Pais :
-              <input
-                type="text"
-                value={vinho.pais}
-                onChange={(e) => setVinho({ ...vinho, pais: e.target.value })}
-                placeholder="Digite o país de origem"
-              />
-            </div>
-            <div>
-              Safra :
-              <input
-                type="text"
-                value={vinho.safra_vinho}
-                onChange={(e) =>
-                  setVinho({ ...vinho, safra_vinho: e.target.value })
-                }
-                placeholder="Digite o ano da safra do vinho"
               />
             </div>
             <div>
@@ -365,14 +467,11 @@ export default function CrudProdutos() {
               />
             </div>
 
-            <div className="botao">
+            <div className="botoes-crud-produto">
               <input type="button" value="Cadastrar" onClick={cadastrar} />
-            </div>
-            <div className="botao">
               <input type="button" value="Alterar" onClick={alterar} />
-            </div>
-            <div className="botao">
               <input type="button" value="Excluir" onClick={Excluir} />
+              <input type="button" value="Limpar" onClick={limpar} />
             </div>
           </div>
         </section>

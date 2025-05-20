@@ -177,7 +177,6 @@ export default function CarrinhoCliente() {
               {listaItensCarrinho.map((carrinho, index) => (
                 <tr key={carrinho.id_itens_carrinho}>
                   <td className="primeira-coluna">
-                    {carrinho.vinho}
                     <img src={carrinho.imagem_vinho} alt="imagem vinho" />
                   </td>
                   <td>

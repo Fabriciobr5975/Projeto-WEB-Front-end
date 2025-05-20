@@ -35,7 +35,7 @@ export default function PerfilCliente() {
   const habilitarCampoSenha = () => {
     setBloqueioSenha((senha) => !senha);
     alert("O campo da senha foi habilitado!");
-  }
+  };
 
   const alterarDados = async () => {
     try {
@@ -51,6 +51,13 @@ export default function PerfilCliente() {
       setBloqueioSenha(true);
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao alterar o cliente");
+    }
+  };
+
+  const confimarSaidaSite = () => {
+    if (window.confirm("Você está saindo da sua conta, clique em OK para continuar e realizar o logout")) {
+      sessionStorage.removeItem("cliente");
+      navigate("/homepage");
     }
   };
 
@@ -150,7 +157,7 @@ export default function PerfilCliente() {
               <label>E-mail:</label>
               <input
                 type="email"
-                style={{background: "#d0d0d0"}}
+                style={{ background: "#d0d0d0" }}
                 placeholder="Seu e-mail"
                 value={dadosCliente.email}
                 onChange={(e) =>
@@ -182,7 +189,7 @@ export default function PerfilCliente() {
               <label>Senha:</label>
               <input
                 type={bloqueioSenha ? "password" : "text"}
-                style={{background: bloqueioSenha ? "#d0d0d0" : "inherit"}}
+                style={{ background: bloqueioSenha ? "#d0d0d0" : "inherit" }}
                 placeholder="Sua Senha Cadastrada"
                 value={dadosCliente.senha}
                 onChange={(e) =>
@@ -201,7 +208,7 @@ export default function PerfilCliente() {
               <input
                 type="text"
                 placeholder="Seu CPF"
-                style={{background: "#d0d0d0"}}
+                style={{ background: "#d0d0d0" }}
                 readOnly
                 value={dadosCliente.cpf}
                 onChange={(e) =>
@@ -227,8 +234,9 @@ export default function PerfilCliente() {
               />
             </div>
           </div>
-          <div className="botao">
+          <div className="botoes-dados-usuario">
             <button onClick={alterarDados}>Salvar</button>
+            <button onClick={() => confimarSaidaSite()}>Sair da Conta</button>
           </div>
         </section>
 

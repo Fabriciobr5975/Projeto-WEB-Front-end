@@ -110,7 +110,6 @@ export default function AnaliseClientes() {
               <col className="email-cliente" />
               <col className="cidade-cliente" />
               <col className="bairro-cliente" />
-              <col className="cliente-ativo" />
               <col className="ticket-medio-cliente" />
             </colgroup>
             <thead>
@@ -120,7 +119,6 @@ export default function AnaliseClientes() {
                 <th>E-mail</th>
                 <th>Cidade</th>
                 <th>Bairro</th>
-                <th>Ativo?</th>
                 <th>Ticket Médio</th>
               </tr>
             </thead>
@@ -130,9 +128,8 @@ export default function AnaliseClientes() {
                   <td>{item.id_cliente}</td>
                   <td>{item.nome_completo_cliente}</td>
                   <td>{item.email}</td>
-                  <td>{item.cidade}</td>
-                  <td>{item.bairro}</td>
-                  <td>{"Sim"}</td>
+                  <td>{item?.cidade}</td>
+                  <td>{item?.bairro}</td>
                   <td>
                     <div className="preco">
                       <span>R$</span>
