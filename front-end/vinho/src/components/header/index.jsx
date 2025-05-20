@@ -50,8 +50,8 @@ export default function Header(props) {
                   <i class="fas fa-key"></i> Administrador
                 </Link>
               ) : (
-                <Link to="/contato" className="link-header">
-                  Contato
+                <Link to="/sobrenos" className="link-header">
+                  Sobre Nós
                 </Link>
               )}
             </li>
