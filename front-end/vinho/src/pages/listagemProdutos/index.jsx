@@ -80,8 +80,17 @@ export default function ListagemProdutos() {
               abaAtual={true}
               navegacao="/listagemprodutos"
             />
-            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
-            <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
+            <AbaNavegacao
+              nome="Modificar Produtos"
+              navegacao="/crudprodutos" />
+            <AbaNavegacao
+              nome="Modificar Vinicola/Pais"
+              navegacao="/crudvinicolapais"
+            />
+            <AbaNavegacao
+              nome="Lista de Pedidos"
+              navegacao="/listapedidos"
+            />
           </div>
         </section>
         <section className="conteudo">

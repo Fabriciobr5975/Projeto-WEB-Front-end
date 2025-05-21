@@ -138,7 +138,7 @@ export default function CrudProdutos() {
 
       setTemImagemCampo(true);
       alert(`Alteração realizada com sucesso no vinho`);
-     limparTodosCampos();
+      limparTodosCampos();
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao inserir o vinho");
     }
@@ -202,6 +202,7 @@ export default function CrudProdutos() {
     limparCampoImagem();
     limparCampos();
   }
+
   const listarVinicolas = useCallback(async () => {
     try {
       const resp = await axios.get(`http://localhost:5001/vinicola`);
@@ -249,7 +250,14 @@ export default function CrudProdutos() {
               abaAtual={true}
               navegacao="/crudprodutos"
             />
-            <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
+            <AbaNavegacao
+              nome="Modificar Vinicola/Pais"
+              navegacao="/crudvinicolapais"
+            />
+            <AbaNavegacao
+              nome="Lista de Pedidos"
+              navegacao="/listapedidos"
+            />
           </div>
         </section>
 
@@ -316,9 +324,7 @@ export default function CrudProdutos() {
                   <option value="Suave" selected>
                     Suave
                   </option>
-                  <option value="Seco" selected>
-                    Seco
-                  </option>
+                  <option value="Seco" selected>Seco</option>
                   <option value="Demi-Sec">Demi-Sec</option>
                   <option value="Espumante">Espumante</option>
                   <option value="Frisante">Frisante</option>
@@ -478,7 +484,7 @@ export default function CrudProdutos() {
               <input type="button" value="Cadastrar" onClick={cadastrar} />
               <input type="button" value="Alterar" onClick={alterar} />
               <input type="button" value="Excluir" onClick={Excluir} />
-              <input type="button" value="limparCampos" onClick={() => limparTodosCampos()} />
+              <input type="button" value="LimparCampos" onClick={() => limparTodosCampos()} />
             </div>
           </div>
         </section>

@@ -39,7 +39,7 @@ export default function ListaPedidosClientes() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-          "Erro ao buscar as informações dos pedidos"
+        "Erro ao buscar as informações dos pedidos"
       );
     }
   };
@@ -100,7 +100,13 @@ export default function ListaPedidosClientes() {
               nome="Produtos Cadastrados"
               navegacao="/listagemprodutos"
             />
-            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
+            <AbaNavegacao
+              nome="Modificar Produtos"
+              navegacao="/crudprodutos" />
+            <AbaNavegacao
+              nome="Modificar Vinicola/Pais"
+              navegacao="/crudvinicolapais"
+            />
             <AbaNavegacao
               nome="Lista de Pedidos"
               navegacao="/listapedidos"

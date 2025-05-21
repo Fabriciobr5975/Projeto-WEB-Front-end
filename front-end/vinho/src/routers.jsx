@@ -22,6 +22,7 @@ import Vinicola from "./pages/vinicola";
 import Privacidade from "./pages/privacidade";
 import PerguntasFrequentes from "./pages/perguntasFrequentes";
 import PoliticaDevolucao from "./pages/politicaDevolucao";
+import CrudVinicolaPais from "./pages/crudVinicolaPais";
 
 export default function Navegacao() {
   return (
@@ -30,6 +31,7 @@ export default function Navegacao() {
         <Route path="/" element={<Navigate to="/homepage" replace />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/crudprodutos" element={<CrudProdutos />} />
+        <Route path="/crudvinicolapais" element={<CrudVinicolaPais />} />
         <Route path="/listagemprodutos" element={<ListagemProdutos />} />
         <Route path="/analiseclientes" element={<AnaliseClientes />} />
         <Route path="/listapedidos" element={<ListaPedidosClientes />} />

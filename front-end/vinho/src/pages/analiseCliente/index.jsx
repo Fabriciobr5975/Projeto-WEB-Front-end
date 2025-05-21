@@ -55,7 +55,7 @@ export default function AnaliseClientes() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-          `Erro ao buscar as informações do filtro ${filtroBusca}`
+        `Erro ao buscar as informações do filtro ${filtroBusca}`
       );
     }
   }
@@ -78,8 +78,17 @@ export default function AnaliseClientes() {
               nome="Produtos Cadastrados"
               navegacao="/listagemprodutos"
             />
-            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
-            <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
+            <AbaNavegacao
+              nome="Modificar Produtos"
+              navegacao="/crudprodutos" />
+            <AbaNavegacao
+              nome="Modificar Vinicola/Pais"
+              navegacao="/crudvinicolapais"
+            />
+            <AbaNavegacao
+              nome="Lista de Pedidos"
+              navegacao="/listapedidos"
+            />
           </div>
         </section>
 
