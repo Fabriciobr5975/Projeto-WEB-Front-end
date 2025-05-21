@@ -109,7 +109,7 @@ export default function CheckOut() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-          "Erro ao buscar as informações dos seus pedidos"
+        "Erro ao buscar as informações dos seus pedidos"
       );
     }
   }, [cpfCliente]);
@@ -199,12 +199,11 @@ export default function CheckOut() {
           const url = `http://localhost:5001/itenscarrinho/${listaItensCarrinho[idItemCarrinho].id_itens_carrinho}`;
           await axios.put(url, itemCarrinho);
 
-          alert("A quantidade foi alterada com sucesso!");
         }
       } catch (error) {
         alert(
           error.response?.data?.erro ??
-            "Erro ao alterar a quantidade de vinhos no carrinho"
+          "Erro ao alterar a quantidade de vinhos no carrinho"
         );
         listaItensCarrinho[idItemCarrinho].quantidade -= 1;
         setListaItensCarrinho((prev) => [...prev]);
@@ -512,13 +511,13 @@ export default function CheckOut() {
               <div className="container-conteudo">
                 <div className="opcoes">
                   <div className="opcao">
-                    <input type="checkbox" /> <span>Cartão Débito</span>
+                    <input type="radio" name="tipo-pagamento" value={"Cartão Débito"} /> <span>Cartão Débito</span>
                   </div>
                   <div className="opcao">
-                    <input type="checkbox" /> <span>Cartão Crédito</span>
+                    <input type="radio" name="tipo-pagamento" value={"Cartão Crédito"} /> <span>Cartão Crédito</span>
                   </div>
                   <div className="opcao">
-                    <input type="checkbox" /> <span>Pix</span>
+                    <input type="radio" name="tipo-pagamento" value={"Pix"} /> <span>Pix</span>
                   </div>
                 </div>
               </div>
@@ -529,17 +528,14 @@ export default function CheckOut() {
                   <strong>4. SUMÁRIO DO PEDIDO</strong>
                 </h1>
               </div>
-              {listaItensCarrinho.map((item, index) => (
-                <div className="container-conteudo" key={index}>
-                  <div className="opcoes">
-                    <div className="opcao">
-                      <input type="checkbox" /> <span>Cartão Crédito</span>
-                    </div>
-                    <div className="opcao">
-                      <input type="checkbox" /> <span>Pix</span>
-                    </div>
+              <div className="container-conteudo">
+                <div className="opcoes">
+                  <div className="opcao">
+                    <input type="checkbox" /> <span>Cartão Crédito</span>
                   </div>
-                  <div className="resumo-item">
+                </div>
+                {listaItensCarrinho.map((item, index) => (
+                  <div className="resumo-item" key={index}>
                     <div className="info-vinho">
                       <span className="quantidade">{item.quantidade}</span>
                       <span className="nome">Nome: {item.vinho}</span>
@@ -551,8 +547,9 @@ export default function CheckOut() {
                       )}
                     </span>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
               <div className="preco-total-pedido">
                 <span>
                   <h3>Total:</h3>

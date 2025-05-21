@@ -5,12 +5,10 @@ import Footer from "../../components/footer";
 import TelaCarregamento from "../../components/telaCarregamento";
 import AbaNavegacao from "../../components/abaNavegacao";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
-
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { calcularValorTotalCarrinho } from "../../service/calculosCarrinho/calculosCarrinhoCliente";
-import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
+
 
 export default function CrudVinicolaPais() {
     const cliente = useMemo(() => {
@@ -19,37 +17,202 @@ export default function CrudVinicolaPais() {
 
     const navigate = useNavigate();
 
+    const [nomeVinicola, setNomeVinicola] = useState("");
+    const [nomePais, setNomePais] = useState("");
+
+    useEffect(() => {
+        impedirAcessoTelaAdministrador(cliente, navigate);
+    }, [cliente, navigate]);
+
+    const [pais, setPais] = useState({
+        id_pais: 0,
+        pais: "",
+        sigla: ""
+    });
+
+    const [vinicola, setVinicola] = useState({
+        id_vinicola: 0,
+        vinicola: "",
+        rotulo: ""
+    });
+
+    const [listaVinicolas, setListarVinicola] = useState([]);
+    const [listaPaises, setListarPaises] = useState([]);
+
+    const [atualizarListaVinicola, setAtualizarListaVinicola] = useState(false);
+    const [atualizarListaPais, setAtualizarListaPais] = useState(false);
+
+    useEffect(() => {
+        listarVinicola();
+    }, [atualizarListaVinicola]);
+
+    useEffect(() => {
+        listarPais();
+    }, [atualizarListaPais]);
+
+
+    const limparCamposVinicola = () => {
+        setVinicola((prevState) => ({
+            ...prevState,
+            id_vinicola: 0,
+            vinicola: "",
+            rotulo: ""
+        }));
+    };
+
+    const limparCamposPais = () => {
+        setPais((prevState) => ({
+            ...prevState,
+            id_pais: 0,
+            pais: "",
+            sigla: ""
+        }));
+    };
+
+
+
+
     async function BuscarVinicola() {
+        try {
+            const resp = await axios.get(`http://localhost:5001/vinicola/nome/${nomeVinicola}`);
+            const vinicolaBuscado = resp.data[0];
 
+            setVinicola(vinicolaBuscado);
+
+            alert(
+                `Vinícola(s) com nome "${vinicolaBuscado.vinicola}" buscada(s) com sucesso! `
+            );
+        } catch (error) {
+            alert(error.response?.data?.erro ?? `Erro ao Buscar a vinícola ${vinicola.vinicola}`);
+        }
     }
+
     async function BuscarPais() {
+        try {
+            const resp = await axios.get(`http://localhost:5001/pais/nome/${nomePais}`);
+            const paisBuscado = resp.data[0];
 
+            setPais(paisBuscado);
+
+            alert(
+                `País(es) com nome "${paisBuscado.pais}" buscado(s) com sucesso! `
+            );
+        } catch (error) {
+            alert(error.response?.data?.erro ?? `Erro ao Buscar o pais ${pais.pais}`);
+        }
     }
+
     async function cadastrarVinicola() {
+        try {
+            const url = `http://localhost:5001/vinicola`;
 
+            await axios.post(url, vinicola);
+
+            alert(`Cadastro realizado com sucesso da vinícola`);
+            limparCamposVinicola();
+
+        } catch (error) {
+            alert(error.response?.data?.erro ?? "Erro ao cadastrar a vinícola.");
+        }
     }
+
     async function alterarVinicola() {
+        try {
+            const url = `http://localhost:5001/vinicola/${vinicola.id_vinicola}`;
 
+            await axios.put(url, vinicola);
+
+            alert(`Alteração realizada com sucesso na vinicola`);
+            limparCamposVinicola();
+
+        } catch (error) {
+            alert(error.response?.data?.erro ?? "Erro ao alterar a vinícola.");
+        }
     }
+
     async function excluirVinicola() {
+        try {
+            await axios.delete(`http://localhost:5001/vinicola/${vinicola.id_vinicola}`);
+            alert(`A vinícola (${vinicola.id_vinicola}) foi excluida com sucesso! `);
 
+            limparCamposVinicola();
+        } catch (error) {
+            alert(error.response?.data?.erro ?? "Erro para excluir a vinícola");
+        }
     }
-    async function limparVinicola() {
 
-    }
+    const listarVinicola = async () => {
+        try {
+            const resp = await axios.get("http://localhost:5001/vinicola");
+            const vinicola = resp.data;
+
+            setListarVinicola(vinicola);
+        } catch (error) {
+            alert(
+                error.response?.data?.erro ?? "Erro ao buscar as informações das vinícolas."
+            );
+        }
+    };
+
     async function cadastrarPais() {
+        try {
+            const url = `http://localhost:5001/pais`;
 
+            await axios.post(url, pais);
+
+            alert(`Cadastro realizado com sucesso do país`);
+            limparCamposPais();
+
+        } catch (error) {
+            alert(error.response?.data?.erro ?? "Erro ao cadastrar o país.");
+        }
     }
+
     async function alterarPais() {
+        try {
+            const url = `http://localhost:5001/pais/${pais.id_pais}`;
 
+            await axios.put(url, pais);
+
+            alert(`Alteração realizada com sucesso no país.`);
+            limparCamposPais();
+
+        } catch (error) {
+            alert(error.response?.data?.erro ?? "Erro ao alterar o país.");
+        }
     }
+
     async function excluirPais() {
+        try {
+            await axios.delete(`http://localhost:5001/pais/${pais.id_pais}`);
+            alert(`O país (${pais.id_pais}) foi excluido com sucesso! `);
 
+            limparCamposPais();
+        } catch (error) {
+            alert(error.response?.data?.erro ?? "Erro para excluir o país");
+        }
     }
-    async function limparPais() {
 
+    const listarPais = async () => {
+        try {
+            const resp = await axios.get("http://localhost:5001/pais");
+            const pais = resp.data;
+
+            setListarPaises(pais);
+        } catch (error) {
+            alert(
+                error.response?.data?.erro ?? "Erro ao buscar as informações dos países."
+            );
+        }
+    };
+
+    async function atualizarPais() {
+        setAtualizarListaPais((atualizar) => !atualizar);
     }
 
+    async function atualizarVinicola() {
+        setAtualizarListaVinicola((atualizar) => !atualizar);
+    }
 
     return (
         <main className="pagina-crud-vinicola-pais pagina">
@@ -97,8 +260,8 @@ export default function CrudVinicolaPais() {
                                     <input type="button" value="Buscar" onClick={BuscarVinicola} />
                                     <input
                                         type="text"
-                                        // value={id}
-                                        // onChange={(e) => setId(e.target.value)}
+                                        value={nomeVinicola}
+                                        onChange={(e) => setNomeVinicola( e.target.value )}
                                         placeholder="Insira o nome da vinicola"
                                     />
                                 </div>
@@ -109,10 +272,8 @@ export default function CrudVinicolaPais() {
                                         <input
                                             type="text"
                                             style={{ background: "#d0d0d0" }}
-                                            // value={vinho.id_vinho}
-                                            // onChange={(e) =>
-                                            //     setVinho({ ...vinho, id_vinho: e.target.value })
-                                            // }
+                                            value={vinicola.id_vinicola}
+                                            onChange={(e) => setVinicola({ ...vinicola, id_vinicola: e.target.value })}
                                             placeholder="ID da vinicola"
                                             readOnly
                                         />
@@ -124,10 +285,10 @@ export default function CrudVinicolaPais() {
                                         <br />
                                         <input
                                             type="text"
-                                            // value={vinho.nome_vinho}
-                                            // onChange={(e) =>
-                                            //     setVinho({ ...vinho, nome_vinho: e.target.value })
-                                            // }
+                                            value={vinicola.vinicola}
+                                            onChange={(e) =>
+                                                setVinicola({ ...vinicola, vinicola: e.target.value })
+                                            }
                                             placeholder="Digite o nome da vinicola"
                                         />
                                     </div>
@@ -136,10 +297,10 @@ export default function CrudVinicolaPais() {
                                         <br />
                                         <input
                                             type="text"
-                                            // value={vinho.nome_vinho}
-                                            // onChange={(e) =>
-                                            //     setVinho({ ...vinho, nome_vinho: e.target.value })
-                                            // }
+                                            value={vinicola.rotulo}
+                                            onChange={(e) =>
+                                                setVinicola({ ...vinicola, rotulo: e.target.value })
+                                            }
                                             placeholder="Digite o nome do rotulo"
                                         />
                                     </div>
@@ -148,7 +309,7 @@ export default function CrudVinicolaPais() {
                                     <input type="button" value="Cadastrar" onClick={cadastrarVinicola} />
                                     <input type="button" value="Alterar" onClick={alterarVinicola} />
                                     <input type="button" value="Excluir" onClick={excluirVinicola} />
-                                    <input type="button" value="Limpar" onClick={limparVinicola} />
+                                    <input type="button" value="Limpar" onClick={limparCamposVinicola} />
                                 </div>
 
 
@@ -166,7 +327,7 @@ export default function CrudVinicolaPais() {
                                 <div className="recarregar-dados">
                                     <i
                                         class="fa-solid fa-arrows-rotate"
-                                    // onClick={atualizarTabela}
+                                        onClick={() => atualizarVinicola()}
                                     ></i>
 
                                 </div>
@@ -185,6 +346,13 @@ export default function CrudVinicolaPais() {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {listaVinicolas.map((item) => (
+                                        <tr key={item.id_vinicola}>
+                                            <td>{item.id_vinicola}</td>
+                                            <td>{item.vinicola}</td>
+                                            <td>{item.rotulo}</td>
+                                        </tr>
+                                    ))}
 
                                 </tbody>
                             </table>
@@ -202,8 +370,8 @@ export default function CrudVinicolaPais() {
                                     <input type="button" value="Buscar" onClick={BuscarPais} />
                                     <input
                                         type="text"
-                                        // value={id}
-                                        // onChange={(e) => setId(e.target.value)}
+                                        value={nomePais}
+                                        onChange={(e) => setNomePais(e.target.value )}
                                         placeholder="Insira o nome do pais"
                                     />
                                 </div>
@@ -214,10 +382,8 @@ export default function CrudVinicolaPais() {
                                         <input
                                             type="text"
                                             style={{ background: "#d0d0d0" }}
-                                            // value={vinho.id_vinho}
-                                            // onChange={(e) =>
-                                            //     setVinho({ ...vinho, id_vinho: e.target.value })
-                                            // }
+                                            value={pais.id_pais}
+                                            onChange={(e) => setPais({ ...pais, id_pais: e.target.value })}
                                             placeholder="ID do Pais"
                                             readOnly
                                         />
@@ -229,10 +395,8 @@ export default function CrudVinicolaPais() {
                                         <br />
                                         <input
                                             type="text"
-                                            // value={vinho.nome_vinho}
-                                            // onChange={(e) =>
-                                            //     setVinho({ ...vinho, nome_vinho: e.target.value })
-                                            // }
+                                            value={pais.pais}
+                                            onChange={(e) => setPais({ ...pais, pais: e.target.value })}
                                             placeholder="Digite o nome do Pais"
                                         />
                                     </div>
@@ -241,10 +405,8 @@ export default function CrudVinicolaPais() {
                                         <br />
                                         <input
                                             type="text"
-                                            // value={vinho.nome_vinho}
-                                            // onChange={(e) =>
-                                            //     setVinho({ ...vinho, nome_vinho: e.target.value })
-                                            // }
+                                            value={pais.sigla}
+                                            onChange={(e) => setPais({ ...pais, sigla: e.target.value })}
                                             placeholder="Digite a sigla do Pais"
                                         />
                                     </div>
@@ -253,7 +415,7 @@ export default function CrudVinicolaPais() {
                                     <input type="button" value="Cadastrar" onClick={cadastrarPais} />
                                     <input type="button" value="Alterar" onClick={alterarPais} />
                                     <input type="button" value="Excluir" onClick={excluirPais} />
-                                    <input type="button" value="Limpar" onClick={limparPais} />
+                                    <input type="button" value="Limpar" onClick={limparCamposPais} />
                                 </div>
 
 
@@ -272,7 +434,7 @@ export default function CrudVinicolaPais() {
                                 <div className="recarregar-dados">
                                     <i
                                         class="fa-solid fa-arrows-rotate"
-                                    // onClick={atualizarTabela}
+                                        onClick={() => atualizarPais()}
                                     ></i>
 
                                 </div>
@@ -291,6 +453,13 @@ export default function CrudVinicolaPais() {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {listaPaises.map((item) => (
+                                        <tr key={item.id_pais}>
+                                            <td>{item.id_pais}</td>
+                                            <td>{item.pais}</td>
+                                            <td>{item.sigla}</td>
+                                        </tr>
+                                    ))}
 
                                 </tbody>
                             </table>

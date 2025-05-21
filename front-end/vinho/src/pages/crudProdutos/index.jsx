@@ -128,7 +128,7 @@ export default function CrudProdutos() {
       formData.append("vinicola", vinho.vinicola);
       formData.append("pais", vinho.pais);
 
-      console.log(vinho);
+
 
       await axios.put(
         `http://localhost:5001/vinho/${vinho.id_vinho}`,

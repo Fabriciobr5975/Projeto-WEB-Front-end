@@ -79,6 +79,8 @@ export default function Footer(props) {
               <i class="fa-brands fa-whatsapp whatsapp"></i>
               <span>(11) 95100-3733</span>
             </div>
+          
+          
           </div>
 
           <div className="midia-social-footer">
