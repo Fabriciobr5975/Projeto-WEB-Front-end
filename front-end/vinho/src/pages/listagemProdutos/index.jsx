@@ -54,7 +54,6 @@ export default function ListagemProdutos() {
         `http://localhost:5001/estoque/busca/vinho?vinho=${nome}`
       );
       setListaVinhos(resp.data);
-      alert(`Produto(s) com nome "${nome}" buscado(s) com sucesso!`);
     } catch (error) {
       alert(
         error.response?.data?.erro ?? "Erro ao buscar as informações do estoque"

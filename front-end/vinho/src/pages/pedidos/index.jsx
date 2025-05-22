@@ -18,7 +18,7 @@ export default function PedidosCliente() {
       navigate("/");
     }
   }, [navigate]);
-  
+
   const [cpfCliente] = useState(cliente.cpf);
   const [listaPedidos, setListaPedidos] = useState([]);
 
@@ -74,66 +74,80 @@ export default function PedidosCliente() {
           </div>
         </section>
 
-        <section className="pedidos-cliente">
-          <div className="filtragem-pedidos">
-            <span>Período:</span>
-            <select name="filtragem">
-              <option value="todos">Mostrar todos os pedidos</option>
-              <option>Últimos 12 meses</option>
-              <option>Último mês</option>
-              <option>última Compra</option>
-            </select>
-          </div>
+        {listaPedidos.length === 0 ? (
+          <div className="pedido-vazio">
+            <div className="conteudo-pedido-vazio">
+              <img src="/assets/images/box-open-solid.svg" alt="pedido vazio" />
 
-          <div className="listagem-pedidos">
-            <table>
-              <colgroup>
-                <col className="numero-pedido" />
-                <col className="quantidade-pedido" />
-                <col className="nome-vinho-pedido" />
-                <col className="status-pedido" />
-                <col className="data-pedido" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>Nº do Pedido</th>
-                  <th>Quantidade</th>
-                  <th>Nome do Vinho</th>
-                  <th>Status do Pedido</th>
-                  <th>Data/Mês/Ano</th>
-                </tr>
-              </thead>
-              <tbody>
-                {listaPedidos.map((pedido) => (
-                  <tr key={pedido.id_pedido}>
-                    <td>
-                      <div className="primeira-coluna">
-                        {pedido.id_pedido}
-                        <button>Ver Pedido Completo</button>
-                      </div>
-                    </td>
-                    <td>
-                      {pedido.itens.map((item) => (
-                        <div className="conteudo-lista">
-                          <div key={item.id_vinho}>{item.quantidade}</div>
-                        </div>
-                      ))}
-                    </td>
-                    <td>
-                      {pedido.itens.map((item) => (
-                        <div className="conteudo-lista">
-                          <div key={item.id_vinho}>{item.vinho}</div>
-                        </div>
-                      ))}
-                    </td>
-                    <td>{pedido.status_pedido}</td>
-                    <td>{pedido.data_pedido}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              <div className="mensagem-pedido-vazio">
+                <span>
+                  Você ainda não realizou nenhum pedido!
+                </span>
+              </div>
+            </div>
           </div>
-        </section>
+        ) : (
+          <section className="pedidos-cliente">
+            <div className="filtragem-pedidos">
+              <span>Período:</span>
+              <select name="filtragem">
+                <option value="todos">Mostrar todos os pedidos</option>
+                <option>Últimos 12 meses</option>
+                <option>Último mês</option>
+                <option>última Compra</option>
+              </select>
+            </div>
+
+            <div className="listagem-pedidos">
+              <table>
+                <colgroup>
+                  <col className="numero-pedido" />
+                  <col className="quantidade-pedido" />
+                  <col className="nome-vinho-pedido" />
+                  <col className="status-pedido" />
+                  <col className="data-pedido" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Nº do Pedido</th>
+                    <th>Quantidade</th>
+                    <th>Nome do Vinho</th>
+                    <th>Status do Pedido</th>
+                    <th>Data/Mês/Ano</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listaPedidos.map((pedido) => (
+                    <tr key={pedido.id_pedido}>
+                      <td>
+                        <div className="primeira-coluna">
+                          {pedido.id_pedido}
+                          <button>Ver Pedido Completo</button>
+                        </div>
+                      </td>
+                      <td>
+                        {pedido.itens.map((item) => (
+                          <div className="conteudo-lista">
+                            <div key={item.id_vinho}>{item.quantidade}</div>
+                          </div>
+                        ))}
+                      </td>
+                      <td>
+                        {pedido.itens.map((item) => (
+                          <div className="conteudo-lista">
+                            <div key={item.id_vinho}>{item.vinho}</div>
+                          </div>
+                        ))}
+                      </td>
+                      <td>{pedido.status_pedido}</td>
+                      <td>{pedido.data_pedido}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
         <Footer cliente={cliente} />
       </TelaCarregamento>

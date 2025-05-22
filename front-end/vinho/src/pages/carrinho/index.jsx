@@ -7,7 +7,7 @@ import AbaNavegacao from "../../components/abaNavegacao";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { calcularValorTotalCarrinho } from "../../service/calculosCarrinho/calculosCarrinhoCliente";
 import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
 
@@ -42,10 +42,7 @@ export default function CarrinhoCliente() {
 
       setListaItensCarrinho(carrinho);
     } catch (error) {
-      alert(
-        error.response?.data?.erro ??
-          "Erro ao buscar as informações dos seus pedidos"
-      );
+      alert(error.response?.data?.erro);
     }
   }, [cpfCliente]);
 
@@ -153,89 +150,108 @@ export default function CarrinhoCliente() {
           </div>
         </section>
 
-        <section className="carrinho-cliente">
-          <table>
-            <colgroup>
-              <col className="item-carrinho" />
-              <col className="quantidade-carrinho" />
-              <col className="nome-vinho-carrinho" />
-              <col className="valor-unitario-carrinho" />
-              <col className="total-carrinho" />
-              <col className="remover-item-carrinho" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Quantidade</th>
-                <th>Nome do Vinho</th>
-                <th>Valor Unitário</th>
-                <th>Total</th>
-                <th>Remover Item</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listaItensCarrinho.map((carrinho, index) => (
-                <tr key={carrinho.id_itens_carrinho}>
-                  <td className="primeira-coluna">
-                    <img src={carrinho.imagem_vinho} alt="imagem vinho" />
-                  </td>
-                  <td>
-                    <div className="manipulacao-quantidade">
-                      <span onClick={() => diminuirQuantidade(index)}>-</span>
-                      {carrinho.quantidade}
-                      <span onClick={() => aumentarQuantidade(index)}>+</span>
-                    </div>
-                  </td>
-                  <td>{carrinho.vinho}</td>
-                  <td>
-                    <div className="preco">
-                      <span>R$</span>
-                      {imprimirNumeroComVirgula(carrinho.preco_vinho)}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="preco">
-                      <span>R$</span>
-                      {imprimirNumeroComVirgula(
-                        Number(carrinho.preco_vinho) * carrinho.quantidade
-                      )}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="icone-excluir">
-                      <i
-                        class="fa-solid fa-trash-can"
-                        onClick={() =>
-                          removerItemCarrinho(carrinho.id_itens_carrinho)
-                        }
-                      ></i>
-                    </div>
-                  </td>
+        {listaItensCarrinho.length === 0 ? (
+          <div className="carrinho-vazio">
+            <div className="conteudo-carrinho-vazio">
+              <img
+                src="/assets/images/cart-shopping-solid.svg"
+                alt="carrinho vazio"
+              />
+
+              <div className="mensagem-carrinho-vazio">
+                <span>
+                  Seu carrinho está vazio. Nosso catálogo de vinhos te aguarda para novas experiências!
+                </span>
+
+                <Link to="/produtos">Continuar comprando</Link>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <section className="carrinho-cliente">
+            <table>
+              <colgroup>
+                <col className="item-carrinho" />
+                <col className="quantidade-carrinho" />
+                <col className="nome-vinho-carrinho" />
+                <col className="valor-unitario-carrinho" />
+                <col className="total-carrinho" />
+                <col className="remover-item-carrinho" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantidade</th>
+                  <th>Nome do Vinho</th>
+                  <th>Valor Unitário</th>
+                  <th>Total</th>
+                  <th>Remover Item</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {listaItensCarrinho.map((carrinho, index) => (
+                  <tr key={carrinho.id_itens_carrinho}>
+                    <td className="primeira-coluna">
+                      <img src={carrinho.imagem_vinho} alt="imagem vinho" />
+                    </td>
+                    <td>
+                      <div className="manipulacao-quantidade">
+                        <span onClick={() => diminuirQuantidade(index)}>-</span>
+                        {carrinho.quantidade}
+                        <span onClick={() => aumentarQuantidade(index)}>+</span>
+                      </div>
+                    </td>
+                    <td>{carrinho.vinho}</td>
+                    <td>
+                      <div className="preco">
+                        <span>R$</span>
+                        {imprimirNumeroComVirgula(carrinho.preco_vinho)}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="preco">
+                        <span>R$</span>
+                        {imprimirNumeroComVirgula(
+                          Number(carrinho.preco_vinho) * carrinho.quantidade
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="icone-excluir">
+                        <i
+                          class="fa-solid fa-trash-can"
+                          onClick={() =>
+                            removerItemCarrinho(carrinho.id_itens_carrinho)
+                          }
+                        ></i>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-          <span className="valor-total-carrinho">
-            Valor Total:{" "}
-            <strong>
-              R$ {imprimirNumeroComVirgula(precoTotal.toFixed(2))}
-            </strong>
-          </span>
+            <span className="valor-total-carrinho">
+              Valor Total:{" "}
+              <strong>
+                R$ {imprimirNumeroComVirgula(precoTotal.toFixed(2))}
+              </strong>
+            </span>
 
-          <button
-            className="botao-finalizar-compra"
-            onClick={() =>
-              listaItensCarrinho.length > 0
-                ? navigate("/checkout")
-                : alert(
-                    "Para finalizar o pedido é necessário adicionar itens ao carrinho!"
-                  )
-            }
-          >
-            Finalizar Compra
-          </button>
-        </section>
+            <button
+              className="botao-finalizar-compra"
+              onClick={() =>
+                listaItensCarrinho.length > 0
+                  ? navigate("/checkout")
+                  : alert(
+                      "Para finalizar o pedido é necessário adicionar itens ao carrinho!"
+                    )
+              }
+            >
+              Finalizar Compra
+            </button>
+          </section>
+        )}
 
         <Footer cliente={cliente} />
       </TelaCarregamento>

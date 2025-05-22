@@ -286,8 +286,20 @@
             accent-color: #15ab1a;
           }
 
-          input[type="checkbox"] {
+          input[type="radio"] {
+            -weblit-appearance: none;
+            appearance: none;
             height: 90%;
+            border-radius: 0;
+            border: 0.0625rem solid #000;
+          }
+
+          input:checked {  
+            background-color: #15ab1a;
+            background-image: url("../../../public/assets/images/check-solid.svg");
+            background-repeat: no-repeat;
+            background-size: 75%;
+            background-position: center;
           }
 
           span {

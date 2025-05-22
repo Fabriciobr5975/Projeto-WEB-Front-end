@@ -19,6 +19,8 @@ export default function CheckOut() {
 
   const [listaEnderecos, setListaEnderecos] = useState([]);
   const [indexLista, setIndexLista] = useState(-1);
+  const [tipoFormaPagamento, setTipoFormaPagamento] = useState("");
+
   const [enderecoSelecionado, setEnderecoSelecionado] = useState({
     id_cliente: 0,
     nome_completo_cliente: "",
@@ -109,7 +111,7 @@ export default function CheckOut() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-        "Erro ao buscar as informações dos seus pedidos"
+          "Erro ao buscar as informações dos seus pedidos"
       );
     }
   }, [cpfCliente]);
@@ -198,12 +200,11 @@ export default function CheckOut() {
 
           const url = `http://localhost:5001/itenscarrinho/${listaItensCarrinho[idItemCarrinho].id_itens_carrinho}`;
           await axios.put(url, itemCarrinho);
-
         }
       } catch (error) {
         alert(
           error.response?.data?.erro ??
-          "Erro ao alterar a quantidade de vinhos no carrinho"
+            "Erro ao alterar a quantidade de vinhos no carrinho"
         );
         listaItensCarrinho[idItemCarrinho].quantidade -= 1;
         setListaItensCarrinho((prev) => [...prev]);
@@ -237,6 +238,31 @@ export default function CheckOut() {
     },
     [listaItensCarrinho, alterarItemCarrinho]
   );
+
+  const finalizarPedido = async () => {
+    try {
+      if (sessionStorage.getItem("cliente")) {
+        const pedido = {
+          carrinho: listaItensCarrinho[0].id_carrinho,
+          endereco_entrega: enderecoSelecionado.id_endereco,
+          valor_total: calcularValorTotalCarrinho(listaItensCarrinho),
+          status_pedido: "PENDENTE",
+          data_pedido: new Date().toISOString().split('T')[0],
+        };
+
+        console.log(pedido);
+
+        const url = `http://localhost:5001/pedido`;
+        const resp = await axios.post(url, pedido);
+
+        alert(resp.data?.resposta);
+
+        navigate("/confirmacaopedido");
+      }
+    } catch (error) {
+      alert(error.response?.data?.erro ?? "Erro ao finalizar o pedido");
+    }
+  };
 
   return (
     <main className="pagina-check-out pagina">
@@ -511,13 +537,31 @@ export default function CheckOut() {
               <div className="container-conteudo">
                 <div className="opcoes">
                   <div className="opcao">
-                    <input type="radio" name="tipo-pagamento" value={"Cartão Débito"} /> <span>Cartão Débito</span>
+                    <input
+                      type="radio"
+                      name="tipo-pagamento"
+                      value={"Cartão Débito"}
+                      onChange={(e) => setTipoFormaPagamento(e.target.value)}
+                    />{" "}
+                    <span>Cartão Débito</span>
                   </div>
                   <div className="opcao">
-                    <input type="radio" name="tipo-pagamento" value={"Cartão Crédito"} /> <span>Cartão Crédito</span>
+                    <input
+                      type="radio"
+                      name="tipo-pagamento"
+                      value={"Cartão Crédito"}
+                      onChange={(e) => setTipoFormaPagamento(e.target.value)}
+                    />{" "}
+                    <span>Cartão Crédito</span>
                   </div>
                   <div className="opcao">
-                    <input type="radio" name="tipo-pagamento" value={"Pix"} /> <span>Pix</span>
+                    <input
+                      type="radio"
+                      name="tipo-pagamento"
+                      value={"Pix"}
+                      onChange={(e) => setTipoFormaPagamento(e.target.value)}
+                    />{" "}
+                    <span>Pix</span>
                   </div>
                 </div>
               </div>
@@ -531,9 +575,20 @@ export default function CheckOut() {
               <div className="container-conteudo">
                 <div className="opcoes">
                   <div className="opcao">
-                    <input type="checkbox" /> <span>Cartão Crédito</span>
+                    <input
+                      type="radio"
+                      value={tipoFormaPagamento}
+                      disabled
+                      checked={tipoFormaPagamento.length > 1 ? true : false}
+                    />{" "}
+                    <span>
+                      {tipoFormaPagamento.length > 1
+                        ? tipoFormaPagamento
+                        : "Forma de Pagamento"}
+                    </span>
                   </div>
                 </div>
+                <br />
                 {listaItensCarrinho.map((item, index) => (
                   <div className="resumo-item" key={index}>
                     <div className="info-vinho">
@@ -567,7 +622,7 @@ export default function CheckOut() {
                   <input
                     type="button"
                     value="Confirmar Pedido"
-                    onClick={() => navigate("/confirmacaopedido")}
+                    onClick={() => finalizarPedido()}
                   />
                 </div>
               </div>

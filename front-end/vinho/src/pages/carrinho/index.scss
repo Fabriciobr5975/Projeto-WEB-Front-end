@@ -36,6 +36,47 @@
     }
   }
 
+  .carrinho-vazio {
+    display: flex;
+    width: 100%;
+    background-color: #eae9e9;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 3.5rem 3rem 5rem 3rem;
+
+    .conteudo-carrinho-vazio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 2rem;
+
+      .mensagem-carrinho-vazio {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        font: 500 1.5rem/normal "Poppins";
+
+        a {
+          text-decoration: none;
+          font: 400 1.25/normal "Poppins";
+
+          &:hover {
+            opacity: 0.95;
+            text-shadow: 0rem 0rem 0.15rem #ff0000 inset;
+            transform: scale(1);
+            text-decoration: underline;
+          }
+        }
+      }
+
+      img {
+        width: 10%;
+      }
+    }
+  }
+
   .carrinho-cliente {
     display: flex;
     flex-direction: column;

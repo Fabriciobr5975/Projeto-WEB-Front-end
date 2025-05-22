@@ -128,8 +128,6 @@ export default function CrudProdutos() {
       formData.append("vinicola", vinho.vinicola);
       formData.append("pais", vinho.pais);
 
-
-
       await axios.put(
         `http://localhost:5001/vinho/${vinho.id_vinho}`,
         formData,
@@ -168,7 +166,7 @@ export default function CrudProdutos() {
       setTemImagemCampo(true);
 
       alert(
-        `Produto(s) com nome "${vinhoBuscado.nome_vinho}" buscado(s) com sucesso! `
+        `Produto com nome "${vinhoBuscado.nome_vinho}" buscado com sucesso! `
       );
     } catch (error) {
       alert(error.response?.data?.erro ?? `Erro ao Buscar o vinho de ID ${id}`);
@@ -201,7 +199,7 @@ export default function CrudProdutos() {
   const limparTodosCampos = () => {
     limparCampoImagem();
     limparCampos();
-  }
+  };
 
   const listarVinicolas = useCallback(async () => {
     try {
@@ -254,10 +252,7 @@ export default function CrudProdutos() {
               nome="Modificar Vinicola/Pais"
               navegacao="/crudvinicolapais"
             />
-            <AbaNavegacao
-              nome="Lista de Pedidos"
-              navegacao="/listapedidos"
-            />
+            <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
           </div>
         </section>
 
@@ -321,10 +316,12 @@ export default function CrudProdutos() {
                     setVinho({ ...vinho, classificacao_vinho: e.target.value })
                   }
                 >
-                  <option value="Suave" selected>
-                    Suave
+                  <option className="option-padrao" value="" selected disabled>
+                    Selecione a classificação do vinho
                   </option>
-                  <option value="Seco" selected>Seco</option>
+
+                  <option value="Suave">Suave</option>
+                  <option value="Seco">Seco</option>
                   <option value="Demi-Sec">Demi-Sec</option>
                   <option value="Espumante">Espumante</option>
                   <option value="Frisante">Frisante</option>
@@ -341,6 +338,10 @@ export default function CrudProdutos() {
                     setVinho({ ...vinho, vinicola: e.target.value })
                   }
                 >
+                  <option className="option-padrao" value="" selected disabled>
+                    Selecione a vinícola do vinho
+                  </option>
+
                   {listaVinicolas.length > 0 ? (
                     listaVinicolas.map((item) => (
                       <option value={item.vinicola}>{item.vinicola}</option>
@@ -357,6 +358,9 @@ export default function CrudProdutos() {
                   value={vinho.pais}
                   onChange={(e) => setVinho({ ...vinho, pais: e.target.value })}
                 >
+                  <option className="option-padrao" value="" selected disabled>
+                    Selecione o pais do vinho
+                  </option>
                   {listaPaises.length > 0 ? (
                     listaPaises.map((item) => (
                       <option value={item.vinicola}>{item.pais}</option>
@@ -426,9 +430,11 @@ export default function CrudProdutos() {
                   setVinho({ ...vinho, status_estoque: e.target.value })
                 }
               >
-                <option value="Sem Informação" selected>
-                  Sem Informação
+                <option className="option-padrao" value="" selected disabled>
+                  Selecione a classificação do vinho
                 </option>
+
+                <option value="Sem Informação">Sem Informação</option>
                 <option value="Vazio">Vazio</option>
                 <option value="Baixo">Baixo</option>
                 <option value="Normal">Normal</option>
@@ -484,7 +490,11 @@ export default function CrudProdutos() {
               <input type="button" value="Cadastrar" onClick={cadastrar} />
               <input type="button" value="Alterar" onClick={alterar} />
               <input type="button" value="Excluir" onClick={Excluir} />
-              <input type="button" value="LimparCampos" onClick={() => limparTodosCampos()} />
+              <input
+                type="button"
+                value="LimparCampos"
+                onClick={() => limparTodosCampos()}
+              />
             </div>
           </div>
         </section>
