@@ -42,10 +42,13 @@ export default function Footer(props) {
 
         <div className="vinho-footer">
           <h3 className="subtitulos-footer">VINHOS</h3>
-          <Link to="/produtos">Tinto</Link>
-          <Link to="/produtos">Branco</Link>
-          <Link to="/produtos">Espumante</Link>
-          <Link to="/produtos">Rosé</Link>
+          <Link to="/produtos?classificacao=Espumante">Espumante</Link>
+          <Link to="/produtos?classificacao=Frisante">Frisante</Link>
+          <Link to="/produtos?classificacao=Rose">Rosé</Link>
+          <Link to="/produtos?classificacao=Fortificado">Fortificado</Link>
+          <Link to="/produtos?classificacao=Seco">Seco</Link>
+          <Link to="/produtos?classificacao=Demi-sec">Demi-sec</Link>
+          <Link to="/produtos?classificacao=Suave">Suave</Link>
           <Link to="/produtos">Mais Vendidos</Link>
           <Link to="/produtos">Em Promoção</Link>
         </div>

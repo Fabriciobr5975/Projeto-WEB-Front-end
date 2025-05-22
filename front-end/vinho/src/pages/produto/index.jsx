@@ -4,14 +4,18 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { useEffect, useState, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Vinho from "../../components/vinho";
 
 export default function Produtos() {
     const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
     const [listaVinhos, setListaVinhos] = useState([]);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const classificacaoInicial = queryParams.get("classificacao");
     const [filtros, setFiltros] = useState({
-        classificacao: [],
+        classificacao: classificacaoInicial ? [classificacaoInicial] : [],
         pais: []
     });
 
