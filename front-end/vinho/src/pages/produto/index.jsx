@@ -3,7 +3,7 @@ import "./index.scss";
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Vinho from "../../components/vinho";
@@ -11,17 +11,62 @@ import Vinho from "../../components/vinho";
 export default function Produtos() {
     const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
     const [listaVinhos, setListaVinhos] = useState([]);
+
     const location = useLocation();
+    const containerRef = useRef(null);
     const queryParams = new URLSearchParams(location.search);
     const classificacaoInicial = queryParams.get("classificacao");
+
     const [filtros, setFiltros] = useState({
         classificacao: classificacaoInicial ? [classificacaoInicial] : [],
         pais: []
     });
 
+    const vinhosFiltrados = useMemo(() => {
+        return listaVinhos.filter((vinho) => {
+            const matchClassificacao =
+                filtros.classificacao.length === 0 ||
+                (vinho.classificacao_vinho &&
+                    filtros.classificacao.includes(vinho.classificacao_vinho));
+            const matchPais =
+                filtros.pais.length === 0 ||
+                (vinho.pais && filtros.pais.includes(vinho.pais));
+            return matchClassificacao && matchPais;
+        });
+    }, [listaVinhos, filtros]);
+
+
+    // Estado para paginação:
+    const [paginaAtual, setPaginaAtual] = useState(1);
+    const itensPorPagina = 16; // Defina quantos itens exibir por página
+
+
+
+    // Calcula os itens que serão exibidos na página atual
+    const vinhosPagina = useMemo(() => {
+        const indiceInicio = (paginaAtual - 1) * itensPorPagina;
+        const indiceFinal = indiceInicio + itensPorPagina;
+        return vinhosFiltrados.slice(indiceInicio, indiceFinal);
+    }, [vinhosFiltrados, paginaAtual]);
+
+
+    // Calcula o total de páginas
+    const totalPaginas = Math.ceil(vinhosFiltrados.length / itensPorPagina);
+
+    // Índices para exibição: Mostrando X a Y de Z
+    const indiceInicioExibicao = vinhosFiltrados.length === 0 ? 0 : (paginaAtual - 1) * itensPorPagina + 1;
+    const indiceFimExibicao = Math.min(paginaAtual * itensPorPagina, vinhosFiltrados.length);
+
     useEffect(() => {
         listarVinhos();
     }, []);
+
+    // Efeito para rolar o container referenciado para o topo sempre que a página mudar
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [paginaAtual]);
 
     const listarVinhos = async () => {
         try {
@@ -44,35 +89,25 @@ export default function Produtos() {
             } else {
                 novosFiltros[tipo] = novosFiltros[tipo].filter((item) => item !== valor);
             }
+            setPaginaAtual(1);
             return novosFiltros;
         });
     }
 
-    const vinhosFiltrados = useMemo(() => {
-        return listaVinhos.filter((vinho) => {
-            const matchClassificacao =
-                filtros.classificacao.length === 0 ||
-                (vinho.classificacao_vinho &&
-                    filtros.classificacao.includes(vinho.classificacao_vinho));
-            const matchPais =
-                filtros.pais.length === 0 ||
-                (vinho.pais && filtros.pais.includes(vinho.pais));
-            return matchClassificacao && matchPais;
-        });
-    }, [listaVinhos, filtros]);
+
 
     return (
         <div className="pagina-produtos pagina">
             <TelaCarregamento tempo={250}>
                 <Header cliente={cliente} />
 
-                <section className="banner-perfil"></section>
+                <section className="banner-perfil" ref={containerRef}></section>
                 <section className="titulo-banner">
                     <h1>Vinhos</h1>
                     <hr className="barra-banner-produtos" />
-                    <p className="paginas">
-                        {listaVinhos.length >= 1 ? 1 : 0}-{listaVinhos.length ?? 0} de{" "}
-                        {listaVinhos.length ?? 0} resultados
+                    <p className="paginas" >
+                        Página {paginaAtual} de {totalPaginas} <br />
+                        Mostrando {indiceInicioExibicao} - {indiceFimExibicao} de {vinhosFiltrados.length} resultados
                     </p>
                 </section>
 
@@ -228,20 +263,28 @@ export default function Produtos() {
                         </div>
                     </div>
 
-                    <div className="produtos">
-                        {vinhosFiltrados.map((item) => (
+                    <div className="produtos" >
+                        {vinhosPagina.map((item) => (
                             <Vinho vinhos={item} key={item.id_vinho} />
                         ))}
                     </div>
 
                     <section className="manipulacao-paginas-produtos">
                         <div className="icones">
-                            <div className="icone-voltar">
+                            <div
+                                className="icone-voltar"
+                                onClick={() =>
+                                    setPaginaAtual((prev) => (prev > 1 ? prev - 1 : prev))}
+                            >
                                 <i className="fa-solid fa-circle-chevron-left"></i>
                                 <p>PÁGINA ANTERIOR</p>
                             </div>
 
-                            <div className="icone-avancar">
+                            <div
+                                className="icone-avancar"
+                                onClick={() =>
+                                    setPaginaAtual((prev) => prev < totalPaginas ? prev + 1 : prev)}
+                            >
                                 <p>PRÓXIMA PÁGINA</p>
                                 <i className="fa-solid fa-circle-chevron-right"></i>
                             </div>
