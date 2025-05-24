@@ -2,9 +2,25 @@
 <p align="justify">Repositório para os arquivos referentes ao front-end do projeto <strong>Vinho</strong>. O projeto está vendo construido em NodeJs, usando o Framework ReactJs, com um sistema de gerenciamente de banco de dados MySQL.</p>
 
 ## Objetivo 🎯 
-<p align="justify">O objetivo principal é armazenar os arquivos necessários para a contrução da parte do Front-End nosso projeto, <b>Viana Vinhos</b>. Quando o projeto estiver quase pronto, com as telas validadas e o Back-End funcionando bem, iremos integrar o Front ao Back, e assim finalizar esse projeto. </p>
+<p align="justify">Este projeto full stack teve como proposito a construção de uma plataforma online de reserva de produtos, no caso vinhos, com o intuito de automatizar e facilitar na execução de processos administrativos e operacionais.</p>
 
-## Uma Breve Explicação Sobre a Nossa Aplicação 📕
+## Funcionalidades 📕
+<p align="justify">Neste sistema temos dois tipos de usuários, os usuários básicos e os usuários especiais. Os usuários básicos, são aqueles que acessaram o site em busca de resolver uma necessidade, no caso, a compra de vinhos. Eles representam o nosso público principal e é também o público que utilizara o sistema para realizar os pedidos e afins. Os usuários especiais são os administradores, que cuidaram da parte de cadastros e manipulações dos vinhos, vinícolas, pedidos e afins. Os administradores tem funções específicas que somente eles tem acesso, com isso o acesso fica restrito ao tipo de usuário que está acessando. Em baixo temos uma breve explicação sobre algumas das atividades que os usuário podem estar realizando no site:</p>
+
+- Usuário Básico
+  - Se cadastrar;
+  - Realizar e validar login;
+  - Cadastrar endereço para entrega;
+  - Adicionar produtos à um Carrinho de Compra;
+  - Selecionar preferências de métodos para pagamento;
+  - Finalizar e enviar um pedido de reserva a loja/empreendedor para posterior contato.
+ 
+- Usuário Especial (Administrador)
+  - Cadastrar, buscar, alterar e deletar produtos na loja;
+  - Listar e atualizar status de pedidos;
+  - Realizar listagem de produtos para verificação de estoque;
+  - Sistema de ERP simples para análise dos clientes;
+  - Cadastro de fornecedores (vinícolas).   
 
 ## Informações Complementares 🧩
 - A maioria dos ícones foram pegos do site [`Font Awesome`](https://fontawesome.com/)
