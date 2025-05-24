@@ -114,7 +114,7 @@ export default function Produtos() {
                 <section className="conteudo-produtos">
                     <div className="filtros-produto">
                         <div className="classificacao">
-                            <h4>Classificacao</h4>
+                            <h4>Classificação</h4>
                             <div className="filtro">
                                 <input
                                     type="checkbox"
