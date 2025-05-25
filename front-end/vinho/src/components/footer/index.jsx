@@ -49,8 +49,6 @@ export default function Footer(props) {
           <Link to="/produtos?classificacao=Seco">Seco</Link>
           <Link to="/produtos?classificacao=Demi-sec">Demi-sec</Link>
           <Link to="/produtos?classificacao=Suave">Suave</Link>
-          <Link to="/produtos">Mais Vendidos</Link>
-          <Link to="/produtos">Em Promoção</Link>
         </div>
 
         <div className="ajuda-footer">
