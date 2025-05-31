@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
-import { base64ParaFile } from "../../utils/conversaoUtil";
+import { tratarNumeroComVirgula, imprimirNumeroComVirgula, base64ParaFile } from "../../utils/conversaoUtil";
 
 export default function CrudProdutos() {
   const cliente = useMemo(() => {
@@ -91,7 +91,7 @@ export default function CrudProdutos() {
       formData.append("volume", vinho.volume_vinho);
       formData.append("safra", vinho.safra_vinho);
       formData.append("temperatura_servir", vinho.temperatura_servir);
-      formData.append("preco", vinho.preco_vinho);
+      formData.append("preco", tratarNumeroComVirgula(vinho.preco_vinho));
       formData.append("descricao", vinho.descricao);
       formData.append("quantidade", vinho.quantidade_disponivel);
       formData.append("status_estoque", vinho.status_estoque);
@@ -112,8 +112,6 @@ export default function CrudProdutos() {
 
   const alterar = async () => {
     try {
-
-      console.log(vinho.imagem_vinho);
       const formData = new FormData();
       formData.append("imagem_vinho", vinho.imagem_vinho);
       formData.append("nome_imagem", vinho.nome_imagem);
@@ -124,7 +122,7 @@ export default function CrudProdutos() {
       formData.append("volume", vinho.volume_vinho);
       formData.append("safra", vinho.safra_vinho);
       formData.append("temperatura_servir", vinho.temperatura_servir);
-      formData.append("preco", vinho.preco_vinho);
+      formData.append("preco", tratarNumeroComVirgula(vinho.preco_vinho));
       formData.append("descricao", vinho.descricao);
       formData.append("quantidade", vinho.quantidade_disponivel);
       formData.append("status_estoque", vinho.status_estoque);
@@ -173,6 +171,7 @@ export default function CrudProdutos() {
       const imagemUrl = URL.createObjectURL(imagemBusca);
 
       vinhoBuscado.imagem_vinho = imagemBusca;
+      vinhoBuscado.preco_vinho = imprimirNumeroComVirgula(vinhoBuscado.preco_vinho);
 
       setVinho(vinhoBuscado);
       setImagemCampo(imagemUrl);
@@ -485,7 +484,7 @@ export default function CrudProdutos() {
                 onChange={(e) =>
                   setVinho({ ...vinho, preco_vinho: e.target.value })
                 }
-                placeholder="Digite o preço unitário do vinho"
+                placeholder="Digite o preço unitário do vinho no formato"
               />
             </div>
             <div className="descricao">
