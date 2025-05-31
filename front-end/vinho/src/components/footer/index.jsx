@@ -30,7 +30,8 @@ export default function Footer(props) {
           <h3 className="subtitulos-footer">VIANA VINHOS</h3>
           <Link to="/">Home</Link>
           <Link to="/sobrenos">Sobre Nós</Link>
-          <Link to="/cadastro">Cadastre-se</Link>
+          
+          <Link to={props.cliente?.primeiro_nome ? "/perfil" : "/cadastro"}>{props.cliente?.primeiro_nome ? "Meu Dados" : "Cadastre-se"}</Link>
           <Link
             to="/listagemprodutos"
             style={{ display: clienteEspecial ? "" : "none" }}

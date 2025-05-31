@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
+import { base64ParaFile } from "../../utils/conversaoUtil";
 
 export default function CrudProdutos() {
   const cliente = useMemo(() => {
@@ -111,6 +112,8 @@ export default function CrudProdutos() {
 
   const alterar = async () => {
     try {
+
+      console.log(vinho.imagem_vinho);
       const formData = new FormData();
       formData.append("imagem_vinho", vinho.imagem_vinho);
       formData.append("nome_imagem", vinho.nome_imagem);
@@ -160,8 +163,19 @@ export default function CrudProdutos() {
 
       limparCampoImagem();
 
+      // Converter a imagem Base64 em um arquivo válido
+      const imagemBusca = base64ParaFile(
+        vinhoBuscado.imagem_vinho,
+        vinhoBuscado.nome_imagem
+      );
+
+      // Criar um objeto URL para exibir a imagem corretamente
+      const imagemUrl = URL.createObjectURL(imagemBusca);
+
+      vinhoBuscado.imagem_vinho = imagemBusca;
+
       setVinho(vinhoBuscado);
-      setImagemCampo(vinho.imagem_vinho);
+      setImagemCampo(imagemUrl);
       setNomeImagem(vinho.nome_imagem);
       setTemImagemCampo(true);
 

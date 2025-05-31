@@ -86,7 +86,17 @@
 
         .campo:last-child {
           grid-column: 1 / -1;
+
+          input {
+            width: 100%;
+          }
+          
         }
+
+        p {
+            font: 300 1.5rem "Poppins";
+            color: #ff2600;
+          }
       }
 
       .info-campos-obrigatorios {

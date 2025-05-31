@@ -48,6 +48,9 @@ export default function PerfilCliente() {
         alert("Os seus dados foram alterados com sucesso!");
       }
 
+      sessionStorage.setItem("cliente", JSON.stringify(cliente));
+      localStorage.clear();
+
       setBloqueioSenha(true);
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao alterar o cliente");
