@@ -51,7 +51,7 @@ export default function HomePage() {
           </div>
         </main>
 
-        <section className="sobre-nos">
+        <section className="secao-sobre-nos">
           <picture className="img-sobre-nos">
             <img
               src="/assets/images/imagem-sobre-nos.svg"

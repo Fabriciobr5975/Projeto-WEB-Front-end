@@ -13,11 +13,11 @@ export default function SobreNos() {
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
         <main className="sobre-nos">
-          <div className="banner">
+          <div className="banner-sobre-nos">
             <h1>Sobre Nós</h1>
           </div>
 
-          <div className="informacoes-sobre-nos">
+          <div className="conteudo-sobre-nos">
             <div className="informacoes">
               <picture className="logo">
                 <img
