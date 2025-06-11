@@ -7,7 +7,7 @@ export default function Footer(props) {
   const [clienteEspecial] = useState(props.cliente?.acesso);
 
   const [emailUsuario, setEmailUsuario] = useState("");
-  
+
   const teclaEnterApertada = (e) => {
     if (e.key === "Enter") {
       enviarEmailUsuario();
@@ -30,8 +30,10 @@ export default function Footer(props) {
           <h3 className="subtitulos-footer">VIANA VINHOS</h3>
           <Link to="/">Home</Link>
           <Link to="/sobrenos">Sobre Nós</Link>
-          
-          <Link to={props.cliente?.primeiro_nome ? "/perfil" : "/cadastro"}>{props.cliente?.primeiro_nome ? "Meu Dados" : "Cadastre-se"}</Link>
+
+          <Link to={props.cliente?.primeiro_nome ? "/perfil" : "/cadastro"}>
+            {props.cliente?.primeiro_nome ? "Meu Dados" : "Cadastre-se"}
+          </Link>
           <Link
             to="/listagemprodutos"
             style={{ display: clienteEspecial ? "" : "none" }}
@@ -81,10 +83,7 @@ export default function Footer(props) {
               <i class="fa-brands fa-whatsapp whatsapp"></i>
               <span>(11) 95100-3733</span>
             </div>
-          
-          
           </div>
-
           <div className="midia-social-footer">
             <h3 className="subtitulos-footer">MÍDIA SOCIAL</h3>
             <div className="redes-sociais">

@@ -42,6 +42,10 @@ export default function CarrinhoCliente() {
 
       setListaItensCarrinho(carrinho);
     } catch (error) {
+      if(error.response?.data?.erro === "Não foram encontrado registros para o itens do carrinho") {
+        return;
+      }
+      
       alert(error.response?.data?.erro);
     }
   }, [cpfCliente]);
@@ -212,7 +216,7 @@ export default function CarrinhoCliente() {
                       <div className="preco">
                         <span>R$</span>
                         {imprimirNumeroComVirgula(
-                          Number(carrinho.preco_vinho) * carrinho.quantidade
+                          Number(carrinho.preco_vinho * carrinho.quantidade).toFixed(2)
                         )}
                       </div>
                     </td>

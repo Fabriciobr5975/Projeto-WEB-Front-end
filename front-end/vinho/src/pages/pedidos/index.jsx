@@ -31,9 +31,12 @@ export default function PedidosCliente() {
 
       setListaPedidos(Object.values(pedidos));
     } catch (error) {
+      if(error.response?.data?.erro === "Não foram encontrado registros para o pedido") {
+        return;
+      }
+      
       alert(
-        error.response?.data?.erro ??
-          "Erro ao buscar as informações dos seus pedidos"
+        error.response?.data?.erro 
       );
     }
   }, [cpfCliente]);

@@ -243,7 +243,7 @@ export default function CheckOut() {
     try {
       if (sessionStorage.getItem("cliente")) {
         const pedido = {
-          carrinho: listaItensCarrinho[0].id_vinho,
+          cliente: cliente.id_cliente,
           endereco_entrega: enderecoSelecionado.id_endereco,
           valor_total: calcularValorTotalCarrinho(listaItensCarrinho),
           status_pedido: "PENDENTE",

@@ -12,9 +12,9 @@ export default function Vinho() {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const [ vinho, setVinhos ] = useState({});
-  const [ quantidadeDisponivel, setQuantidadeDisponivel ] = useState(0);
-  const [ quantidade, setQuantidade ] = useState(1);
+  const [vinho, setVinhos] = useState({});
+  const [quantidadeDisponivel, setQuantidadeDisponivel] = useState(0);
+  const [quantidade, setQuantidade] = useState(1);
 
   useEffect(() => {
     if (quantidade > quantidadeDisponivel) {
@@ -42,7 +42,10 @@ export default function Vinho() {
 
   const reservarVinho = async () => {
     try {
-      if ((cliente && cliente.id_cliente) || sessionStorage.getItem("cliente")) {
+      if (
+        (cliente && cliente.id_cliente) ||
+        sessionStorage.getItem("cliente")
+      ) {
         const itemCarrinho = {
           carrinho: cliente.id_cliente,
           vinho: vinho.id_vinho,
@@ -125,31 +128,38 @@ export default function Vinho() {
                 </span>
               </div>
 
-              <div className="reserva-vinho">
-                <div className="input-reservar-vinho">
-                  <p
-                    class="manipulacao-valores-input"
-                    onClick={diminuirQuantidade}
-                  >
-                    -
-                  </p>
-                  <input
-                    id="input"
-                    type="number"
-                    min={1}
-                    max={quantidadeDisponivel}
-                    value={quantidade}
-                    onChange={(e) => setQuantidade(e.target.value)}
-                  />
-                  <p
-                    class="manipulacao-valores-input"
-                    onClick={aumentarQuantidade}
-                  >
-                    +
-                  </p>
+              {quantidadeDisponivel !== 0 && (
+                <div className="reserva-vinho">
+                  <div className="input-reservar-vinho">
+                    <p
+                      class="manipulacao-valores-input"
+                      onClick={diminuirQuantidade}
+                    >
+                      -
+                    </p>
+                    <input
+                      id="input"
+                      type="number"
+                      min={1}
+                      max={quantidadeDisponivel}
+                      value={quantidade}
+                      onChange={(e) => setQuantidade(e.target.value)}
+                    />
+                    <p
+                      class="manipulacao-valores-input"
+                      onClick={aumentarQuantidade}
+                    >
+                      +
+                    </p>
+                  </div>
+                  <button onClick={reservarVinho}>Reservar</button>
                 </div>
-                <button onClick={reservarVinho}>Reservar</button>
-              </div>
+              )}
+              {quantidadeDisponivel === 0 && (
+                <span id="mensagem-vinho-esgotado">
+                  Desculpe, {vinho.nome_vinho} não está disponível no momento!
+                </span>
+              )}
             </div>
           </div>
 
