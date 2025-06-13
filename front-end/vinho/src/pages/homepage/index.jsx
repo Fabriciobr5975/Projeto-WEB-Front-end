@@ -22,7 +22,7 @@ export default function HomePage() {
 
   const listarVinhos = async () => {
     try {
-      const url = `http://localhost:5001/vinho`;
+      const url = `http://localhost:5001/vinhos/maisvendidos`;
 
       const resp = await axios.get(url);
       const vinhos = resp.data;
