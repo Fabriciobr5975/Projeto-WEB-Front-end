@@ -68,7 +68,7 @@ export default function HomePage() {
             </p>
             <p>
               A empresa tem como objetivo atender as pessoas que apreciam um bom
-              vinho. Nossos parceiros profissionais: <strong>Vinícola Gões e Vinícola XV
+              vinho. Nossos parceiros profissionais: <strong>Vinícola Gões</strong> e <strong>Vinícola XV
               de Novembro</strong>.
             </p>
             <p>

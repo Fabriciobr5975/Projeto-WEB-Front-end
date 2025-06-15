@@ -51,6 +51,26 @@ export default function DetalhesDoPedido(props) {
             </div>
           ))}
 
+          {props?.telaAdministrador && (
+            <div className="informacoes-cliente-pedido">
+              <h3>Informações do Cliente</h3>
+
+              <div className="pedido-cliente">
+                <span>
+                  <b>Nome Completo: </b>
+                  {props.pedido.nome_completo}
+                </span>
+                <span>
+                  <b>E-mail: </b>
+                  {props.pedido.email}
+                </span>
+                <span>
+                  <b>Celular para Contato: </b> {props.pedido.celular}
+                </span>
+              </div>
+            </div>
+          )}
+
           <div className="informacoes-endereco-pedido">
             <h3>Endereço de Entrega</h3>
 
@@ -70,7 +90,7 @@ export default function DetalhesDoPedido(props) {
                 {props.pedido.localidade + " - " + props.pedido.uf}
               </span>
               <span>
-                <b>Complemento</b>: {props.pedido.complemento}
+                <b>Complemento:</b> {props.pedido.complemento}
               </span>
             </div>
           </div>

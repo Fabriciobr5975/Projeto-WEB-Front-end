@@ -100,7 +100,7 @@ export default function ListaPedidosClientes() {
 
   return (
     <main className="pagina-listagem-produtos-clientes pagina">
-      {abrirModal && <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} />}
+      {abrirModal && <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} telaAdministrador={true} />}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
         <section className="banner-abas">
