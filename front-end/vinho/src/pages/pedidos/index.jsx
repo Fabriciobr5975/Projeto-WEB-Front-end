@@ -53,12 +53,12 @@ export default function PedidosCliente() {
   const chamarModal = (pedido) => {
     setAbrirModal(true);
     setPedidoSelecionado(pedido);
-    document.body.classList.add("tela-lista-pedidos-clientes-modal");
+    document.body.classList.add("tela-pedidos-clientes-modal");
   };
 
   const fecharModal = () => {
    setAbrirModal(false);
-   document.body.classList.remove("tela-lista-pedidos-clientes-modal");
+   document.body.classList.remove("tela-pedidos-clientes-modal");
   };
 
   return (
