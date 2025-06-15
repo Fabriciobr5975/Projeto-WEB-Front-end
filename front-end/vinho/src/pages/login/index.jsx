@@ -4,7 +4,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import TelaCarregamento from "../../components/telaCarregamento";
 
@@ -13,6 +13,13 @@ export default function Login() {
   const [senha, setSenha] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
 
   const buscarCliente = async () => {
     try {
@@ -32,7 +39,6 @@ export default function Login() {
           );
           sessionStorage.setItem("cliente", JSON.stringify(clienteValido));
           navigate("/homepage");
-          
         } else {
           alert("O usuário não foi encontrado!");
         }

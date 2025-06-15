@@ -1,3 +1,7 @@
+.tela-lista-pedidos-clientes-modal {
+  overflow: hidden;
+}
+
 .pagina-listagem-produtos-clientes {
   display: flex;
   flex-direction: column;
@@ -135,7 +139,7 @@
           .select-status-pedido {
             border-radius: 0.6rem;
             padding: 0.3rem;
-            font: 500 0.9rem/normal "Poppins";
+            font: 500 0.9rem / normal "Poppins";
             background-color: #eae9e9;
             cursor: pointer;
           }
@@ -148,7 +152,7 @@
             gap: 1rem;
 
             button {
-              width: 50%;
+              width: 90%;
               height: 2.5rem;
               font: 400 0.8rem "Poppins";
               color: #fff;

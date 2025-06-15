@@ -1,0 +1,149 @@
+.modal-informacoes-pedido {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  background-color: #fff;
+  border: 0.1rem solid #000;
+  border-radius: 0.75rem;
+  overflow: hidden;
+
+  .conteudo-modal {
+    max-height: 80vh;
+    width: 45vw;
+    overflow-y: auto;
+
+    .cabecalho-modal-informacao-pedido {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+
+      h2 {
+        font: 700 1.35rem "poppins";
+      }
+
+      i {
+        font-size: 2rem;
+        cursor: pointer;
+        transition: opacity 0.5s ease;
+
+        &:hover {
+          opacity: 0.95;
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .conteudo-informacoes-pedido {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 1rem 1.25rem 1.25rem 1.25rem;
+      font: 500 1rem / normal "poppins";
+
+      .informacao-principal-pedido {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 1rem;
+
+        .identificacao-pedido {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          hr {
+            border: 0.0625rem solid #000;
+            min-height: 1rem;
+          }
+        }
+      }
+
+      .informacoes-vinho-pedido {
+        display: grid;
+        width: 100%;
+        border: 0.0625rem solid #7a7a7a;
+        padding: 0.25rem;
+        gap: 1rem;
+        grid-template-columns: 20% 2fr;
+
+        .imagem-vinho {
+          display: inline-flex;
+          justify-content: flex-end;
+          align-items: center;
+          padding: 0.5rem;
+          border: 0.0625rem solid #dadada;
+          border-radius: 0.8rem;
+
+          img {
+            min-width: 20%;
+            image-rendering: optimizeQuality;
+          }
+        }
+
+        .vinho-pedido {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: flex-end;
+          justify-content: center;
+          font: 500 1rem / normal "poppins";
+          color: #444444;
+
+          span:first-child {
+            font-weight: 700;
+          }
+
+          span:last-child {
+            font-weight: 700;
+            font-size: 1.1rem;
+          }
+        }
+      }
+
+      .informacoes-endereco-pedido {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        gap: 0.5rem;
+
+        h3 {
+          font: 700 1.25rem "poppins";
+        }
+
+        .endereco-entrega-pedido {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: inherit;
+          justify-content: inherit;
+          gap: 0.15rem;
+          font: 400 0.925rem / normal "poppins";
+
+          span {
+            color: #444444;
+          }
+
+          span b {
+            font-weight: 600;
+          }
+        }
+      }
+
+      .preco-total-pedido {
+        display: inline-flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+
+        span {
+          font: 700 1.15rem / normal "poppins";
+        }
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
+import ModalPedido from "../../components/modalPedido";
 
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -21,6 +22,8 @@ export default function PedidosCliente() {
 
   const [cpfCliente] = useState(cliente.cpf);
   const [listaPedidos, setListaPedidos] = useState([]);
+  const [pedidoSelecionado, setPedidoSelecionado] = useState([]);
+  const [abrirModal, setAbrirModal] = useState(false);
 
   const listarPedidos = useCallback(async () => {
     try {
@@ -47,8 +50,20 @@ export default function PedidosCliente() {
     }
   }, [cpfCliente, listarPedidos]);
 
+  const chamarModal = (pedido) => {
+    setAbrirModal(true);
+    setPedidoSelecionado(pedido);
+    document.body.classList.add("tela-lista-pedidos-clientes-modal");
+  };
+
+  const fecharModal = () => {
+   setAbrirModal(false);
+   document.body.classList.remove("tela-lista-pedidos-clientes-modal");
+  };
+
   return (
     <div className="pagina-pedidos-cliente pagina">
+      {abrirModal && <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} />}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
 
@@ -125,7 +140,7 @@ export default function PedidosCliente() {
                       <td>
                         <div className="primeira-coluna">
                           {pedido.id_pedido}
-                          <button>Ver Pedido Completo</button>
+                          <button onClick={() => chamarModal(pedido)} >Ver Pedido Completo</button>
                         </div>
                       </td>
                       <td>

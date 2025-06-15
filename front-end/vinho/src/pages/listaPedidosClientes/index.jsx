@@ -4,11 +4,13 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
+import ModalPedido from "../../components/modalPedido";
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
+import { imprimirNumeroComVirgula, tranformarDataParaModeloAmericano } from "../../utils/conversaoUtil";
 
 export default function ListaPedidosClientes() {
   const cliente = useMemo(() => {
@@ -23,6 +25,8 @@ export default function ListaPedidosClientes() {
 
   const [listaPedidos, setListaPedidos] = useState([]);
   const [atualizarLista, setAtualizarLista] = useState(false);
+  const [pedidoSelecionado, setPedidoSelecionado] = useState([]);
+  const [abrirModal, setAbrirModal] = useState(false);
 
   useEffect(() => {
     listarPedidosClientes();
@@ -39,7 +43,7 @@ export default function ListaPedidosClientes() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-        "Erro ao buscar as informações dos pedidos"
+          "Erro ao buscar as informações dos pedidos"
       );
     }
   };
@@ -52,7 +56,7 @@ export default function ListaPedidosClientes() {
     try {
       const pedidoCliente = {
         status_pedido: listaPedidos[index].status_pedido,
-        data_pedido: listaPedidos[index].data_pedido,
+        data_pedido: new Date(tranformarDataParaModeloAmericano(listaPedidos[index].data_pedido)),
       };
 
       if (sessionStorage.getItem("cliente")) {
@@ -83,8 +87,20 @@ export default function ListaPedidosClientes() {
     }
   };
 
+  const chamarModal = (pedido) => {
+    setAbrirModal(true);
+    setPedidoSelecionado(pedido);
+    document.body.classList.add("tela-lista-pedidos-clientes-modal");
+  };
+
+  const fecharModal = () => {
+   setAbrirModal(false);
+   document.body.classList.remove("tela-lista-pedidos-clientes-modal");
+  };
+
   return (
     <main className="pagina-listagem-produtos-clientes pagina">
+      {abrirModal && <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} />}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
         <section className="banner-abas">
@@ -100,9 +116,7 @@ export default function ListaPedidosClientes() {
               nome="Produtos Cadastrados"
               navegacao="/listagemprodutos"
             />
-            <AbaNavegacao
-              nome="Modificar Produtos"
-              navegacao="/crudprodutos" />
+            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
             <AbaNavegacao
               nome="Modificar Vinicola/Pais"
               navegacao="/crudvinicolapais"
@@ -149,7 +163,9 @@ export default function ListaPedidosClientes() {
                     <td>
                       <div className="primeira-coluna">
                         {pedido.id_pedido}
-                        <button>Ver Pedido Completo</button>
+                        <button onClick={() => chamarModal(pedido)}>
+                          Ver Pedido Completo
+                        </button>
                       </div>
                     </td>
                     <td>
@@ -169,7 +185,9 @@ export default function ListaPedidosClientes() {
                     <td>
                       <div className="preco">
                         <span>R$</span>
-                        {1000}
+                        {imprimirNumeroComVirgula(
+                          Number(pedido.preco_total_pedido).toFixed(2)
+                        )}
                       </div>
                     </td>
                     <td className="contato-cliente">{pedido.celular}</td>

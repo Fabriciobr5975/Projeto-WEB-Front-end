@@ -12,6 +12,12 @@ export default function CadastroCliente() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const [bloqueioCampo, setBloqueioCampo] = useState(true);
 
   const [clienteCadastro, setCliente] = useState({

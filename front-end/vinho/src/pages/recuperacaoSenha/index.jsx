@@ -4,10 +4,18 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RecuperacaoSenha() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  const navigate = useNavigate();
+
+   useEffect(() => {
+      if (sessionStorage.getItem("cliente")) {
+        navigate("/");
+      }
+    }, [navigate]);
 
   const [email, setEmail] = useState("");
   const [codigo, setCodigo] = useState("");

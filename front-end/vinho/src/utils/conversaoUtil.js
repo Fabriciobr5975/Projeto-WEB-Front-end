@@ -43,3 +43,19 @@ export function base64ParaFile(base64, fileName) {
 
   return new File([u8arr], fileName, { type: mime });
 }
+
+
+/**
+ * Função simples que pega uma data formatada no padrão do Brasil e troca para o padrão americano
+ * 
+ * @param {String} data - Recebe a data a ser formatada
+ * 
+ * @returns Retorna uma String com uma data no padrão YYYY-mm-dd
+ */
+export function tranformarDataParaModeloAmericano(data) {
+  const dia = data.substring(0, 2);
+  const mes = data.substring(3, 5);
+  const ano = data.substring(6, 10);
+
+  return ano + "-" + mes + "-" + dia;
+}
