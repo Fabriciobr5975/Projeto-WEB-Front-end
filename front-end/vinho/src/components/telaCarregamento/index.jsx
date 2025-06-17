@@ -11,7 +11,7 @@ export default function TelaCarregamento(props) {
 
     setTimeout(() => {
       setCarregamento(false);
-    }, props.tempo ?? 1000);
+    }, props.tempo ?? 250);
     
   }, [props?.tempo, props.tituloPagina]);
 

@@ -93,21 +93,21 @@ export default function HomePage() {
               <img
                 src="/assets/images/classificao-vinhos/Tinto.svg"
                 alt="Categoria Tinto"
-                onClick={() => navigate("/produtos")}
+                onClick={() => navigate("/produtos?classificacao=Suave")}
               />
             </picture>
             <picture className="categoria rose">
               <img
                 src="/assets/images/classificao-vinhos/Rose.svg"
                 alt="Categoria Rose"
-                onClick={() => navigate("/produtos")}
+                onClick={() => navigate("/produtos?classificacao=Rosé")}
               />
             </picture>
             <picture className="categoria branco">
               <img
                 src="/assets/images/classificao-vinhos/Branco.svg"
                 alt="Categoria Branco"
-                onClick={() => navigate("/produtos")}
+                onClick={() => navigate("/produtos?classificacao=Espumante")}
               />
             </picture>
           </div>

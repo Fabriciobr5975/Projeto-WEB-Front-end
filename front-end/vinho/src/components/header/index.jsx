@@ -65,10 +65,12 @@ export default function Header(props) {
           </span>
           <div className="icones">
             <i class="fa-solid fa-circle-user" onClick={() => navegacao()}></i>
+            {props?.cliente?.id_cliente &&
             <i
               class="fa-solid fa-cart-shopping"
               onClick={() => navigate("/meucarrinho")}
             ></i>
+            }
           </div>
         </div>
       </div>
