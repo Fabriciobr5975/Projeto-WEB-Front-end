@@ -61,7 +61,6 @@ export default function PerfilCliente() {
       const cliente = resp.data[0];
       setDadosCliente({...cliente, nome: cliente.primeiro_nome});
       
-      console.log("Dados do cliente:", dadosCliente);
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao buscar o cliente");
     }
