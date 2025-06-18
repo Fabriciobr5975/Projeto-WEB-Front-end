@@ -34,13 +34,14 @@ export default function PedidosCliente() {
 
       setListaPedidos(Object.values(pedidos));
     } catch (error) {
-      if(error.response?.data?.erro === "Não foram encontrado registros para o pedido") {
+      if (
+        error.response?.data?.erro ===
+        "Não foram encontrado registros para o pedido"
+      ) {
         return;
       }
-      
-      alert(
-        error.response?.data?.erro 
-      );
+
+      alert(error.response?.data?.erro);
     }
   }, [cpfCliente]);
 
@@ -57,13 +58,16 @@ export default function PedidosCliente() {
   };
 
   const fecharModal = () => {
-   setAbrirModal(false);
-   document.body.classList.remove("tela-pedidos-clientes-modal");
+    setAbrirModal(false);
+    document.body.classList.remove("tela-pedidos-clientes-modal");
   };
 
   return (
     <div className="pagina-pedidos-cliente pagina">
-      {abrirModal && <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} />}
+      {abrirModal && <div className="bloqueio-pedido-cliente"></div>}
+      {abrirModal && (
+        <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} />
+      )}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
 
@@ -98,9 +102,7 @@ export default function PedidosCliente() {
               <img src="/assets/images/box-open-solid.svg" alt="pedido vazio" />
 
               <div className="mensagem-pedido-vazio">
-                <span>
-                  Você ainda não realizou nenhum pedido!
-                </span>
+                <span>Você ainda não realizou nenhum pedido!</span>
               </div>
             </div>
           </div>
@@ -140,7 +142,9 @@ export default function PedidosCliente() {
                       <td>
                         <div className="primeira-coluna">
                           {pedido.id_pedido}
-                          <button onClick={() => chamarModal(pedido)} >Ver Pedido Completo</button>
+                          <button onClick={() => chamarModal(pedido)}>
+                            Ver Pedido Completo
+                          </button>
                         </div>
                       </td>
                       <td>

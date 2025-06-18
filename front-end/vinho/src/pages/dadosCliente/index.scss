@@ -1,3 +1,15 @@
+.tela-alterar-senha-cliente-modal {
+  overflow: hidden;
+}
+
+.bloqueio-tela-perfil-cliente {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  pointer-events: all;
+}
+
 .pagina-perfil-cliente {
   display: flex;
   flex-direction: column;
@@ -6,6 +18,7 @@
   flex-shrink: 1;
   font-style: normal;
   line-height: normal;
+  user-select: none;
 
   .banner-perfil {
     width: 100%;
@@ -69,24 +82,35 @@
           font-size: 1rem;
           color: #000;
         }
-
-        span {
-          display: inline-flex;
-          align-self: flex-end;
-          font: 500 0.9rem "Poppins";
-          color: #2e31d8;
-          cursor: pointer;
-          text-decoration: none;
-
-          &:hover {
-            transform: scale(1.05);
-          }
-        }
       }
 
       .entrada:last-child {
         grid-column: 2 / 3;
-        margin-top: -1rem;
+      }
+
+      .alteracao-senha {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        color: #2e31d8;
+
+        span {
+          display: inline-flex;
+          align-self: flex-end;
+          font: 500 0.96rem "Poppins";
+          cursor: pointer;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          } 
+        }
+
+        i {
+          font-size: 1rem;
+        }
       }
     }
 

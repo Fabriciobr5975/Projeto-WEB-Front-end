@@ -2,6 +2,14 @@
   overflow: hidden;
 }
 
+.bloqueio-pedido-cliente {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  pointer-events: all;
+}
+
 .pagina-pedidos-cliente {
   display: flex;
   flex-direction: column;

@@ -10,7 +10,10 @@ import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
-import { imprimirNumeroComVirgula, tranformarDataParaModeloAmericano } from "../../utils/conversaoUtil";
+import {
+  imprimirNumeroComVirgula,
+  tranformarDataParaModeloAmericano,
+} from "../../utils/conversaoUtil";
 
 export default function ListaPedidosClientes() {
   const cliente = useMemo(() => {
@@ -56,7 +59,9 @@ export default function ListaPedidosClientes() {
     try {
       const pedidoCliente = {
         status_pedido: listaPedidos[index].status_pedido,
-        data_pedido: new Date(tranformarDataParaModeloAmericano(listaPedidos[index].data_pedido)),
+        data_pedido: new Date(
+          tranformarDataParaModeloAmericano(listaPedidos[index].data_pedido)
+        ),
       };
 
       if (sessionStorage.getItem("cliente")) {
@@ -94,13 +99,20 @@ export default function ListaPedidosClientes() {
   };
 
   const fecharModal = () => {
-   setAbrirModal(false);
-   document.body.classList.remove("tela-lista-pedidos-clientes-modal");
+    setAbrirModal(false);
+    document.body.classList.remove("tela-lista-pedidos-clientes-modal");
   };
 
   return (
     <main className="pagina-listagem-produtos-clientes pagina">
-      {abrirModal && <ModalPedido pedido={pedidoSelecionado} fecharModal={fecharModal} telaAdministrador={true} />}
+      {abrirModal && <div className="bloqueio-lista-pedido-cliente"></div>}
+      {abrirModal && (
+        <ModalPedido
+          pedido={pedidoSelecionado}
+          fecharModal={fecharModal}
+          telaAdministrador={true}
+        />
+      )}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
         <section className="banner-abas">

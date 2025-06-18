@@ -301,7 +301,7 @@ export default function CheckOut() {
                         <span className="preco">
                           <span className="cifrao">R$</span>
                           {imprimirNumeroComVirgula(
-                            Number(item.preco_vinho) * item.quantidade
+                            Number(item.preco_vinho * item.quantidade).toFixed(2)
                           )}
                         </span>
                       </div>

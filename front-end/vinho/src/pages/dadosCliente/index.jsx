@@ -4,6 +4,7 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
+import ModalAlterarSenhaCliente from "../../components/modalAlterarSenhaCliente"; 
 
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
@@ -20,22 +21,9 @@ export default function PerfilCliente() {
   }, [navigate]);
 
   const [idCliente] = useState(cliente.id_cliente);
-  const [bloqueioSenha, setBloqueioSenha] = useState(true);
+  const [abrirModal, setAbrirModal] = useState(false);
 
-  const [dadosCliente, setDadosCliente] = useState({
-    nome: "",
-    sobrenome: "",
-    cpf: "",
-    email: "",
-    senha: "",
-    data_nascimento: "",
-    celular: "",
-  });
-
-  const habilitarCampoSenha = () => {
-    setBloqueioSenha((senha) => !senha);
-    alert(`${bloqueioSenha ? "O campo da senha foi habilitado!" : "O campo da senha foi desabilitado!" }`);
-  };
+  const [dadosCliente, setDadosCliente] = useState({});
 
   const alterarDados = async () => {
     try {
@@ -48,17 +36,18 @@ export default function PerfilCliente() {
         alert("Os seus dados foram alterados com sucesso!");
       }
 
-      sessionStorage.setItem("cliente", JSON.stringify(cliente));
-      localStorage.clear();
-
-      setBloqueioSenha(true);
+      sessionStorage.setItem("cliente", JSON.stringify(dadosCliente));
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao alterar o cliente");
     }
   };
 
   const confimarSaidaSite = () => {
-    if (window.confirm("Você está saindo da sua conta, clique em OK para continuar e realizar o logout")) {
+    if (
+      window.confirm(
+        "Você está saindo da sua conta, clique em OK para continuar e realizar o logout"
+      )
+    ) {
       sessionStorage.removeItem("cliente");
       navigate("/homepage");
     }
@@ -70,15 +59,9 @@ export default function PerfilCliente() {
       const resp = await axios.get(url);
 
       const cliente = resp.data[0];
-      setDadosCliente({
-        nome: cliente.primeiro_nome,
-        sobrenome: cliente.sobrenome,
-        cpf: cliente.cpf,
-        data_nascimento: cliente.data_nascimento,
-        email: cliente.email,
-        senha: cliente.senha,
-        celular: cliente.celular,
-      });
+      setDadosCliente({...cliente, nome: cliente.primeiro_nome});
+      
+      console.log("Dados do cliente:", dadosCliente);
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao buscar o cliente");
     }
@@ -90,8 +73,20 @@ export default function PerfilCliente() {
     }
   }, [idCliente, buscarCliente]);
 
+  const chamarModal = () => {
+    setAbrirModal(true);
+    document.body.classList.add("tela-alterar-senha-cliente-modal");
+  };
+
+  const fecharModal = () => {
+   setAbrirModal(false);
+   document.body.classList.remove("tela-alterar-senha-cliente-modal");
+  };
+
   return (
     <div className="pagina-perfil-cliente pagina">
+      {abrirModal && <div className="bloqueio-tela-perfil-cliente"></div>}
+      {abrirModal && <ModalAlterarSenhaCliente cliente={cliente.id_cliente} fecharModal={fecharModal}/>}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
 
@@ -189,24 +184,6 @@ export default function PerfilCliente() {
             </div>
 
             <div className="entrada">
-              <label>Senha:</label>
-              <input
-                type={bloqueioSenha ? "password" : "text"}
-                style={{ background: bloqueioSenha ? "#d0d0d0" : "inherit" }}
-                placeholder="Sua Senha Cadastrada"
-                value={dadosCliente.senha}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    senha: e.target.value,
-                  })
-                }
-                readOnly={bloqueioSenha}
-              />
-              <span onClick={() => habilitarCampoSenha()}>Alterar Senha</span>
-            </div>
-
-            <div className="entrada">
               <label>CPF:</label>
               <input
                 type="text"
@@ -235,6 +212,10 @@ export default function PerfilCliente() {
                   })
                 }
               />
+            </div>
+            <div className="entrada alteracao-senha">
+              <i class="fa-solid fa-unlock-keyhole"></i>
+              <span onClick={chamarModal}>Alterar Senha</span>
             </div>
           </div>
           <div className="botoes-dados-usuario">

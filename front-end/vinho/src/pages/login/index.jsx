@@ -2,6 +2,7 @@ import "./index.scss";
 
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import InputSenha from "../../components/inputSenha";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -20,17 +21,15 @@ export default function Login() {
     }
   }, [navigate]);
 
-
   const buscarCliente = async () => {
     try {
       if (validarCampos()) {
-        const url = `http://localhost:5001/cliente/busca/email?email=${email}`;
+        const url = `http://localhost:5001/cliente/busca/email?email=${email}&senha=${senha}`;
 
         const resp = await axios.get(url);
 
         const clienteValido = resp.data.find(
-          (clienteBusca) =>
-            clienteBusca.email === email && clienteBusca.senha === senha
+          (clienteBusca) => clienteBusca.email === email
         );
 
         if (clienteValido) {
@@ -87,14 +86,12 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="campo-senha">
-                <label>Senha: </label>
-                <input
-                  type="password"
-                  placeholder="Digite sua Senha"
-                  value={senha}
-                  onKeyUp={teclaEnterApertada}
-                  onChange={(e) => setSenha(e.target.value)}
+              <div className="campo-senha" onKeyUp={teclaEnterApertada}>
+                <InputSenha
+                  labelCampo="Senha:"
+                  setSenha={setSenha}
+                  placeholder="Digite sua senha"
+                  
                 />
               </div>
               <Link to="/recuperacaosenha">Esqueci minha senha</Link>
