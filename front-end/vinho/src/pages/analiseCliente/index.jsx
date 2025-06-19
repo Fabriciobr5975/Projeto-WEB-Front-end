@@ -10,6 +10,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
 
+import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
+import { calcularTicketMedioCliente } from "../../service/calculosCarrinho/calculosCarrinhoCliente";
+
 export default function AnaliseClientes() {
   const cliente = useMemo(() => {
     return JSON.parse(sessionStorage.getItem("cliente")) || {};
@@ -31,19 +34,32 @@ export default function AnaliseClientes() {
 
   const listarClientes = async () => {
     try {
-      const resp = await axios.get("http://localhost:5001/enderecoCliente");
-      const vinhos = resp.data;
+      const resp = await axios.get(
+        "http://localhost:5001/cliente/lista/pedidos"
+      );
 
-      setListaClientes(vinhos);
+      setListaClientes(Object.values(resp.data));
     } catch (error) {
       alert(
-        error.response?.data?.erro ?? "Erro ao buscar as informações do estoque"
+        error.response?.data?.erro ??
+          "Erro ao buscar as informações dos clientes."
       );
     }
   };
 
   const atualizarTabela = () => {
     setAtualizarLista((atualizar) => !atualizar);
+  };
+
+  const verificarSeUsuarioTemPedidos = (idCliente) => {
+    if (
+      !listaClientes[idCliente]?.quantidade_pedidos ||
+      listaClientes[idCliente]?.quantidade_pedidos === 0
+    ) {
+      console.log(listaClientes[idCliente]);
+      return false;
+    }
+    return true;
   };
 
   async function Buscar() {
@@ -55,7 +71,7 @@ export default function AnaliseClientes() {
     } catch (error) {
       alert(
         error.response?.data?.erro ??
-        `Erro ao buscar as informações do filtro ${filtroBusca}`
+          `Erro ao buscar as informações do filtro ${filtroBusca}`
       );
     }
   }
@@ -78,17 +94,12 @@ export default function AnaliseClientes() {
               nome="Produtos Cadastrados"
               navegacao="/listagemprodutos"
             />
-            <AbaNavegacao
-              nome="Modificar Produtos"
-              navegacao="/crudprodutos" />
+            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
             <AbaNavegacao
               nome="Modificar Vinicola/Pais"
               navegacao="/crudvinicolapais"
             />
-            <AbaNavegacao
-              nome="Lista de Pedidos"
-              navegacao="/listapedidos"
-            />
+            <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
           </div>
         </section>
 
@@ -105,7 +116,7 @@ export default function AnaliseClientes() {
             <div className="filtro-busca">
               <input
                 type="text"
-                placeholder="Busque por Cidade, Ticket Médio ou Região"
+                placeholder="Busque por Preço Total ou Ticket Médio"
                 value={filtroBusca}
                 onChange={(e) => setFiltroBusca(e.target.value)}
               />
@@ -117,8 +128,8 @@ export default function AnaliseClientes() {
               <col className="identificacao-cliente" />
               <col className="nome-cliente" />
               <col className="email-cliente" />
-              <col className="cidade-cliente" />
-              <col className="bairro-cliente" />
+              <col className="celular-cliente" />
+              <col className="total-pedidos-cliente" />
               <col className="ticket-medio-cliente" />
             </colgroup>
             <thead>
@@ -126,23 +137,39 @@ export default function AnaliseClientes() {
                 <th>Identificação</th>
                 <th>Nome</th>
                 <th>E-mail</th>
-                <th>Cidade</th>
-                <th>Bairro</th>
+                <th>Celular</th>
+                <th>Total em Compras</th>
                 <th>Ticket Médio</th>
               </tr>
             </thead>
             <tbody>
-              {listaClientes.map((item) => (
+              {listaClientes.map((item, index) => (
                 <tr key={item.id_cliente}>
                   <td>{item.id_cliente}</td>
-                  <td>{item.nome_completo_cliente}</td>
+                  <td>{item.nome_completo}</td>
                   <td>{item.email}</td>
-                  <td>{item?.cidade}</td>
-                  <td>{item?.bairro}</td>
+                  <td>{item.celular}</td>
+                  <td>
+                    <div className="preco">
+                      {verificarSeUsuarioTemPedidos(index) && <span>R$</span>}
+                      {verificarSeUsuarioTemPedidos(index)
+                        ? imprimirNumeroComVirgula(
+                            Number(item?.preco_total_pedido).toFixed(2)
+                          )
+                        : "Sem Pedidos"}
+                    </div>
+                  </td>
                   <td>
                     <div className="preco">
                       <span>R$</span>
-                      {0}
+                      {verificarSeUsuarioTemPedidos(index)
+                        ? imprimirNumeroComVirgula(
+                            calcularTicketMedioCliente(
+                              item?.preco_total_pedido,
+                              item?.quantidade_pedidos
+                            ).toFixed(2)
+                          )
+                        : "0,00"}
                     </div>
                   </td>
                 </tr>

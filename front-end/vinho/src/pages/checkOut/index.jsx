@@ -113,8 +113,10 @@ export default function CheckOut() {
         error.response?.data?.erro ??
           "Erro ao buscar as informações dos seus pedidos"
       );
+
+      navigate("/");
     }
-  }, [cpfCliente]);
+  }, [cpfCliente, navigate]);
 
   const colocarApelidoEnderecoPadrao = (endereco) => {
     if (!endereco.apelido_endereco) {
@@ -255,8 +257,11 @@ export default function CheckOut() {
         const url = `http://localhost:5001/pedido`;
         const resp = await axios.post(url, pedido);
 
-        alert(resp.data?.resposta);
+        const mensagem = resp.data?.resposta;
 
+        alert(mensagem);
+
+        sessionStorage.setItem("idPedido", JSON.stringify(mensagem.replaceAll(/\D/g, '')));
         navigate("/confirmacaopedido");
       }
     } catch (error) {
@@ -598,7 +603,7 @@ export default function CheckOut() {
                     <span className="preco">
                       R$
                       {imprimirNumeroComVirgula(
-                        Number(item.preco_vinho) * item.quantidade
+                        Number(item.preco_vinho * item.quantidade).toFixed(2)
                       )}
                     </span>
                   </div>

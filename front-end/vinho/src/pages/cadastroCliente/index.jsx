@@ -30,6 +30,7 @@ export default function CadastroCliente() {
     cep: "",
     numero: "",
     complemento: "",
+    apelido_endereco: "",
   });
 
   const [endereco, setEndereco] = useState({
@@ -78,6 +79,7 @@ export default function CadastroCliente() {
       ...clienteSemEndereco,
       numero: "",
       complemento: "",
+      apelido_endereco: ""
     }));
   }, []);
 
@@ -91,13 +93,26 @@ export default function CadastroCliente() {
     }
   }, [clienteCadastro.cep, pegarEnderecoViaCep, limparEndereco]);
 
+
+  const colocarApelidoEnderecoPadrao = () => {
+    if (!clienteCadastro.apelido_endereco) {
+      clienteCadastro.apelido_endereco =
+        `${endereco.logradouro} ${clienteCadastro.numero} - ${clienteCadastro.cep}, ${clienteCadastro.numero} ${endereco.cidade}`.replace(
+          /\n/g,
+          " "
+        );
+    }
+  };
+
   const inserirNovoCliente = async () => {
     try {
+      colocarApelidoEnderecoPadrao();
       const url = `http://localhost:5001/cliente`;
       const resp = await axios.post(url, clienteCadastro);
+
       alert(resp.data.resposta);
-      navigate("/login");
       
+      navigate("/login");
     } catch (err) {
       alert("O ocorreu um erro na inserção do cliente");
     }

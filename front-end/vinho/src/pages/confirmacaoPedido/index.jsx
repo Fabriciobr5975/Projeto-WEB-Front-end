@@ -7,14 +7,18 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function ConfirmacaoPedido() {
-  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    if (!sessionStorage.getItem("cliente")) {
+    if (!sessionStorage.getItem("cliente") || (!sessionStorage.getItem("idPedido") || sessionStorage.getItem("idPedido") === 0 )) {
       navigate("/");
     }
   }, [navigate]);
+  
+  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
+  const idPedido = sessionStorage.getItem("idPedido");
+  
+  
 
   return (
     <div className="pagina-confirmacao-pedido pagina">
@@ -30,7 +34,7 @@ export default function ConfirmacaoPedido() {
               <div className="mensagem-confirmacao-pedido">
                 <i class="fa-solid fa-circle-check"></i>
                 <h3>Pedido Confirmado</h3>
-                <span>Pedido Nº 1234567</span>
+                <span>Pedido Nº {idPedido}</span>
 
                 <div className="mensagem-recibo">
                   <div className="mensagem-agradecimento">

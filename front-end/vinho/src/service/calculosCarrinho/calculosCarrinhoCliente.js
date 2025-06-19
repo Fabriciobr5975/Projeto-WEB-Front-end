@@ -6,3 +6,8 @@ export function calcularValorTotalCarrinho(itensCarrinho) {
 
     return precoTotal;
 }
+
+
+export function calcularTicketMedioCliente(valorTotal, quantidade) {
+    return valorTotal / quantidade;
+}

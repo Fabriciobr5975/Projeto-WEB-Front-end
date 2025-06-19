@@ -42,10 +42,13 @@ export default function CarrinhoCliente() {
 
       setListaItensCarrinho(carrinho);
     } catch (error) {
-      if(error.response?.data?.erro === "Não foram encontrado registros para o itens do carrinho") {
+      if (
+        error.response?.data?.erro ===
+        "Não foram encontrado registros para o itens do carrinho"
+      ) {
         return;
       }
-      
+
       alert(error.response?.data?.erro);
     }
   }, [cpfCliente]);
@@ -59,6 +62,10 @@ export default function CarrinhoCliente() {
       alert("O item foi removido com sucesso do carrinho!");
 
       listarItensCarrinho();
+
+      if (listaItensCarrinho.length === 1) {
+        navigate(0);
+      } 
     } catch (error) {
       alert(
         error.response?.data?.erro ?? "Erro ao remover o item do carrinho!"
@@ -164,7 +171,8 @@ export default function CarrinhoCliente() {
 
               <div className="mensagem-carrinho-vazio">
                 <span>
-                  Seu carrinho está vazio. Nosso catálogo de vinhos te aguarda para novas experiências!
+                  Seu carrinho está vazio. Nosso catálogo de vinhos te aguarda
+                  para novas experiências!
                 </span>
 
                 <Link to="/produtos">Continuar comprando</Link>
@@ -216,7 +224,9 @@ export default function CarrinhoCliente() {
                       <div className="preco">
                         <span>R$</span>
                         {imprimirNumeroComVirgula(
-                          Number(carrinho.preco_vinho * carrinho.quantidade).toFixed(2)
+                          Number(
+                            carrinho.preco_vinho * carrinho.quantidade
+                          ).toFixed(2)
                         )}
                       </div>
                     </td>
