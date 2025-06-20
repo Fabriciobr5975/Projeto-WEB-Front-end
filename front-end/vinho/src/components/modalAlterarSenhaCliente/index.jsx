@@ -4,6 +4,7 @@ import InputSenha from "../inputSenha";
 
 import { useState } from "react";
 import axios from "axios";
+import validarSenha from "../../service/validacaoCampos/validacaoCampoSenha";
 
 export default function ModalAlterarSenhaCliente(props) {
   const [senhaAtual, setSenhaAtual] = useState("");
@@ -18,12 +19,19 @@ export default function ModalAlterarSenhaCliente(props) {
         "A senha atual é obrigatória é deve ser a mesma cadastrada no sistema"
       );
       validacao = false;
+    
     } else if (!novaSenha) {
       alert("Digite a nova senha!");
       validacao = false;
+    
     } else if (!confirmarNovaSenha) {
       alert("Confirme a nova senha!");
       validacao = false;
+    
+    } else if (!validarSenha(novaSenha)) {
+      alert("A senha passada não atende aos critérios para a alteração da senha");
+      validacao = false;
+    
     } else if (novaSenha !== confirmarNovaSenha) {
       alert("A nova senha e a confirmação não coincidem!");
       validacao = false;
@@ -35,7 +43,7 @@ export default function ModalAlterarSenhaCliente(props) {
   const alterarSenha = async () => {
     try {
       const url = `http://localhost:5001/cliente/senha/${props.cliente}`;
-     
+
       if (!validarCampos()) {
         return;
       }
@@ -72,6 +80,7 @@ export default function ModalAlterarSenhaCliente(props) {
               labelCampo="Nova Senha:"
               setSenha={setNovaSenha}
               placeholder="Digite a nova senha"
+              habilitarCampoSenhaValido={true}
             />
             <InputSenha
               labelCampo="Confirmar Nova Senha:"

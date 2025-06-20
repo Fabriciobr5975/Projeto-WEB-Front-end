@@ -24,7 +24,7 @@
       justify-content: center;
       align-items: stretch;
       width: 50rem;
-      padding: 2rem;  
+      padding: 2rem;
       gap: 3.5rem;
 
       .titulo-secao {
@@ -38,33 +38,37 @@
         display: inline-flex;
         justify-content: flex-start;
         align-items: center;
-        font: 400 1.2rem "Poppins";
-      }
-
-      input {
-        flex: 1;
-        width: 100%;
-        height: 3rem;
-        border-radius: 0.75rem;
-        border: 0.0625rem solid #000;
-        padding: 0rem 1rem;
-        font-size: 1rem;
-        color: #000;
+        font: 400 1rem "Poppins";
       }
 
       .campos-entrada-obrigatório {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 1rem;
+        gap: 1.25rem;
 
         .campo {
-          display: grid;
-          grid-template-columns: 18% 75% 7%;
-          align-items: center;
-          gap: 1rem;
-        
-          p {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+
+          .input-obrigatorio {
+            display: flex;
+            gap: 0.55rem;
+            width: 100%;
+
+            h5 {
+              display: inline-flex;
+              align-items: flex-end;
+            }
+
+            input {
+              border: none;
+            }
+          }
+
+          h5 {
             font: 300 1.5rem "Poppins";
             color: #ff2600;
           }
@@ -84,19 +88,38 @@
           gap: 0.5rem;
         }
 
+        .campo-obrigatorio {
+          display: flex;
+          gap: 0.55rem;
+          width: 100%;
+
+          h5 {
+            display: inline-flex;
+            align-items: flex-end;
+          }
+
+          input {
+            border: none;
+          }
+        }
+
+        h5 {
+          font: 300 1.5rem "Poppins";
+          color: #ff2600;
+        }
+
         .campo:last-child {
           grid-column: 1 / -1;
 
           input {
             width: 100%;
           }
-          
         }
 
         p {
-            font: 300 1.5rem "Poppins";
-            color: #ff2600;
-          }
+          font: 300 1.5rem "Poppins";
+          color: #ff2600;
+        }
       }
 
       .info-campos-obrigatorios {
@@ -115,7 +138,7 @@
       justify-content: flex-start;
       padding: 1rem;
       gap: 2rem;
-      margin-top: .5rem;
+      margin-top: 0.5rem;
 
       .icone-voltar {
         display: flex;
@@ -126,13 +149,13 @@
 
         i {
           font-size: 3rem;
-          text-shadow: 0rem .25rem .25rem 0rem #000 inset;
+          text-shadow: 0rem 0.25rem 0.25rem 0rem #000 inset;
           cursor: pointer;
           transition: opacity 0.5s ease;
 
           &:hover {
-            opacity: 0.9; 
-            text-shadow: 0rem 0rem .3rem #282828 inset;
+            opacity: 0.9;
+            text-shadow: 0rem 0rem 0.3rem #282828 inset;
             transform: scale(1.1);
           }
         }

@@ -2,12 +2,16 @@ import "./index.scss";
 
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import InputPadrao from "../../components/inputPadrao";
 import InputSenha from "../../components/inputSenha";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TelaCarregamento from "../../components/telaCarregamento";
+
+import validarEmail from "../../service/validacaoCampos/validacaoCampoEmail";
+import validarSenha from "../../service/validacaoCampos/validacaoCampoSenha";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -56,6 +60,13 @@ export default function Login() {
     if (!senha || senha === "") {
       alert("O Campo da senha é obrigatório e deve ser preenchido");
       return false;
+    } else if (!validarSenha(senha)) {
+      alert("A senha informada não contém todos os caracteres obrigatórios!");
+    }
+
+    if (!validarEmail(email)) {
+      alert("O e-mail informado não contem os caracteres de um e-mail válido");
+      return false;
     }
 
     return true;
@@ -77,13 +88,14 @@ export default function Login() {
 
             <div className="campos-entrada">
               <div className="campo-email">
-                <label>E-mail: </label>
-                <input
-                  type="text"
-                  placeholder="Digite seu E-Mail"
-                  value={email}
-                  onKeyUp={teclaEnterApertada}
-                  onChange={(e) => setEmail(e.target.value)}
+                <InputPadrao
+                  tipoCampo="email"
+                  labelCampo="E-mail:"
+                  placeholder="Digite seu e-mail"
+                  valor={email}
+                  setValor={setEmail}
+                  tamanhoMaximo={100}
+                  requerido={true}
                 />
               </div>
               <div className="campo-senha" onKeyUp={teclaEnterApertada}>
@@ -91,7 +103,7 @@ export default function Login() {
                   labelCampo="Senha:"
                   setSenha={setSenha}
                   placeholder="Digite sua senha"
-                  
+                  habilitarCampoSenhaValido={true}
                 />
               </div>
               <Link to="/recuperacaosenha">Esqueci minha senha</Link>

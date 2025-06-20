@@ -4,11 +4,14 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
-import ModalAlterarSenhaCliente from "../../components/modalAlterarSenhaCliente"; 
+import ModalAlterarSenhaCliente from "../../components/modalAlterarSenhaCliente";
+import InputPadrao from "../../components/inputPadrao";
 
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+
+import validarCelular from "../../service/validacaoCampos/validacaoCampoCelular";
 
 export default function PerfilCliente() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
@@ -27,6 +30,10 @@ export default function PerfilCliente() {
 
   const alterarDados = async () => {
     try {
+      if (!validarCelular(dadosCliente.celular)) {
+        alert("O celular passado não contém os digitos corretos");
+        return;
+      }
       const url = `http://localhost:5001/cliente/${idCliente}`;
       const resp = await axios.put(url, dadosCliente);
 
@@ -37,6 +44,7 @@ export default function PerfilCliente() {
       }
 
       sessionStorage.setItem("cliente", JSON.stringify(dadosCliente));
+      navigate(0);
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao alterar o cliente");
     }
@@ -59,8 +67,7 @@ export default function PerfilCliente() {
       const resp = await axios.get(url);
 
       const cliente = resp.data[0];
-      setDadosCliente({...cliente, nome: cliente.primeiro_nome});
-      
+      setDadosCliente({ ...cliente, nome: cliente.primeiro_nome });
     } catch (error) {
       alert(error.response?.data?.erro ?? "Erro ao buscar o cliente");
     }
@@ -78,14 +85,19 @@ export default function PerfilCliente() {
   };
 
   const fecharModal = () => {
-   setAbrirModal(false);
-   document.body.classList.remove("tela-alterar-senha-cliente-modal");
+    setAbrirModal(false);
+    document.body.classList.remove("tela-alterar-senha-cliente-modal");
   };
 
   return (
     <div className="pagina-perfil-cliente pagina">
       {abrirModal && <div className="bloqueio-tela-perfil-cliente"></div>}
-      {abrirModal && <ModalAlterarSenhaCliente cliente={cliente.id_cliente} fecharModal={fecharModal}/>}
+      {abrirModal && (
+        <ModalAlterarSenhaCliente
+          cliente={cliente.id_cliente}
+          fecharModal={fecharModal}
+        />
+      )}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
 
@@ -121,94 +133,94 @@ export default function PerfilCliente() {
         <section className="dados-cliente">
           <div className="entrada-dados">
             <div className="entrada">
-              <label>Nome:</label>
-              <input
-                type="text"
+              <InputPadrao
+                labelCampo="Nome:"
                 placeholder="Seu nome"
-                value={dadosCliente.nome}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    nome: e.target.value,
-                  })
+                valor={dadosCliente.nome}
+                setValor={(novoNome) =>
+                  setDadosCliente((prev) => ({
+                    ...prev,
+                    nome: novoNome,
+                  }))
                 }
+                tamanhoMaximo={300}
               />
             </div>
 
             <div className="entrada">
-              <label>Sobrenome:</label>
-              <input
-                type="text"
+              <InputPadrao
+                labelCampo="Sobrenome:"
                 placeholder="Seu sobrenome"
-                value={dadosCliente.sobrenome}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    sobrenome: e.target.value,
-                  })
+                valor={dadosCliente.sobrenome}
+                setValor={(novoSobrenome) =>
+                  setDadosCliente((prev) => ({
+                    ...prev,
+                    sobrenome: novoSobrenome,
+                  }))
                 }
+                tamanhoMaximo={30}
               />
             </div>
 
             <div className="entrada">
-              <label>E-mail:</label>
-              <input
-                type="email"
-                style={{ background: "#d0d0d0" }}
+              <InputPadrao
+                tipoCampo="email"
+                labelCampo="E-mail:"
                 placeholder="Seu e-mail"
-                value={dadosCliente.email}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    email: e.target.value,
-                  })
+                valor={dadosCliente.email}
+                setValor={(novoEmail) =>
+                  setDadosCliente((prev) => ({
+                    ...prev,
+                    email: novoEmail,
+                  }))
                 }
-                readOnly
+                tamanhoMaximo={100}
+                apenasLeitura={true}
               />
             </div>
 
             <div className="entrada">
-              <label>Celular:</label>
-              <input
-                type="text"
-                placeholder="Seu celular"
-                value={dadosCliente.celular}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    celular: e.target.value,
-                  })
+              <InputPadrao
+                labelCampo="Celular:"
+                placeholder="Seu celular. Exemplo: (11) 91111-1111"
+                valor={dadosCliente.celular}
+                setValor={(novoCelular) =>
+                  setDadosCliente((prev) => ({
+                    ...prev,
+                    celular: novoCelular,
+                  }))
                 }
+                tamanhoMaximo={15}
               />
             </div>
 
             <div className="entrada">
-              <label>CPF:</label>
-              <input
-                type="text"
+              <InputPadrao
+                labelCampo="CPF:"
                 placeholder="Seu CPF"
-                style={{ background: "#d0d0d0" }}
-                readOnly
-                value={dadosCliente.cpf}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    cpf: e.target.value,
-                  })
+                valor={dadosCliente.cpf}
+                setValor={(novoCpf) =>
+                  setDadosCliente((prev) => ({
+                    ...prev,
+                    cpf: novoCpf,
+                  }))
                 }
+                tamanhoMaximo={11}
+                apenasLeitura={true}
               />
             </div>
 
             <div className="entrada">
-              <label>Data de Nascimento</label>
-              <input
-                type="date"
-                value={dadosCliente.data_nascimento}
-                onChange={(e) =>
-                  setDadosCliente({
-                    ...dadosCliente,
-                    data_nascimento: e.target.value,
-                  })
+              <InputPadrao
+                tipoCampo="date"
+                labelCampo="Data de Nascimento:"
+                placeholder="Sua Data de Nascimento"
+                valor={dadosCliente.data_nascimento}
+                setValor={(novaDataNascimento) =>
+                  setDadosCliente((prev) => ({
+                    ...prev,
+                    data_nascimento: novaDataNascimento,
+                  }))
                 }
               />
             </div>

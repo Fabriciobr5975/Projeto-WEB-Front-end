@@ -3,10 +3,16 @@ import "./index.scss";
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import InputPadrao from "../../components/inputPadrao";
+import InputSenha from "../../components/inputSenha";
 
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import validarSenha from "../../service/validacaoCampos/validacaoCampoSenha";
+import validarEmail from "../../service/validacaoCampos/validacaoCampoEmail";
+import validarCelular from "../../service/validacaoCampos/validacaoCampoCelular";
 
 export default function CadastroCliente() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
@@ -32,6 +38,9 @@ export default function CadastroCliente() {
     complemento: "",
     apelido_endereco: "",
   });
+
+  const [senhaCliente, setSenhacliente] = useState("");
+  const [confirmarSenhaCliente, setConfirmarSenhacliente] = useState("");
 
   const [endereco, setEndereco] = useState({
     estado: "",
@@ -63,6 +72,7 @@ export default function CadastroCliente() {
       setBloqueioCampo(false);
     } catch (err) {
       console.error("Erro ao buscar endereço");
+      setBloqueioCampo(true);
     }
   }, [clienteCadastro.cep]);
 
@@ -79,7 +89,7 @@ export default function CadastroCliente() {
       ...clienteSemEndereco,
       numero: "",
       complemento: "",
-      apelido_endereco: ""
+      apelido_endereco: "",
     }));
   }, []);
 
@@ -88,11 +98,11 @@ export default function CadastroCliente() {
       pegarEnderecoViaCep();
     }
 
-    if (clienteCadastro.cep !== "" && clienteCadastro.cep.length === 0) {
+    if (clienteCadastro.cep !== "" && clienteCadastro.cep.length < 8) {
       limparEndereco();
+      setBloqueioCampo(true);
     }
   }, [clienteCadastro.cep, pegarEnderecoViaCep, limparEndereco]);
-
 
   const colocarApelidoEnderecoPadrao = () => {
     if (!clienteCadastro.apelido_endereco) {
@@ -104,14 +114,49 @@ export default function CadastroCliente() {
     }
   };
 
+  const validarCampos = () => {
+    if (!senhaCliente) {
+      alert("Digite a senha!");
+      return false;
+    } else if (!confirmarSenhaCliente) {
+      alert("Confirme a senha!");
+      return false;
+    } else if (!validarSenha(senhaCliente)) {
+      alert("A senha passada não atende aos critérios para a criação da senha");
+      return false;
+    } else if (senhaCliente !== confirmarSenhaCliente) {
+      alert("As senha não estão iguais!");
+      return false;
+    }
+
+    if (!validarEmail(clienteCadastro.email)) {
+      alert("O e-mail informado não contem os caracteres de um e-mail válido");
+      return false;
+    }
+
+    if (!validarCelular(clienteCadastro.celular)) {
+      alert("O número de celular informado não contém os digitos corretos");
+      return false;
+    }
+
+    return true;
+  };
+
   const inserirNovoCliente = async () => {
     try {
       colocarApelidoEnderecoPadrao();
+
+      if (!validarCampos()) {
+        return;
+      }
+
+      clienteCadastro.senha = senhaCliente;
+
       const url = `http://localhost:5001/cliente`;
       const resp = await axios.post(url, clienteCadastro);
 
       alert(resp.data.resposta);
-      
+
       navigate("/login");
     } catch (err) {
       alert("O ocorreu um erro na inserção do cliente");
@@ -129,174 +174,217 @@ export default function CadastroCliente() {
 
             <div className="campos-entrada-obrigatório">
               <div className="campo">
-                <label>Nome:</label>
-                <input
-                  type="text"
-                  placeholder="Digite seu primeiro nome"
-                  value={clienteCadastro.nome}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, nome: e.target.value })
-                  }
-                  required
-                />
-                <p>*</p>
+                <div className="input-obrigatorio">
+                  <InputPadrao
+                    labelCampo="Nome:"
+                    placeholder="Digite seu nome"
+                    valor={clienteCadastro.nome}
+                    setValor={(novoNome) =>
+                      setCliente((prev) => ({
+                        ...prev,
+                        nome: novoNome,
+                      }))
+                    }
+                    tamanhoMaximo={30}
+                    requerido={true}
+                  />
+
+                  <h5>*</h5>
+                </div>
               </div>
 
               <div className="campo">
-                <label>Sobrenome:</label>
-                <input
-                  type="text"
-                  placeholder="Digite seu sobrenome"
-                  value={clienteCadastro.sobrenome}
-                  onChange={(e) =>
-                    setCliente({
-                      ...clienteCadastro,
-                      sobrenome: e.target.value,
-                    })
-                  }
-                  required
-                />
-                <p>*</p>
+                <div className="input-obrigatorio">
+                  <InputPadrao
+                    labelCampo="Sobrenome:"
+                    placeholder="Digite Seu sobrenome"
+                    valor={clienteCadastro.sobrenome}
+                    setValor={(novoSobrenome) =>
+                      setCliente((prev) => ({
+                        ...prev,
+                        sobrenome: novoSobrenome,
+                      }))
+                    }
+                    tamanhoMaximo={30}
+                    requerido={true}
+                  />
+
+                  <h5>*</h5>
+                </div>
               </div>
 
               <div className="campo">
-                <label>CPF:</label>
-                <input
-                  type="text"
-                  placeholder="Digite seu CPF"
-                  value={clienteCadastro.cpf}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, cpf: e.target.value })
-                  }
-                  required
-                />
-                <p>*</p>
+                <div className="input-obrigatorio">
+                  <InputPadrao
+                    labelCampo="CPF:"
+                    placeholder="Digite seu CPF"
+                    valor={clienteCadastro.cpf}
+                    setValor={(novoCPF) =>
+                      setCliente((prev) => ({
+                        ...prev,
+                        cpf: novoCPF,
+                      }))
+                    }
+                    tamanhoMaximo={14}
+                    requerido={true}
+                  />
+                  <h5>*</h5>
+                </div>
               </div>
 
               <div className="campo">
-                <label>E-mail:</label>
-                <input
-                  type="text"
-                  placeholder="Digite seu E-mail"
-                  value={clienteCadastro.email}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, email: e.target.value })
-                  }
-                  required
-                />
-                <p>*</p>
+                <div className="input-obrigatorio">
+                  <InputPadrao
+                    tipoCampo="email"
+                    labelCampo="E-mail:"
+                    placeholder="Digite seu e-mail. Exemplo: seuemail@email.com"
+                    valor={clienteCadastro.email}
+                    setValor={(novoEmail) =>
+                      setCliente((prev) => ({
+                        ...prev,
+                        email: novoEmail,
+                      }))
+                    }
+                    tamanhoMaximo={100}
+                    requerido={true}
+                  />
+
+                  <h5>*</h5>
+                </div>
               </div>
 
               <div className="campo">
-                <label>Senha:</label>
-                <input
-                  type="text"
-                  placeholder="Digite sua senha"
-                  value={clienteCadastro.senha}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, senha: e.target.value })
-                  }
-                  required
-                />
-                <p>*</p>
+                <div className="input-obrigatorio">
+                  <InputSenha
+                    labelCampo="Senha:"
+                    setSenha={setSenhacliente}
+                    placeholder="Digite sua Senha"
+                    habilitarCampoSenhaValido={true}
+                  />
+                  <h5>*</h5>
+                </div>
               </div>
 
               <div className="campo">
-                <label>Celular:</label>
-                <input
-                  type="text"
-                  placeholder="Digite o número de celular"
-                  value={clienteCadastro.celular}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, celular: e.target.value })
-                  }
-                  required
-                />
-                <p>*</p>
+                <div className="input-obrigatorio">
+                  <InputSenha
+                    labelCampo="Confirmar Senha:"
+                    setSenha={setConfirmarSenhacliente}
+                    placeholder="Confirme a senha"
+                  />
+                  <h5>*</h5>
+                </div>
+              </div>
+
+              <div className="campo">
+                <div className="input-obrigatorio">
+                  <InputPadrao
+                    labelCampo="Celular:"
+                    placeholder="Digite o número de celular. Exemplo: (11) 91111-1111"
+                    valor={clienteCadastro.celular}
+                    setValor={(novoCelular) =>
+                      setCliente((prev) => ({
+                        ...prev,
+                        celular: novoCelular,
+                      }))
+                    }
+                    tamanhoMaximo={15}
+                    requerido={true}
+                  />
+
+                  <h5>*</h5>
+                </div>
               </div>
             </div>
 
             <div className="campos-entrada-opcionais">
               <div className="campo">
-                <label>CEP:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  labelCampo="CEP:"
                   placeholder="Digite seu CEP"
-                  value={clienteCadastro.cep}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, cep: e.target.value })
+                  valor={clienteCadastro.cep}
+                  setValor={(novoCEP) =>
+                    setCliente((prev) => ({
+                      ...prev,
+                      cep: novoCEP,
+                    }))
                   }
+                  tamanhoMaximo={9}
+                  requerido={true}
                 />
               </div>
 
               <div className="campo">
-                <div className="campo"></div>
-                <label>Bairro:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  labelCampo="Bairro:"
                   placeholder="Bairro"
-                  value={endereco.bairro}
-                  readOnly
+                  valor={endereco.bairro}
+                  apenasLeitura={true}
                 />
               </div>
 
               <div className="campo">
-                <label>Estado:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  labelCampo="Estado:"
                   placeholder="Estado"
-                  value={endereco.estado}
-                  readOnly
+                  valor={endereco.estado}
+                  apenasLeitura={true}
                 />
               </div>
 
               <div className="campo">
-                <label>Cidade:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  labelCampo="Cidade:"
                   placeholder="Cidade"
-                  value={endereco.cidade}
-                  readOnly
+                  valor={endereco.cidade}
+                  apenasLeitura={true}
                 />
               </div>
 
               <div className="campo">
-                <label>Logradouro:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  labelCampo="Logradouro:"
                   placeholder="Logradouro"
-                  value={endereco.logradouro}
-                  readOnly
+                  valor={endereco.logradouro}
+                  apenasLeitura={true}
                 />
               </div>
 
-              <div className="campo">
-                <label>Número:</label>
-                <input
-                  type="text"
+              <div className="campo campo-obrigatorio">
+                <InputPadrao
+                  tipoCampo="number"
+                  labelCampo="Numero:"
                   placeholder="Digite o número do seu imóvel"
-                  value={clienteCadastro.numero}
-                  onChange={(e) =>
-                    setCliente({ ...clienteCadastro, numero: e.target.value })
+                  valor={clienteCadastro.numero}
+                  setValor={(novoNumero) =>
+                    setCliente((prev) => ({
+                      ...prev,
+                      numero: novoNumero,
+                    }))
                   }
-                  readOnly={bloqueioCampo}
+                  tamanhoMaximo={10}
+                  requerido={true}
+                  apenasLeitura={bloqueioCampo}
                 />
+                {!bloqueioCampo && <h5>*</h5>}
               </div>
 
-              <div className="campo">
-                <label>Complemento:</label>
-                <input
-                  type="text"
+              <div className="campo campo-obrigatorio">
+                <InputPadrao
+                  labelCampo="Complemento"
                   placeholder="Digite o complemento do seu endereço"
-                  value={clienteCadastro.complemento}
-                  onChange={(e) =>
-                    setCliente({
-                      ...clienteCadastro,
-                      complemento: e.target.value,
-                    })
+                  valor={clienteCadastro.complemento}
+                  setValor={(novoComplemento) =>
+                    setCliente((prev) => ({
+                      ...prev,
+                      complemento: novoComplemento,
+                    }))
                   }
-                  readOnly={bloqueioCampo}
+                  tamanhoMaximo={50}
+                  requerido={true}
+                  apenasLeitura={bloqueioCampo}
                 />
+                {!bloqueioCampo && <h5>*</h5>}
               </div>
             </div>
             <span className="info-campos-obrigatorios">
@@ -306,7 +394,10 @@ export default function CadastroCliente() {
 
           <div className="finalizacao-cadastro">
             <div className="icone-voltar">
-              <i class="fa-solid fa-circle-chevron-left" onClick={() => navigate("/login")}></i>
+              <i
+                class="fa-solid fa-circle-chevron-left"
+                onClick={() => navigate("/login")}
+              ></i>
               <p>Voltar</p>
             </div>
             <div className="botao">
