@@ -45,6 +45,8 @@
 [<img src="https://img.shields.io/badge/Unimodeler-black?style=for-the-badge&logoColor=for-the-badge&labelColor=121212" />](https://app.unimodeler.dev/workspace/shareLink/hebleocqsj657)
 </sub>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e33370db-0318-47a8-89d7-17375d023714/deploy-status)](https://app.netlify.com/projects/viana-vinhos/deploys)
+
 ## 
 <h5 align="center">Feito por <a tex href="https://github.com/Fabriciobr5975"> Fabrício de Araújo Santana</a>, <a tex href="https://github.com/geovannanovais"> Geovanna Novais</a>, <a href="https://github.com/MarcusVPRocha">Marcus Vinícius Pereira Rocha</a> e <a href="https://github.com/Ruanlv"> Ruan Lopes Viana</a></h5>
 
