@@ -47,18 +47,20 @@
         display: inline-flex;
         list-style-type: none;
 
-        a {
-          text-decoration: none;
-          color: #f6edd9;
-          font-style: normal;
-          line-height: normal;
-          text-align: center;
-          transition: opacity 0.5s ease;
+        li {
+          a {
+            text-decoration: none;
+            color: #f6edd9;
+            font-style: normal;
+            line-height: normal;
+            text-align: center;
+            transition: opacity 0.5s ease;
+          }
 
           &:hover {
             opacity: 0.9;
             text-shadow: 0rem 0rem 1rem #fff inset;
-            transform: scale(1.05);
+            transform: scale(1.1);
           }
         }
 

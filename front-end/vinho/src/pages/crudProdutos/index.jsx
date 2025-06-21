@@ -9,7 +9,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
-import { tratarNumeroComVirgula, imprimirNumeroComVirgula, base64ParaFile } from "../../utils/conversaoUtil";
+import {
+  tratarNumeroComVirgula,
+  imprimirNumeroComVirgula,
+  base64ParaFile,
+} from "../../utils/conversaoUtil";
 
 export default function CrudProdutos() {
   const cliente = useMemo(() => {
@@ -144,14 +148,19 @@ export default function CrudProdutos() {
   };
 
   async function Excluir() {
-    try {
-      await axios.delete(`http://localhost:5001/vinho/${vinho.id_vinho}`);
-      alert(`O produto (${vinho.nome_vinho}) foi excluido com sucesso! `);
+    const resultado = window.confirm(
+      "Essa operação pode ser bloqueada pelo banco de dados, se quiser continuar aperte no ok!"
+    );
 
-      limparTodosCampos();
-    } catch (error) {
-      alert(error.response?.data?.erro ?? "Erro para excluir o vinho");
-    }
+    if (resultado)
+      try {
+        await axios.delete(`http://localhost:5001/vinho/${vinho.id_vinho}`);
+        alert(`O produto (${vinho.nome_vinho}) foi excluido com sucesso! `);
+
+        limparTodosCampos();
+      } catch (error) {
+        alert(error.response?.data?.erro ?? "Erro para excluir o vinho");
+      }
   }
 
   async function Buscar() {
@@ -171,7 +180,9 @@ export default function CrudProdutos() {
       const imagemUrl = URL.createObjectURL(imagemBusca);
 
       vinhoBuscado.imagem_vinho = imagemBusca;
-      vinhoBuscado.preco_vinho = imprimirNumeroComVirgula(vinhoBuscado.preco_vinho);
+      vinhoBuscado.preco_vinho = imprimirNumeroComVirgula(
+        vinhoBuscado.preco_vinho
+      );
 
       setVinho(vinhoBuscado);
       setImagemCampo(imagemUrl);

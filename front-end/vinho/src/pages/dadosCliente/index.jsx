@@ -57,6 +57,7 @@ export default function PerfilCliente() {
       )
     ) {
       sessionStorage.removeItem("cliente");
+      sessionStorage.removeItem("idPedido");
       navigate("/homepage");
     }
   };
@@ -144,6 +145,7 @@ export default function PerfilCliente() {
                   }))
                 }
                 tamanhoMaximo={300}
+                requerido={true}
               />
             </div>
 
@@ -159,6 +161,7 @@ export default function PerfilCliente() {
                   }))
                 }
                 tamanhoMaximo={30}
+                requerido={true}
               />
             </div>
 
@@ -168,12 +171,6 @@ export default function PerfilCliente() {
                 labelCampo="E-mail:"
                 placeholder="Seu e-mail"
                 valor={dadosCliente.email}
-                setValor={(novoEmail) =>
-                  setDadosCliente((prev) => ({
-                    ...prev,
-                    email: novoEmail,
-                  }))
-                }
                 tamanhoMaximo={100}
                 apenasLeitura={true}
               />
@@ -191,6 +188,7 @@ export default function PerfilCliente() {
                   }))
                 }
                 tamanhoMaximo={15}
+                requerido={true}
               />
             </div>
 
@@ -199,12 +197,6 @@ export default function PerfilCliente() {
                 labelCampo="CPF:"
                 placeholder="Seu CPF"
                 valor={dadosCliente.cpf}
-                setValor={(novoCpf) =>
-                  setDadosCliente((prev) => ({
-                    ...prev,
-                    cpf: novoCpf,
-                  }))
-                }
                 tamanhoMaximo={11}
                 apenasLeitura={true}
               />

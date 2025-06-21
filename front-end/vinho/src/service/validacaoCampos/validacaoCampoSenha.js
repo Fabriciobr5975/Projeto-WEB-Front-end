@@ -6,6 +6,7 @@ export default function validarSenha (senha)  {
       senha.length >= 8 &&
       senha.length <= 64 &&
       regex.test(senha) &&
+      /[a-z]/.test(senha) &&
       /[A-Z]/.test(senha) &&
       /\d/.test(senha) &&
       /[@#$%&*!?]/.test(senha)

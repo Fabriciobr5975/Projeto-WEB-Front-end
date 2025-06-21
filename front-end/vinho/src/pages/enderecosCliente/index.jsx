@@ -4,9 +4,13 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
+import InputPadrao from "../../components/inputPadrao";
+
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
+
+import validarCEP from "../../service/validacaoCampos/validacaoCampoCEP";
 
 export default function EnderecosCliente() {
   const cliente = useMemo(() => {
@@ -249,7 +253,7 @@ export default function EnderecosCliente() {
           </div>
 
           <div className="entrada-dados">
-            <div className="entrada">
+            <div className="entrada entrada-apelido-endereco">
               <label>Apelido do Endereço:</label>
               <input
                 type="text"
@@ -265,116 +269,90 @@ export default function EnderecosCliente() {
             </div>
 
             <div className="entrada">
-              <label>Estado:</label>
-              <input
-                type="text"
-                style={{ background: "#d0d0d0" }}
+              <InputPadrao
+                labelCampo="Estado:"
                 placeholder="Estado"
-                value={enderecoSelecionado.uf}
-                onChange={(e) =>
-                  setEnderecoSelecionado({
-                    ...enderecoSelecionado,
-                    uf: e.target.value,
-                  })
-                }
-                readOnly
+                valor={enderecoSelecionado.uf}
+                apenasLeitura={true}
               />
             </div>
 
             <div className="entrada">
-              <label>Logradouro:</label>
-              <input
-                type="text"
-                style={{ background: "#d0d0d0" }}
+              <InputPadrao
+                labelCampo="Logradouro:"
                 placeholder="Logradouro"
-                value={enderecoSelecionado.logradouro}
-                onChange={(e) =>
-                  setEnderecoSelecionado({
-                    ...enderecoSelecionado,
-                    logradouro: e.target.value,
-                  })
-                }
-                readOnly
+                valor={enderecoSelecionado.logradouro}
+                apenasLeitura={true}
               />
             </div>
 
             <div className="entrada">
-              <label>Cidade:</label>
-              <input
-                type="text"
-                style={{ background: "#d0d0d0" }}
+              <InputPadrao
+                labelCampo="Cidade:"
                 placeholder="Cidade"
-                value={enderecoSelecionado.cidade}
-                onChange={(e) =>
-                  setEnderecoSelecionado({
-                    ...enderecoSelecionado,
-                    cidade: e.target.value,
-                  })
-                }
-                readOnly
+                valor={enderecoSelecionado.cidade}
+                apenasLeitura={true}
               />
             </div>
 
             <div className="entrada">
-              <label>Bairro:</label>
-              <input
-                type="text"
-                style={{ background: "#d0d0d0" }}
+              <InputPadrao
+                labelCampo="Bairro:"
                 placeholder="Bairro"
-                value={enderecoSelecionado.bairro}
-                onChange={(e) =>
-                  setEnderecoSelecionado({
-                    ...enderecoSelecionado,
-                    bairro: e.target.value,
-                  })
-                }
-                readOnly
+                valor={enderecoSelecionado.bairro}
+                apenasLeitura={true}
               />
             </div>
 
             <div className="entrada">
-              <label>Complemento:</label>
-              <input
-                type="text"
-                placeholder="Complemento"
-                value={enderecoSelecionado.complemento}
-                onChange={(e) =>
-                  setEnderecoSelecionado({
-                    ...enderecoSelecionado,
-                    complemento: e.target.value,
-                  })
+              <InputPadrao
+                labelCampo="Complemento:"
+                placeholder="complemento do seu endereço"
+                valor={enderecoSelecionado.complemento}
+                setValor={(novoComplemento) =>
+                  setEnderecoSelecionado((prev) => ({
+                    ...prev,
+                    complemento: novoComplemento,
+                  }))
                 }
+                tamanhoMaximo={50}
+                requerido={true}
               />
             </div>
 
             <div className="ultima-linha">
               <div className="entrada">
-                <label>Número:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  tipoCampo="number"
+                  labelCampo="Número:"
                   placeholder="Número"
-                  value={enderecoSelecionado.numero}
-                  onChange={(e) =>
-                    setEnderecoSelecionado({
-                      ...enderecoSelecionado,
-                      numero: e.target.value,
-                    })
+                  valor={enderecoSelecionado.numero}
+                  setValor={(novoNumero) =>
+                    setEnderecoSelecionado((prev) => ({
+                      ...prev,
+                      numero: novoNumero,
+                    }))
                   }
+                  tamanhoMaximo={10}
+                  requerido={true}
                 />
               </div>
 
               <div className="entrada">
-                <label>CEP:</label>
-                <input
-                  type="text"
+                <InputPadrao
+                  bordaDinamica={enderecoSelecionado.cep.length >= 1}
+                  campoValido={validarCEP(enderecoSelecionado.cep)}
+                  labelCampo="CEP:"
                   placeholder="CEP"
-                  value={enderecoSelecionado.cep}
-                  onChange={(e) =>
-                    setEnderecoSelecionado({
-                      ...enderecoSelecionado,
-                      cep: e.target.value,
-                    })
+                  valor={enderecoSelecionado.cep}
+                  setValor={(novoCEP) =>
+                    setEnderecoSelecionado((prev) => ({
+                      ...prev,
+                      cep: novoCEP,
+                    }))
                   }
+                  tamanhoMaximo={9}
+                  requerido={true}
                 />
               </div>
             </div>

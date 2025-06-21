@@ -3,19 +3,21 @@ import "./index.scss";
 import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import InputPadrao from "../../components/inputPadrao";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import validarEmail from "../../service/validacaoCampos/validacaoCampoEmail";
+
 export default function RecuperacaoSenha() {
-  const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const navigate = useNavigate();
 
-   useEffect(() => {
-      if (sessionStorage.getItem("cliente")) {
-        navigate("/");
-      }
-    }, [navigate]);
+  useEffect(() => {
+    if (sessionStorage.getItem("cliente")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [email, setEmail] = useState("");
   const [codigo, setCodigo] = useState("");
@@ -23,39 +25,47 @@ export default function RecuperacaoSenha() {
   return (
     <div className="pagina-recuperacao-senha pagina">
       <TelaCarregamento tempo={250}>
-        <Header cliente={cliente} />
+        <Header/>
 
         <div className="recuperacao-senha">
           <span>Recuperação de Senha</span>
 
           <div className="campos-entrada">
-            <p>Insira abaixo o e-mail utilizado no cadastro da conta</p>
+            <p className="informacao-campos-entrada">Insira abaixo o e-mail utilizado no cadastro da conta</p>
             <div className="campo-email">
-              <label>E-Mail: </label>
-              <input
-                type="text"
+              <InputPadrao
+                tipoCampo="email"
+                bordaDinamica={email.length >= 1}
+                campoValido={validarEmail(email)}
+                labelCampo="E-mail:"
                 placeholder="Digite o E-Mail para a recuperação da senha"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                valor={email}
+                setValor={setEmail}
+                tamanhoMaximo={100}
+                requerido={true}
               />
               <button className="botao">Enviar</button>
             </div>
             <div className="campo-codigo">
-              <label>Código Recebido Via E-Mail: </label>
+              <label>Digite o Código Recebido Via E-Mail: </label>
               <input
-                type="text"
-                placeholder="Digite o Código recebido pelo E-Mail"
+                type="number"
+                placeholder="Exemplo: 123456"
                 value={codigo}
-                onChange={(e) => setCodigo(e.target.value)}
+                onChange={(e) => setCodigo(e.target.value)
+                }
+                minLength={1}
+                maxLength={6}
+                required
               />
             </div>
           </div>
-          <button className="botao" id="botao-recuperar-senha">
+          <button className="botao" id="botao-recuperar-senha" onClick={() => navigate("/alterarsenha")}>
             Recuperar Senha
           </button>
         </div>
 
-        <Footer cliente={cliente} />
+        <Footer/>
       </TelaCarregamento>
     </div>
   );

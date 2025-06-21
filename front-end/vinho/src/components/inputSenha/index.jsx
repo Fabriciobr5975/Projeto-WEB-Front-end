@@ -11,7 +11,7 @@ export default function InputSenha(props) {
   const mostrarSenhaCampo = () => {
     setMostrarSenha(!mostrarSenha);
   };
-  
+
   const alterarSenha = (e) => {
     const valor = e.target.value;
     setSenhaValida(validarSenha(valor));
@@ -35,6 +35,7 @@ export default function InputSenha(props) {
         <div className="informacao-senha-valida">
           <h3>A senha Precisa:</h3>
           <p>Ter de 8 até 64 caracteres</p>
+          <p>Ter pelo menos uma letra minúscula</p>
           <p>Ter pelo menos uma letra maiúscula</p>
           <p>Ter pelo menos um número</p>
           <p>
@@ -46,7 +47,11 @@ export default function InputSenha(props) {
       <div
         className="input-senha"
         style={
-          senhaValida ? { borderColor: "#1BAC01" } : { borderColor: "#FD0B0B" }
+          props.bordaDinamica ?? true
+            ? senhaValida
+              ? { borderColor: "#1BAC01" }
+              : { borderColor: "#FD0B0B" }
+            : { borderColor: "#000" }
         }
       >
         <input

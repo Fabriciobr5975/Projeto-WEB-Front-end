@@ -1,0 +1,130 @@
+.modal-alterar-produtos {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  background-color: #fff;
+  border: 0.1rem solid #000;
+  border-radius: 0.75rem;
+  overflow: hidden;
+
+  .conteudo-modal {
+    max-height: 90vh;
+    width: 55vw;
+    overflow-y: auto;
+
+    .cabecalho-modal-alteracao-produtos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+
+      h2 {
+        font: 700 1.35rem "poppins";
+      }
+
+      i {
+        font-size: 2rem;
+        cursor: pointer;
+        transition: opacity 0.5s ease;
+
+        &:hover {
+          opacity: 0.95;
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .conteudo-alteracao-produtos {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.25rem 0.5rem;
+      align-items: center;
+      font: 400 1.05rem / normal "poppins";
+
+      .entrada-dados {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 95%;
+
+        label {
+          font: 500 1.15rem "poppins";
+          text-align: start;
+        }
+
+        select {
+          width: 100%;
+          border: 1px solid #00000080;
+          background: #fff;
+          height: 2.5rem;
+          padding: 0.6rem;
+          font: 400 0.9rem "Poppins";
+          text-align: start !important;
+          color: #000;
+        }
+
+        select {
+          border-radius: 0rem;
+        }
+      }
+
+      .descricao {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        grid-row: span 6;
+        justify-items: stretch;
+
+        .area-descricao {
+          font: 400 0.9rem "poppins";
+          width: 100%;
+          border-radius: 0.9375rem;
+          border: 1px solid #00000080;
+          background: #fff;
+          padding: 1rem 1rem;
+          height: 100%;
+          resize: none;
+        }
+      }
+
+      .formatacao-select {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .botoes-modal-alterar-produto {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding-top: 1.5rem;
+
+        button {
+          font: inherit;
+          background-color: #a4596d;
+          display: inline-flex;
+          width: 13rem;
+          height: 3rem;
+          border-radius: 0.5rem;
+          border: none;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          cursor: pointer;
+          transition: opacity 0.5s ease;
+
+          &:hover {
+            opacity: 0.9;
+            box-shadow: 0rem 0rem 0.3rem #b84363 inset;
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,13 +4,13 @@ import TelaCarregamento from "../../components/telaCarregamento";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import AbaNavegacao from "../../components/abaNavegacao";
+import ModalAlterarProduto from "../../components/modalAlterarProduto";
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../service/administrador/impedirAcessoTelasAdministrador";
 import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
-
 
 export default function ListagemProdutos() {
   const cliente = useMemo(() => {
@@ -24,6 +24,8 @@ export default function ListagemProdutos() {
   }, [cliente, navigate]);
 
   const [listaVinhos, setListaVinhos] = useState([]);
+  const [vinhoSelecionado, setVinhoSelecionado] = useState(0);
+  const [abrirModal, setAbrirModal] = useState(false);
   const [atualizarLista, setAtualizarLista] = useState(false);
   const [nome, setNome] = useState("");
 
@@ -61,8 +63,26 @@ export default function ListagemProdutos() {
     }
   }
 
+  const chamarModal = (index) => {
+    setAbrirModal(true);
+    setVinhoSelecionado(index);
+    document.body.classList.add("tela-alterar-produto-modal");
+  };
+
+  const fecharModal = () => {
+    setAbrirModal(false);
+    document.body.classList.remove("tela-alterar-produto-modal");
+  };
+
   return (
     <main className="pagina-listagem-produtos pagina">
+      {abrirModal && <div className="bloqueio-alterar-produto-modal"></div>}
+      {abrirModal && (
+        <ModalAlterarProduto
+          vinho={vinhoSelecionado}
+          fecharModal={fecharModal}
+        />
+      )}
       <TelaCarregamento tempo={250}>
         <Header cliente={cliente} />
         <section className="banner-abas">
@@ -79,17 +99,12 @@ export default function ListagemProdutos() {
               abaAtual={true}
               navegacao="/listagemprodutos"
             />
-            <AbaNavegacao
-              nome="Modificar Produtos"
-              navegacao="/crudprodutos" />
+            <AbaNavegacao nome="Modificar Produtos" navegacao="/crudprodutos" />
             <AbaNavegacao
               nome="Modificar Vinicola/Pais"
               navegacao="/crudvinicolapais"
             />
-            <AbaNavegacao
-              nome="Lista de Pedidos"
-              navegacao="/listapedidos"
-            />
+            <AbaNavegacao nome="Lista de Pedidos" navegacao="/listapedidos" />
           </div>
         </section>
         <section className="conteudo">
@@ -121,6 +136,7 @@ export default function ListagemProdutos() {
               <col className="valor" />
               <col className="status" />
               <col className="estoque" />
+              <col className="icone-editar-produto" />
             </colgroup>
             <thead>
               <tr>
@@ -131,6 +147,7 @@ export default function ListagemProdutos() {
                 <th>Valor Unitário</th>
                 <th>Status Estoque</th>
                 <th>Quantidade</th>
+                <th>Editar</th>
               </tr>
             </thead>
             <tbody>
@@ -139,10 +156,7 @@ export default function ListagemProdutos() {
                   <td>{item.id_vinho}</td>
                   <td>
                     <div className="primeira-coluna">
-                      <img
-                        src={item.imagem_vinho}
-                        alt="imagem vinho"
-                      />
+                      <img src={item.imagem_vinho} alt="imagem vinho" />
                     </div>
                   </td>
                   <td>{item.vinho}</td>
@@ -155,6 +169,9 @@ export default function ListagemProdutos() {
                   </td>
                   <td>{item.status_estoque}</td>
                   <td>{item.quantidade_estoque}</td>
+                  <td>
+                    <i class="fa-solid fa-pen-to-square" onClick={() => chamarModal(item.id_vinho)}></i>
+                  </td>
                 </tr>
               ))}
             </tbody>

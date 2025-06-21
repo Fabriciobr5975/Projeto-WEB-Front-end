@@ -12,7 +12,9 @@ import { useNavigate } from "react-router-dom";
 
 import validarSenha from "../../service/validacaoCampos/validacaoCampoSenha";
 import validarEmail from "../../service/validacaoCampos/validacaoCampoEmail";
+import validarCPF from "../../service/validacaoCampos/validacaoCampoCPF";
 import validarCelular from "../../service/validacaoCampos/validacaoCampoCelular";
+import validarCEP from "../../service/validacaoCampos/validacaoCampoCEP";
 
 export default function CadastroCliente() {
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
@@ -39,7 +41,6 @@ export default function CadastroCliente() {
     apelido_endereco: "",
   });
 
-  const [senhaCliente, setSenhacliente] = useState("");
   const [confirmarSenhaCliente, setConfirmarSenhacliente] = useState("");
 
   const [endereco, setEndereco] = useState({
@@ -102,6 +103,12 @@ export default function CadastroCliente() {
       limparEndereco();
       setBloqueioCampo(true);
     }
+
+     if (clienteCadastro.cep === "") {
+      limparEndereco();
+      setBloqueioCampo(true);
+    }
+
   }, [clienteCadastro.cep, pegarEnderecoViaCep, limparEndereco]);
 
   const colocarApelidoEnderecoPadrao = () => {
@@ -115,16 +122,16 @@ export default function CadastroCliente() {
   };
 
   const validarCampos = () => {
-    if (!senhaCliente) {
+    if (!clienteCadastro.senha) {
       alert("Digite a senha!");
       return false;
     } else if (!confirmarSenhaCliente) {
       alert("Confirme a senha!");
       return false;
-    } else if (!validarSenha(senhaCliente)) {
+    } else if (!validarSenha(clienteCadastro.senha)) {
       alert("A senha passada não atende aos critérios para a criação da senha");
       return false;
-    } else if (senhaCliente !== confirmarSenhaCliente) {
+    } else if (clienteCadastro.senha !== confirmarSenhaCliente) {
       alert("As senha não estão iguais!");
       return false;
     }
@@ -149,8 +156,6 @@ export default function CadastroCliente() {
       if (!validarCampos()) {
         return;
       }
-
-      clienteCadastro.senha = senhaCliente;
 
       const url = `http://localhost:5001/cliente`;
       const resp = await axios.post(url, clienteCadastro);
@@ -216,6 +221,8 @@ export default function CadastroCliente() {
               <div className="campo">
                 <div className="input-obrigatorio">
                   <InputPadrao
+                    bordaDinamica={clienteCadastro.cpf.length >= 1}
+                    campoValido={validarCPF(clienteCadastro.cpf)}
                     labelCampo="CPF:"
                     placeholder="Digite seu CPF"
                     valor={clienteCadastro.cpf}
@@ -236,6 +243,8 @@ export default function CadastroCliente() {
                 <div className="input-obrigatorio">
                   <InputPadrao
                     tipoCampo="email"
+                    bordaDinamica={clienteCadastro.email.length >= 1}
+                    campoValido={validarEmail(clienteCadastro.email)}
                     labelCampo="E-mail:"
                     placeholder="Digite seu e-mail. Exemplo: seuemail@email.com"
                     valor={clienteCadastro.email}
@@ -256,8 +265,14 @@ export default function CadastroCliente() {
               <div className="campo">
                 <div className="input-obrigatorio">
                   <InputSenha
+                    bordaDinamica={clienteCadastro.senha.length >= 1}
                     labelCampo="Senha:"
-                    setSenha={setSenhacliente}
+                    setSenha={(novaSenha) =>
+                      setCliente((prev) => ({
+                        ...prev,
+                        senha: novaSenha,
+                      }))
+                    }
                     placeholder="Digite sua Senha"
                     habilitarCampoSenhaValido={true}
                   />
@@ -268,6 +283,7 @@ export default function CadastroCliente() {
               <div className="campo">
                 <div className="input-obrigatorio">
                   <InputSenha
+                    bordaDinamica={confirmarSenhaCliente.length >= 1}
                     labelCampo="Confirmar Senha:"
                     setSenha={setConfirmarSenhacliente}
                     placeholder="Confirme a senha"
@@ -279,6 +295,8 @@ export default function CadastroCliente() {
               <div className="campo">
                 <div className="input-obrigatorio">
                   <InputPadrao
+                    bordaDinamica={clienteCadastro.celular.length >= 1}
+                    campoValido={validarCelular(clienteCadastro.celular)}
                     labelCampo="Celular:"
                     placeholder="Digite o número de celular. Exemplo: (11) 91111-1111"
                     valor={clienteCadastro.celular}
@@ -300,6 +318,8 @@ export default function CadastroCliente() {
             <div className="campos-entrada-opcionais">
               <div className="campo">
                 <InputPadrao
+                  bordaDinamica={clienteCadastro.cep.length >= 1}
+                  campoValido={validarCEP(clienteCadastro.cep)}
                   labelCampo="CEP:"
                   placeholder="Digite seu CEP"
                   valor={clienteCadastro.cep}
@@ -371,7 +391,7 @@ export default function CadastroCliente() {
 
               <div className="campo campo-obrigatorio">
                 <InputPadrao
-                  labelCampo="Complemento"
+                  labelCampo="Complemento:"
                   placeholder="Digite o complemento do seu endereço"
                   valor={clienteCadastro.complemento}
                   setValor={(novoComplemento) =>

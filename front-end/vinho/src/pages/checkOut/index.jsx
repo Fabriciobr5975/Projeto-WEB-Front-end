@@ -3,12 +3,15 @@ import "./index.scss";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import TelaCarregamento from "../../components/telaCarregamento";
+import InputPadrao from "../../components/inputPadrao";
 
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
+
 import { calcularValorTotalCarrinho } from "../../service/calculosCarrinho/calculosCarrinhoCliente";
 import { imprimirNumeroComVirgula } from "../../utils/conversaoUtil";
+import validarCEP from "../../service/validacaoCampos/validacaoCampoCEP";
 
 export default function CheckOut() {
   const cliente = useMemo(() => {
@@ -243,16 +246,19 @@ export default function CheckOut() {
 
   const finalizarPedido = async () => {
     try {
+      if (!tipoFormaPagamento) {
+        alert("Selecione um tipo de pagamento!");
+        return;
+      }
+
       if (sessionStorage.getItem("cliente")) {
         const pedido = {
           cliente: cliente.id_cliente,
           endereco_entrega: enderecoSelecionado.id_endereco,
           valor_total: calcularValorTotalCarrinho(listaItensCarrinho),
           status_pedido: "PENDENTE",
-          data_pedido: new Date().toISOString().split('T')[0],
+          data_pedido: new Date().toISOString().split("T")[0],
         };
-
-        console.log(pedido);
 
         const url = `http://localhost:5001/pedido`;
         const resp = await axios.post(url, pedido);
@@ -261,7 +267,10 @@ export default function CheckOut() {
 
         alert(mensagem);
 
-        sessionStorage.setItem("idPedido", JSON.stringify(mensagem.replaceAll(/\D/g, '')));
+        sessionStorage.setItem(
+          "idPedido",
+          JSON.stringify(Number(mensagem.replaceAll(/\D/g, "")))
+        );
         navigate("/confirmacaopedido");
       }
     } catch (error) {
@@ -306,7 +315,9 @@ export default function CheckOut() {
                         <span className="preco">
                           <span className="cifrao">R$</span>
                           {imprimirNumeroComVirgula(
-                            Number(item.preco_vinho * item.quantidade).toFixed(2)
+                            Number(item.preco_vinho * item.quantidade).toFixed(
+                              2
+                            )
                           )}
                         </span>
                       </div>
@@ -365,160 +376,137 @@ export default function CheckOut() {
               </div>
               <div className="container-conteudo-endereco">
                 <div className="campo">
-                  <span> Apelido do Endereço: </span>
-                  <input
-                    type="text"
+                  <InputPadrao
+                    labelCampo="Apelido do Endereço:"
                     placeholder="Digite o apelido do endereço"
-                    value={enderecoSelecionado.apelido_endereco}
-                    onChange={(e) =>
-                      setEnderecoSelecionado({
-                        ...enderecoSelecionado,
-                        apelido_endereco: e.target.value,
-                      })
+                    valor={enderecoSelecionado.apelido_endereco}
+                    setValor={(novoApelido) =>
+                      setEnderecoSelecionado((prev) => ({
+                        ...prev,
+                        apelido_endereco: novoApelido,
+                      }))
                     }
+                    tamanhoMaximo={100}
+                    requerido={true}
                   />
                 </div>
                 <div className="campo-duplo1">
                   <div className="campo">
-                    <span> Primeiro Nome: </span>
-                    <input
-                      type="text"
-                      placeholder="Primeiro nome"
-                      value={cliente.primeiro_nome}
-                      readOnly
+                    <InputPadrao
+                      labelCampo="Primeiro Nome:"
+                      placeholder="Primeiro"
+                      valor={enderecoSelecionado.primeiro_nome}
+                      apenasLeitura={true}
                     />
                   </div>
                   <div className="campo">
-                    <span> Último Nome: </span>
-                    <input
-                      type="text"
+                    <InputPadrao
+                      labelCampo="Último Nome:"
                       placeholder="Sobrenome"
-                      value={cliente.sobrenome}
-                      readOnly
+                      valor={enderecoSelecionado.sobrenome}
+                      apenasLeitura={true}
                     />
                   </div>
                 </div>
                 <div className="campo-duplo2">
                   <div className="campo">
-                    <span> Estado: </span>
-                    <input
-                      type="text"
+                    <InputPadrao
+                      labelCampo="Estado:"
                       placeholder="Estado"
-                      value={enderecoSelecionado.uf}
-                      onChange={(e) =>
-                        setEnderecoSelecionado({
-                          ...enderecoSelecionado,
-                          uf: e.target.value,
-                        })
-                      }
-                      readOnly
+                      valor={enderecoSelecionado.estado}
+                      apenasLeitura={true}
                     />
                   </div>
                   <div className="campo">
-                    <span> Cidade: </span>
-                    <input
-                      type="text"
+                    <InputPadrao
+                      labelCampo="Cidade:"
                       placeholder="Cidade"
-                      value={enderecoSelecionado.cidade}
-                      onChange={(e) =>
-                        setEnderecoSelecionado({
-                          ...enderecoSelecionado,
-                          cidade: e.target.value,
-                        })
-                      }
-                      readOnly
+                      valor={enderecoSelecionado.cidade}
+                      apenasLeitura={true}
                     />
                   </div>
                 </div>
                 <div className="campo">
-                  <span> Bairro: </span>
-                  <input
-                    type="text"
+                  <InputPadrao
+                    labelCampo="Bairro:"
                     placeholder="Bairro"
-                    value={enderecoSelecionado.bairro}
-                    onChange={(e) =>
-                      setEnderecoSelecionado({
-                        ...enderecoSelecionado,
-                        bairro: e.target.value,
-                      })
-                    }
-                    readOnly
+                    valor={enderecoSelecionado.bairro}
+                    apenasLeitura={true}
                   />
                 </div>
                 <div className="campo">
-                  <span> Logradouro: </span>
-                  <input
-                    type="text"
+                  <InputPadrao
+                    labelCampo="Logradouro:"
                     placeholder="Logradouro"
-                    value={enderecoSelecionado.logradouro}
-                    onChange={(e) =>
-                      setEnderecoSelecionado({
-                        ...enderecoSelecionado,
-                        logradouro: e.target.value,
-                      })
-                    }
+                    valor={enderecoSelecionado.logradouro}
+                    apenasLeitura={true}
                   />
                 </div>
                 <div className="campo">
-                  <span> Complemento: </span>
-                  <input
-                    type="text"
+                  <InputPadrao
+                    labelCampo="Complemento:"
                     placeholder="Complemento"
-                    value={enderecoSelecionado.complemento}
-                    onChange={(e) =>
-                      setEnderecoSelecionado({
-                        ...enderecoSelecionado,
-                        complemento: e.target.value,
-                      })
+                    valor={enderecoSelecionado.complemento}
+                    setValor={(novoComplemento) =>
+                      setEnderecoSelecionado((prev) => ({
+                        ...prev,
+                        complemento: novoComplemento,
+                      }))
                     }
+                    tamanhoMaximo={50}
+                    requerido={true}
                   />
                 </div>
                 <div className="campo-duplo2">
                   <div className="campo">
-                    <span> Número: </span>
-                    <input
-                      type="text"
+                    <InputPadrao
+                      tipoCampo="number"
+                      labelCampo="Numero:"
                       placeholder="Número"
-                      value={enderecoSelecionado.numero}
-                      onChange={(e) =>
-                        setEnderecoSelecionado({
-                          ...enderecoSelecionado,
-                          numero: e.target.value,
-                        })
+                      valor={enderecoSelecionado.numero}
+                      setValor={(novoNumero) =>
+                        setEnderecoSelecionado((prev) => ({
+                          ...prev,
+                          numero: novoNumero,
+                        }))
                       }
+                      tamanhoMaximo={10}
+                      requerido={true}
                     />
                   </div>
                   <div className="campo">
-                    <span> CEP: </span>
-                    <input
-                      type="text"
+                    <InputPadrao
+                      bordaDinamica={enderecoSelecionado.cep.length >= 1}
+                      campoValido={validarCEP(enderecoSelecionado.cep)}
+                      labelCampo="CEP:"
                       placeholder="CEP"
-                      value={enderecoSelecionado.cep}
-                      onChange={(e) =>
-                        setEnderecoSelecionado({
-                          ...enderecoSelecionado,
-                          cep: e.target.value,
-                        })
+                      valor={enderecoSelecionado.cep}
+                      setValor={(novoCEP) =>
+                        setEnderecoSelecionado((prev) => ({
+                          ...prev,
+                          cep: novoCEP,
+                        }))
                       }
+                      tamanhoMaximo={9}
+                      requerido={true}
                     />
                   </div>
                 </div>
                 <div className="campo">
-                  <span> E-mail: </span>
-                  <input
-                    type="text"
+                  <InputPadrao
+                    tipoCampo="email"
+                    labelCampo="Email:"
                     placeholder="E-mail"
-                    value={cliente.email}
-                    readOnly
+                    valor={cliente.email}
+                    apenasLeitura={true}
                   />
                 </div>
                 <div className="campo">
-                  <span> Número para Contato: </span>
-                  <input
-                    type="text"
+                  <InputPadrao
+                    labelCampo="Número para Contato:"
                     placeholder="Celular"
-                    value={cliente.celular}
-                    readOnly
+                    valor={cliente.celular}
+                    apenasLeitura={true}
                   />
                 </div>
 

@@ -17,8 +17,6 @@ export default function ConfirmacaoPedido() {
   
   const cliente = JSON.parse(sessionStorage.getItem("cliente")) || {};
   const idPedido = sessionStorage.getItem("idPedido");
-  
-  
 
   return (
     <div className="pagina-confirmacao-pedido pagina">

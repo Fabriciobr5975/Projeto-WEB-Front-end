@@ -3,6 +3,8 @@ import "./index.scss";
 
 import { Link } from "react-router-dom";
 
+import validarEmail from "../../service/validacaoCampos/validacaoCampoEmail";
+
 export default function Footer(props) {
   const [clienteEspecial] = useState(props.cliente?.acesso);
 
@@ -17,6 +19,9 @@ export default function Footer(props) {
   const enviarEmailUsuario = () => {
     if (!emailUsuario) {
       alert("Por favor, digite o seu E-mail!");
+      return;
+    } else if (!validarEmail(emailUsuario)) {
+      alert("Informe um e-mail válido");
       return;
     }
     alert(`Obrigado pela inscrição, você receberá um E-mail em breve!`);

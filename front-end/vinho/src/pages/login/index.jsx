@@ -90,6 +90,8 @@ export default function Login() {
               <div className="campo-email">
                 <InputPadrao
                   tipoCampo="email"
+                  bordaDinamica={email.length >= 1}
+                  campoValido={validarEmail(email)}
                   labelCampo="E-mail:"
                   placeholder="Digite seu e-mail"
                   valor={email}
@@ -100,6 +102,7 @@ export default function Login() {
               </div>
               <div className="campo-senha" onKeyUp={teclaEnterApertada}>
                 <InputSenha
+                  bordaDinamica={senha.length >= 1}
                   labelCampo="Senha:"
                   setSenha={setSenha}
                   placeholder="Digite sua senha"

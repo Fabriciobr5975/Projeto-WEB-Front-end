@@ -1,4 +1,4 @@
-.pagina-recuperacao-senha {
+.pagina-alterar-senha-cliente {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -8,7 +8,7 @@
   line-height: normal;
   flex-grow: 1;
 
-  .recuperacao-senha {
+  .alteracao-senha {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,37 +56,18 @@
       justify-content: center;
       gap: 2.5rem;
 
-      p {
+      .informacao-campo-entrada {
         text-align: center;
         font: 400 1.3rem "Poppins";
         font-style: normal;
         line-height: normal;
       }
 
-      .campo-email {
+      .campo-senha {
         display: flex;
         align-items: end;
         justify-content: center;
         gap: 1.25rem;
-        font: 400 1.15rem "poppins";
-
-        input {
-          border: none;
-        }
-
-        button {
-          width: 25%;
-          font: inherit;
-          height: 2;
-        }
-      }
-
-      .campo-codigo {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        gap: 1rem;
-        justify-content: center;
-        align-items: center;
       }
 
       label {
@@ -94,27 +75,6 @@
         justify-content: center;
         align-items: center;
         font: 400 1.2rem "Poppins";
-      }
-
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      input[type="number"] {
-        -moz-appearance: textfield;
-        appearance: none;
-      }
-
-      input[type="number"] {
-        flex: 1;
-        width: 100%;
-        height: 2.5rem;
-        border-radius: 0.75rem;
-        border: 0.0625rem solid #000;
-        color: #000;
-        font: 400 1rem "poppins";
       }
     }
 
