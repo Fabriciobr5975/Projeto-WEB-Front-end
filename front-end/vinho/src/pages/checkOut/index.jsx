@@ -395,7 +395,7 @@ export default function CheckOut() {
                     <InputPadrao
                       labelCampo="Primeiro Nome:"
                       placeholder="Primeiro"
-                      valor={enderecoSelecionado.primeiro_nome}
+                      valor={cliente.primeiro_nome}
                       apenasLeitura={true}
                     />
                   </div>
@@ -403,7 +403,7 @@ export default function CheckOut() {
                     <InputPadrao
                       labelCampo="Último Nome:"
                       placeholder="Sobrenome"
-                      valor={enderecoSelecionado.sobrenome}
+                      valor={cliente.sobrenome}
                       apenasLeitura={true}
                     />
                   </div>
