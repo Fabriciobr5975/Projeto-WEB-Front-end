@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import "./index.scss";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Vinho(props) {
   const navigate = useNavigate();
@@ -18,7 +19,12 @@ export default function Vinho(props) {
         <span>{props.vinhos.classificacao_vinho ?? "Classificação"}</span>
         <p className="preco">R$ {props.vinhos.preco_vinho ?? "0.0"}</p>
         <div className="botao">
+          {props.vinhos.quantidade_disponivel >= 1 && 
           <button className="btn-reserva-vinho" onClick={() => navigate(`/vinho/${props.vinhos.id_vinho}`)}>Reservar</button>
+          }
+          {props.vinhos.quantidade_disponivel <= 0 &&
+            <span className="vinho-indisponivel">Vinho indisponível no momento</span>
+          }
         </div>
       </div>
     </section>
