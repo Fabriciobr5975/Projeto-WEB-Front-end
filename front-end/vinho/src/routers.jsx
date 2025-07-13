@@ -1,29 +1,38 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import HomePage from "./pages/homepage";
-import NotFound from "./pages/notfound";
-import CrudProdutos from "./pages/crudProdutos";
-import ListagemProdutos from "./pages/listagemProdutos";
-import AnaliseClientes from "./pages/analiseCliente";
-import ListaPedidosClientes from "./pages/listaPedidosClientes";
-import Login from "./pages/login";
-import SobreNos from "./pages/sobreNos";
-import RecuperacaoSenha from "./pages/recuperacaoSenha";
-import RecuperarSenha from "./pages/recuperarSenha";
-import CadastroCliente from "./pages/cadastroCliente";
-import PerfilCliente from "./pages/dadosCliente";
-import EnderecosCliente from "./pages/enderecosCliente";
-import PedidosCliente from "./pages/pedidos";
-import CarrinhoCliente from "./pages/carrinho";
-import ConfirmacaoPedido from "./pages/confirmacaoPedido";
-import Produtos from "./pages/produto";
-import Vinho from "./pages/vinho";
-import CheckOut from "./pages/checkOut";
-import Vinicola from "./pages/vinicola";
-import Privacidade from "./pages/privacidade";
-import PerguntasFrequentes from "./pages/perguntasFrequentes";
-import PoliticaDevolucao from "./pages/politicaDevolucao";
-import CrudVinicolaPais from "./pages/crudVinicolaPais";
+// Telas dos Administradores
+import CrudProdutos from "./pages/telasAdministrador/crudProdutos";
+import ListagemProdutos from "./pages/telasAdministrador/listagemProdutos";
+import AnaliseClientes from "./pages/telasAdministrador/analiseCliente";
+import ListaPedidosClientes from "./pages/telasAdministrador/listaPedidosClientes";
+import CrudVinicolaPais from "./pages/telasAdministrador/crudVinicolaPais";
+
+// Telas Principais 
+import HomePage from "./pages/telasUsuarios/telasPrincipais/homepage";
+import NotFound from "./pages/telasUsuarios/telasPrincipais/notfound";
+import Login from "./pages/telasUsuarios/telasPrincipais/login";
+import CadastroCliente from "./pages/telasUsuarios/telasPrincipais/cadastroCliente";
+import Produtos from "./pages/telasUsuarios/telasPrincipais/produto";
+import Vinho from "./pages/telasUsuarios/telasPrincipais/vinho";
+
+// Telas Informativas
+import SobreNos from "./pages/telasUsuarios/telasInformacoes/sobreNos";
+import ConfirmacaoPedido from "./pages/telasUsuarios/telasInformacoes/confirmacaoPedido";
+import Vinicola from "./pages/telasUsuarios/telasInformacoes/vinicola";
+import Privacidade from "./pages/telasUsuarios/telasInformacoes/privacidade";
+import PerguntasFrequentes from "./pages/telasUsuarios/telasInformacoes/perguntasFrequentes";
+import PoliticaDevolucao from "./pages/telasUsuarios/telasInformacoes/perguntasFrequentes";
+
+// Telas de Recuperação de Senha
+import RecuperacaoSenha from "./pages/telasUsuarios/telasRecuperacaoSenha/recuperacaoSenha";
+import RecuperarSenha from "./pages/telasUsuarios/telasRecuperacaoSenha/recuperarSenha";
+
+// Telas de Manipulação dos Clientes
+import PerfilCliente from "./pages/telasUsuarios/telasCliente/dadosCliente";
+import EnderecosCliente from "./pages/telasUsuarios/telasCliente/enderecosCliente";
+import PedidosCliente from "./pages/telasUsuarios/telasCliente/pedidos";
+import CarrinhoCliente from "./pages/telasUsuarios/telasCliente/carrinho";
+import CheckOut from "./pages/telasUsuarios/telasCliente/checkOut";
 
 export default function Navegacao() {
   return (
