@@ -1,3 +1,4 @@
+/* ------ DEPRECIADO, NÃO TEM MAIS UTILIDADE ------ */
 
 export function calcularValorTotalCarrinho(itensCarrinho) {
     const precoTotal = itensCarrinho.reduce((valor, item) => {
@@ -6,7 +7,6 @@ export function calcularValorTotalCarrinho(itensCarrinho) {
 
     return precoTotal;
 }
-
 
 export function calcularTicketMedioCliente(valorTotal, quantidade) {
     return valorTotal / quantidade;

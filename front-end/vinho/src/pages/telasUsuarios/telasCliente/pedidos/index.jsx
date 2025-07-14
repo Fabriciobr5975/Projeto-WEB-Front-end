@@ -20,6 +20,7 @@ export default function PedidosCliente() {
     }
   }, [navigate]);
 
+  const [filtroBusca, setFiltroBusca] = useState("todos");
   const [cpfCliente] = useState(cliente.cpf);
   const [listaPedidos, setListaPedidos] = useState([]);
   const [pedidoSelecionado, setPedidoSelecionado] = useState([]);
@@ -50,6 +51,36 @@ export default function PedidosCliente() {
       listarPedidos();
     }
   }, [cpfCliente, listarPedidos]);
+
+  const listarPedidosPorFiltro = useCallback(
+    async (filtro) => {
+      try {
+        const url = `http://localhost:5001/pedido/busca/data?cliente=${cpfCliente}&filtro=${filtro}`;
+        const resp = await axios.get(url);
+        const pedidos = resp.data;
+
+        setListaPedidos(Object.values(pedidos));
+      } catch (error) {
+        if (
+          error.response?.data?.erro ===
+          "Não foram encontrado registros para o pedido"
+        ) {
+          return;
+        }
+
+        alert(error.response?.data?.erro);
+      }
+    },
+    [cpfCliente]
+  );
+
+  useEffect(() => {
+    if (filtroBusca !== "todos") {
+      listarPedidosPorFiltro(filtroBusca);
+    } else {
+      listarPedidos();
+    }
+  }, [filtroBusca, listarPedidosPorFiltro, listarPedidos]);
 
   const chamarModal = (pedido) => {
     setAbrirModal(true);
@@ -110,11 +141,16 @@ export default function PedidosCliente() {
           <section className="pedidos-cliente">
             <div className="filtragem-pedidos">
               <span>Período:</span>
-              <select name="filtragem">
-                <option value="todos">Mostrar todos os pedidos</option>
-                <option>Últimos 12 meses</option>
-                <option>Último mês</option>
-                <option>última Compra</option>
+              <select
+                name="filtragem"
+                value={filtroBusca}
+                onChange={(e) => setFiltroBusca(e.target.value)}
+              >
+                <option value={"todos"}>Mostrar todos os pedidos</option>
+                <option value={"ultimos-12-meses"}>Últimos 12 meses</option>
+                <option value={"ultimos-3-meses"}>Últimos 3 meses</option>
+                <option value={"ultimo-mes"}>Último mês</option>
+                <option value={"ultima-compra"} >Última Compra</option>
               </select>
             </div>
 

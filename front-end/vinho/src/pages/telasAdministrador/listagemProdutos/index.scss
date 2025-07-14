@@ -95,7 +95,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1.05rem;
 
         span {
           font: 500 1rem "Poppins";
@@ -103,6 +103,7 @@
 
         i {
           transition: opacity 0.5s ease;
+          font-size: 1.55rem;
           cursor: pointer;
 
           &:hover {

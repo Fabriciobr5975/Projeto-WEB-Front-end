@@ -12,23 +12,7 @@ import {
 
 export default function ModalAlterarProduto(props) {
   const [idVinho] = useState(props.vinho); 
-
-  const [vinho, setVinho] = useState({
-    id_vinho: 0,
-    nome_vinho: "",
-    classificacao_vinho: "",
-    vinicola: "",
-    uva_vinho: "",
-    teor_alcolico: "",
-    volume_vinho: "",
-    temperatura_servir: "",
-    pais: "",
-    safra_vinho: "",
-    preco_vinho: 0.0,
-    descricao: "",
-    quantidade_disponivel: 0,
-    status_estoque: "",
-  });
+  const [vinho, setVinho] = useState({});
 
   const buscar = useCallback(async () => {
     try {

@@ -162,8 +162,8 @@ export default function ListaPedidosClientes() {
                 <tr>
                   <th>Nº do Pedido</th>
                   <th>Quantidade</th>
-                  <th>Nome do Vinho</th>
-                  <th>Valor Total do Pedido</th>
+                  <th>Vinhos Comprados</th>
+                  <th>Valor Total (R$)</th>
                   <th>Contato</th>
                   <th>Status do Pedido</th>
                   <th>Data/Mês/Ano</th>

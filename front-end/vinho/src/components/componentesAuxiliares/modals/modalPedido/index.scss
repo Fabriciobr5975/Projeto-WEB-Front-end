@@ -1,4 +1,27 @@
+@keyframes aparecerModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .modal-informacoes-pedido {
+  animation: slideUp .55s ease forwards;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -9,10 +32,12 @@
   border: 0.1rem solid #000;
   border-radius: 0.75rem;
   overflow: hidden;
+  overflow-y: auto;
 
   .conteudo-modal {
     max-height: 80vh;
     width: 45vw;
+    animation: aparecerModal 1s ease normal;
     overflow-y: auto;
 
     .cabecalho-modal-informacao-pedido {
@@ -103,7 +128,8 @@
         }
       }
 
-      .informacoes-cliente-pedido, .informacoes-endereco-pedido {
+      .informacoes-cliente-pedido,
+      .informacoes-endereco-pedido {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -114,7 +140,8 @@
           font: 700 1.25rem "poppins";
         }
 
-        .pedido-cliente, .endereco-entrega-pedido {
+        .pedido-cliente,
+        .endereco-entrega-pedido {
           display: inline-flex;
           flex-direction: column;
           align-items: inherit;

@@ -5,13 +5,12 @@ import Header from "../../../components/componentesPrincipais/header";
 import Footer from "../../../components/componentesPrincipais/footer";
 import AbaNavegacao from "../../../components/componentesAuxiliares/abaNavegacao";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import impedirAcessoTelaAdministrador from "../../../service/administrador/impedirAcessoTelasAdministrador";
 
 import { imprimirNumeroComVirgula } from "../../../utils/conversaoUtil";
-import { calcularTicketMedioCliente } from "../../../service/calculosCarrinho/calculosCarrinhoCliente";
 
 export default function AnaliseClientes() {
   const cliente = useMemo(() => {
@@ -28,24 +27,44 @@ export default function AnaliseClientes() {
   const [atualizarLista, setAtualizarLista] = useState(false);
   const [filtroBusca, setFiltroBusca] = useState("");
 
-  useEffect(() => {
-    listarClientes();
-  }, [atualizarLista]);
-
-  const listarClientes = async () => {
+  const listarClientes = useCallback(async () => {
     try {
       const resp = await axios.get(
         "http://localhost:5001/cliente/lista/pedidos"
       );
 
-      setListaClientes(Object.values(resp.data));
+      setListaClientes(resp.data);
     } catch (error) {
       alert(
         error.response?.data?.erro ??
           "Erro ao buscar as informações dos clientes."
       );
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    listarClientes();
+  }, [atualizarLista, listarClientes]);
+
+  const listarClientesPorFiltro = useCallback(async () => {
+    try {
+      const resp = await axios.get(
+        `http://localhost:5001/cliente/lista/pedidos/filtro?filtro=${filtroBusca}`
+      );
+
+      setListaClientes(resp.data);
+    } catch (error) {
+      alert(error.response?.data?.erro);
+    }
+  }, [filtroBusca]);
+
+  useEffect(() => {
+    if (filtroBusca.length > 0) {
+      listarClientesPorFiltro();
+    } else {
+      listarClientes();
+    }
+  }, [filtroBusca, listarClientesPorFiltro, listarClientes]);
 
   const atualizarTabela = () => {
     setAtualizarLista((atualizar) => !atualizar);
@@ -56,7 +75,6 @@ export default function AnaliseClientes() {
       !listaClientes[idCliente]?.quantidade_pedidos ||
       listaClientes[idCliente]?.quantidade_pedidos === 0
     ) {
-      console.log(listaClientes[idCliente]);
       return false;
     }
     return true;
@@ -164,10 +182,7 @@ export default function AnaliseClientes() {
                       <span>R$</span>
                       {verificarSeUsuarioTemPedidos(index)
                         ? imprimirNumeroComVirgula(
-                            calcularTicketMedioCliente(
-                              item?.preco_total_pedido,
-                              item?.quantidade_pedidos
-                            ).toFixed(2)
+                            Number(item?.ticket_medio).toFixed(2)
                           )
                         : "0,00"}
                     </div>
