@@ -38,7 +38,7 @@ export default function Produtos() {
 
   // Estado para paginação:
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const itensPorPagina = 16; // Defina quantos itens exibir por página
+  const itensPorPagina = 16; // Quantidade de vinhos por página
 
   // Calcula os itens que serão exibidos na página atual
   const vinhosPagina = useMemo(() => {
@@ -233,18 +233,6 @@ export default function Produtos() {
               <div className="filtro">
                 <input
                   type="checkbox"
-                  value="Japão"
-                  checked={filtros.pais.includes("Japão")}
-                  onChange={(e) =>
-                    handleFiltro("pais", "Japão", e.target.checked)
-                  }
-                />
-                <span>Japão</span>
-              </div>
-
-              <div className="filtro">
-                <input
-                  type="checkbox"
                   value="Chile"
                   checked={filtros.pais.includes("Chile")}
                   onChange={(e) =>
@@ -257,13 +245,41 @@ export default function Produtos() {
               <div className="filtro">
                 <input
                   type="checkbox"
-                  value="Itália"
-                  checked={filtros.pais.includes("Itália")}
+                  value="França"
+                  checked={filtros.pais.includes("França")}
                   onChange={(e) =>
-                    handleFiltro("pais", "Itália", e.target.checked)
+                    handleFiltro("pais", "França", e.target.checked)
                   }
                 />
-                <span>Itália</span>
+                <span>França</span>
+              </div>
+
+              <div className="filtro">
+                <input
+                  type="checkbox"
+                  value="Estados Unidos da América"
+                  checked={filtros.pais.includes("Estados Unidos da América")}
+                  onChange={(e) =>
+                    handleFiltro(
+                      "pais",
+                      "Estados Unidos da América",
+                      e.target.checked
+                    )
+                  }
+                />
+                <span>Estados Unidos</span>
+              </div>
+
+              <div className="filtro">
+                <input
+                  type="checkbox"
+                  value="Japão"
+                  checked={filtros.pais.includes("Japão")}
+                  onChange={(e) =>
+                    handleFiltro("pais", "Japão", e.target.checked)
+                  }
+                />
+                <span>Japão</span>
               </div>
             </div>
           </div>
