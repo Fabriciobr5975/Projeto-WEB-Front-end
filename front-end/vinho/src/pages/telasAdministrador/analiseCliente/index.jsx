@@ -58,13 +58,6 @@ export default function AnaliseClientes() {
     }
   }, [filtroBusca]);
 
-  useEffect(() => {
-    if (filtroBusca.length > 0) {
-      listarClientesPorFiltro();
-    } else {
-      listarClientes();
-    }
-  }, [filtroBusca, listarClientesPorFiltro, listarClientes]);
 
   const atualizarTabela = () => {
     setAtualizarLista((atualizar) => !atualizar);
@@ -79,20 +72,6 @@ export default function AnaliseClientes() {
     }
     return true;
   };
-
-  async function Buscar() {
-    try {
-      let resp = await axios.get(
-        `http://localhost:5001/endereco/busca/cidade?cidade=${filtroBusca}`
-      );
-      setListaClientes(resp.data);
-    } catch (error) {
-      alert(
-        error.response?.data?.erro ??
-          `Erro ao buscar as informações do filtro ${filtroBusca}`
-      );
-    }
-  }
 
   return (
     <div className="pagina-analise-cliente pagina">
@@ -138,7 +117,7 @@ export default function AnaliseClientes() {
                 value={filtroBusca}
                 onChange={(e) => setFiltroBusca(e.target.value)}
               />
-              <input type="button" value="Buscar" onClick={Buscar} />
+              <input type="button" value="Buscar" onClick={() => listarClientesPorFiltro()} />
             </div>
           </div>
           <table>
