@@ -33,7 +33,7 @@ export default function InputSenha(props) {
 
       {mostrarInfoSenhaValida && (
         <div className="informacao-senha-valida">
-          <h3>A senha Precisa:</h3>
+          <h3>A Senha Precisa:</h3>
           <p>Ter de 8 até 64 caracteres</p>
           <p>Ter pelo menos uma letra minúscula</p>
           <p>Ter pelo menos uma letra maiúscula</p>

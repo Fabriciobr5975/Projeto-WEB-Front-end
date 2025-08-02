@@ -104,11 +104,10 @@ export default function CadastroCliente() {
       setBloqueioCampo(true);
     }
 
-     if (clienteCadastro.cep === "") {
+    if (clienteCadastro.cep === "") {
       limparEndereco();
       setBloqueioCampo(true);
     }
-
   }, [clienteCadastro.cep, pegarEnderecoViaCep, limparEndereco]);
 
   const colocarApelidoEnderecoPadrao = () => {
@@ -314,7 +313,7 @@ export default function CadastroCliente() {
                 </div>
               </div>
             </div>
-
+            
             <div className="campos-entrada-opcionais">
               <div className="campo">
                 <InputPadrao

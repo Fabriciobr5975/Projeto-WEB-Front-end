@@ -39,7 +39,7 @@ export default function Produtos() {
   // Estado para paginação:
   const [paginaAtual, setPaginaAtual] = useState(1);
   const itensPorPagina = 16; // Quantidade de vinhos por página
-
+  
   // Calcula os itens que serão exibidos na página atual
   const vinhosPagina = useMemo(() => {
     const indiceInicio = (paginaAtual - 1) * itensPorPagina;
